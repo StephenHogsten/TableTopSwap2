@@ -6,11 +6,10 @@ const gameSchema = mongoose.Schema({
     type: String,
     required: 'board game geek ID is required'
   },
-  "user_owner": {
+  "user_seeking": {
     type: String,
     required: 'user is required'
   },
-  "trade_away": Boolean,
   "BGG_info": {
     "image_url": String,
     "title": String,
@@ -21,4 +20,4 @@ const gameSchema = mongoose.Schema({
   }
 });
 
-export default mongoose.model('trade_game', gameSchema);
+export default mongoose.model('trade_game_for', gameSchema);
