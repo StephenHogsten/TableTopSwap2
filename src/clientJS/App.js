@@ -3,9 +3,10 @@ import {
   BrowserRouter as Router,
   Route,
   Link
-} from 'react-router-dom'
+} from 'react-router-dom';
 import logo from '../logo.svg';
 import '../scss/App.scss';
+import About from './About.js';
 
 class App extends Component {
   render() {
@@ -22,18 +23,14 @@ class App extends Component {
           <div>
             <Link to='/about'>Take me to About</Link><br />
             <Link to='/'>Take me to Home</Link>
-            <Route path="/about" component={About}/>
+            <Route path="/about" render={() => (
+              <About text='mememe' />
+            )} />
           </div>
         </div>
       </Router>
     );
   }
 }
-
-const About = ({ match }) => (
-  <div className="HogDog">
-    MEMEMEME
-  </div>
-)
 
 export default App;

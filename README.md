@@ -14,17 +14,20 @@ I'll have mine based no board games instead (use the board game geek api: https:
 1. React-router.  this lets you specify paging within a single page app (?)
 2. Material Design.  This project has to have big lists of stuff, so I can really imitate things like the music player.  I should make more specifically how it should look / behave ahead of time, and then actually hold myself to that design.
 3. Prototyping for React components
+4. Passport Local
 4. After it's build I should figure out exactly how it's initially serving the files. Right now I just want to build
 
 # To Do
-- [ ] read up 
-  - [ ] react-router
+- [ ] read up & add minimal version 
+  - [X] react-router
   - [ ] jest
   - [ ] material design / pre-built components
-  - [ ] React prototypes
-- [ ] Update To do
-- [ ] set-up gulp / the basic server
-- [ ] decide how data / trades will be structured
+  - [X] React prototypes
+- [ ] how can you use create-react-app with an API server / mongoose connection
+- [ ] install packages when back online
+  - [ ] mongoose
+- [X] set-up gulp / the basic server
+- [X] decide how data / trades will be structured
 - [ ] shell
   - [ ] sketch out the pages
   - [ ] build out unstyled pages
@@ -35,3 +38,7 @@ I'll have mine based no board games instead (use the board game geek api: https:
 - [ ] connect APIs to the shell
 - [ ] connect to DB
 - [ ] style everything in the shell
+
+## Bonuses
+- [ ] email notification
+- [ ] automatically match people
