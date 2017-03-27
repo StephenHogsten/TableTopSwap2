@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
-import logo from '../logo.svg';
 import '../scss/App.scss';
+import injectTapEventPlugin from 'react-tap-event-plugin';  
+
 
 // components
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
@@ -18,6 +19,7 @@ class App extends Component {
       gameList: [],
       currentUser: null
     };
+    injectTapEventPlugin(); 
     this.getAllGames();
   }
   getAllGames() {
