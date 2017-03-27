@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
-import {
-  BrowserRouter as Router,
-  Route,
-  Link
-} from 'react-router-dom';
+import { BrowserRouter as Router } from 'react-router-dom';
 import logo from '../logo.svg';
 import '../scss/App.scss';
+
+// components
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import AppBar from 'material-ui/AppBar';
+import Menu from 'material-ui/svg-icons/navigation/menu';
+import IconButton from 'material-ui/IconButton';
+//  mine
 import AppBody from './AppBody.js';
 
 class App extends Component {
@@ -23,17 +26,20 @@ class App extends Component {
   render() {
     return (
       <Router> 
-        <div>
-          <div className="app-header">
-            <img src={logo} className="App-logo" alt="logo" />
-            <h2>Welcome to React</h2>
-          </div>
+        <MuiThemeProvider>
+          <div>
+            <AppBar 
+              iconElementLeft={<IconButton><Menu /></IconButton>}
+              title="Tabletop Swap"
+              iconClassNameRight="App-logo"
+            />
 
-          <div className="app-sidebar">
-          </div>
+            <div className="app-sidebar">
+            </div>
 
-          <AppBody />
-        </div>
+            <AppBody />
+          </div>
+        </MuiThemeProvider>
       </Router>
     );
   }

@@ -32,7 +32,7 @@ if (process.env.ENV_TYPE === 'PRODUCTION') {
 }
 
 app.get('/api/test', (req, res) => {
-  res.sendFile(process.cwd() + '/garbo/games.json');
+  res.sendFile(process.cwd() + '/garbo/test_games.json');
 });
 
 const port = process.env.PORT || 3001;
