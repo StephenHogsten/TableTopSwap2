@@ -3,7 +3,14 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "body-parser": "^1.17.1",
+    "concurrently": "^3.4.0",
+    "connect-mongo": "^1.3.2",
+    "d3-request": "^1.0.5",
     "enzyme": "^2.7.1",
+    "express": "^4.15.2",
+    "express-session": "^1.15.2",
+    "mongoose": "^4.9.2",
     "node-sass": "^4.5.1",
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
@@ -51,10 +58,13 @@
     "whatwg-fetch": "2.0.2"
   },
   "scripts": {
-    "start": "node scripts/start.js",
+    "start_client": "node scripts/start.js",
+    "start_server": "node server.js",
+    "start": "concurrently \"yarn start_server\" \"yarn start_client\"",
     "build": "node scripts/build.js",
     "test": "node scripts/test.js --env=jsdom"
   },
+  "proxy": "http://localhost:3001",
   "jest": {
     "collectCoverageFrom": [
       "src/**/*.{js,jsx}"

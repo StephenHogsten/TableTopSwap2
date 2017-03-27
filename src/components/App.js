@@ -6,27 +6,33 @@ import {
 } from 'react-router-dom';
 import logo from '../logo.svg';
 import '../scss/App.scss';
-import About from './About.js';
+import AppBody from './AppBody.js';
 
 class App extends Component {
+  constructor() {
+    super();
+    this.state = {
+      gameList: [],
+      currentUser: null
+    };
+    this.getAllGames();
+  }
+  getAllGames() {
+    // get the full list of games from the DB (trade for and trade away)
+  }
   render() {
     return (
       <Router> 
-        <div className="App">
-          <div className="App-header">
+        <div>
+          <div className="app-header">
             <img src={logo} className="App-logo" alt="logo" />
             <h2>Welcome to React</h2>
           </div>
-          <p className="App-intro">
-            To get started, edit <code>src/App.js</code> and save to reload.
-          </p>
-          <div>
-            <Link to='/about'>Take me to About</Link><br />
-            <Link to='/'>Take me to Home</Link>
-            <Route path="/about" render={() => (
-              <About text='mememe' />
-            )} />
+
+          <div className="app-sidebar">
           </div>
+
+          <AppBody />
         </div>
       </Router>
     );

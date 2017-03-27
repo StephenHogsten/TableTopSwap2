@@ -23,13 +23,19 @@ I'll have mine based no board games instead (use the board game geek api: https:
   - [ ] jest
   - [ ] material design / pre-built components
   - [X] React prototypes
-- [ ] how can you use create-react-app with an API server / mongoose connection
-- [ ] install packages when back online
-  - [ ] mongoose
+- [X] how can you use create-react-app with an API server / mongoose connection
+  - [X] create a test API endpoint
+  - [X] make a viable start command with concurrently
+  - [X] test accessing the endpoint from the client
+- [ ] when back online
+  - [X] mongoose
+  - [ ] create mock-up data for all games sought / offered
+  - [ ] how to restrict a mongoose schema to enum (trade.js)
 - [X] set-up gulp / the basic server
 - [X] decide how data / trades will be structured
 - [ ] shell
-  - [ ] sketch out the pages
+  - [X] paper sketch out the pages
+  - [ ] decide on components 
   - [ ] build out unstyled pages
   - [ ] connect them together
 - [ ] Add APIs
