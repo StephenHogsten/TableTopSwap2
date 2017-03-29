@@ -12,7 +12,7 @@ class GameList extends Component {
       let thisGame = this.props.gameList[i];
       games.push(
         <Game 
-          key={thisGame.BGG_id}
+          key={thisGame._id || thisGame.BGG_id}
           info={thisGame.BGG_info}
         />
       )

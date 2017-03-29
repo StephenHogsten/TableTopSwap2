@@ -37,9 +37,12 @@ I'll have mine based no board games instead (use the board game geek api: https:
   - [X] paper sketch out the pages
   - [X] decide on components 
   - [X] where does the state live?
-  - [ ] is the only problem with proxying being offline?
-  - [ ] build out unstyled pages
+  - [ ] build out unstyled pages for games
+  - [ ] build out unstyled pages for trades
+  - [ ] build out remaining unstyled pages
+  - [ ] rely on router instead of state
   - [ ] connect them together
+  - [ ] is the only problem with proxying being offline?
 - [ ] build user shell
   - [ ] how do you log in with single page react?
 - [ ] Add APIs

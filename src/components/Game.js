@@ -6,7 +6,7 @@ class Game extends Component {
     // this will mostly be a card (at least without hover) later
     return (
       <div className='one-game'>  
-        <p key='title' classname='one-game-title'>{this.props.info.title}</p>
+        <p key='title' className='one-game-title'>{this.props.info.title}</p>
       </div>
     );
   }

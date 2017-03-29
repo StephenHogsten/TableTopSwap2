@@ -5,12 +5,13 @@ import injectTapEventPlugin from 'react-tap-event-plugin';
 import * as d3 from 'd3-request';
 
 
-// components
+// UI components 
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import AppBar from 'material-ui/AppBar';
 import Menu from 'material-ui/svg-icons/navigation/menu';
 import IconButton from 'material-ui/IconButton';
-//  mine
+
+//  my components
 import MainBody from './MainBody.js';
 import {displayOptions, gameDisplayOptions, tradeDisplayOptions} from './enums.js';
 
@@ -107,12 +108,18 @@ class App extends Component {
       });
     }
   }
-  // probably need to add something that checks whether user is logged in, and if so 
+  
+  filterMySought(gameList) {
+    return gameList.filter( (game) => game.sought_or_owned === 'sought' && game.user === this.state.user );
+  }
+  filterMyOwned(gameList) {
+    return gameList.filter( (game) => game.sought_or_owned === 'owned' && game.user === this.state.user );
+  }
   filterAllSought(gameList) {
-    return gameList.filter( (game) => game.sought_or_owned === 'sought' );
+    return gameList.filter( (game) => game.sought_or_owned === 'sought' && game.user !== this.state.user );
   }
   filterAllOwned(gameList) {
-    return gameList.filter( (game) => game.sought_or_owned === 'owned' );
+    return gameList.filter( (game) => game.sought_or_owned === 'owned' && game.user !== this.state.user );
   }
   render() {
     return (
@@ -134,6 +141,8 @@ class App extends Component {
               displayOption={this.state.displayOption}
               filterAllSought={(gameList) => this.filterAllSought(gameList)}
               filterAllOwned={(gameList) => this.filterAllOwned(gameList)}
+              filterMySought={(gameList) => this.filterMySought(gameList)}
+              filterMyOwned={(gameList) => this.filterMyOwned(gameList)}
             />
           </div>
         </MuiThemeProvider>
