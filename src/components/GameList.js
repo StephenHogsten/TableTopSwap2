@@ -17,6 +17,9 @@ class GameList extends Component {
         />
       )
     }
+    if (games.length === 0) games.push(
+      <p className='no-games'>None</p>
+    );
     return (
       <div className="game-list">
         {games}
