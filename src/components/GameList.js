@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Game from './Game.js';
+import GameCard from './GameCard.js';
 // import '../scss/AllGames';
 
 class GameList extends Component {
@@ -11,14 +11,14 @@ class GameList extends Component {
     for(let i=0; i<count; i++) {
       let thisGame = this.props.gameList[i];
       games.push(
-        <Game 
+        <GameCard 
           key={thisGame._id || thisGame.BGG_id}
           info={thisGame.BGG_info}
         />
       )
     }
     if (games.length === 0) games.push(
-      <p className='no-games'>None</p>
+      <p className='no-games' key='no-games'>None</p>
     );
     return (
       <div className="game-list">

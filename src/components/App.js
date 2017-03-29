@@ -110,16 +110,16 @@ class App extends Component {
   }
   
   filterMySought(gameList) {
-    return gameList.filter( (game) => game.sought_or_owned === 'sought' && game.user === this.state.user );
+    return gameList.filter( (game) => game.sought_or_owned === 'sought' && game.user === this.state.currentUser );
   }
   filterMyOwned(gameList) {
-    return gameList.filter( (game) => game.sought_or_owned === 'owned' && game.user === this.state.user );
+    return gameList.filter( (game) => game.sought_or_owned === 'owned' && game.user === this.state.currentUser );
   }
   filterAllSought(gameList) {
-    return gameList.filter( (game) => game.sought_or_owned === 'sought' && game.user !== this.state.user );
+    return gameList.filter( (game) => game.sought_or_owned === 'sought' && game.user !== this.state.currentUser );
   }
   filterAllOwned(gameList) {
-    return gameList.filter( (game) => game.sought_or_owned === 'owned' && game.user !== this.state.user );
+    return gameList.filter( (game) => game.sought_or_owned === 'owned' && game.user !== this.state.currentUser );
   }
   render() {
     return (
@@ -137,8 +137,6 @@ class App extends Component {
 
             <MainBody 
               gameList={this.state.gameList}
-              display={this.state.display}
-              displayOption={this.state.displayOption}
               filterAllSought={(gameList) => this.filterAllSought(gameList)}
               filterAllOwned={(gameList) => this.filterAllOwned(gameList)}
               filterMySought={(gameList) => this.filterMySought(gameList)}

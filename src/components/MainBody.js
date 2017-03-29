@@ -1,116 +1,89 @@
 import React, { Component } from 'react';
 import { Route, Link } from 'react-router-dom';
-import {displayOptions, gameDisplayOptions, tradeDisplayOptions} from './enums.js';
 import GameList from './GameList.js';
+import OneGame from './OneGame.js';
 
 import '../scss/MainBody.scss';
 
 class MainBody extends Component {
   render() {
-    switch (this.props.display) {
-      case displayOptions.games:
-        return this.renderGamesSwitch();
-      case displayOptions.trades:
-        return this.renderTradesSwitch();
-      default:
-        console.log('error');
-        return (
-          <div className='error'>Invalid displayOption</div>
-        );
-    }
-  }
-  renderGamesSwitch() {
     let soughtGames = this.props.filterAllSought(this.props.gameList);
     let ownedGames = this.props.filterAllOwned(this.props.gameList);
     let mySoughtGames = this.props.filterMySought(this.props.gameList);
     let myOwnedGames = this.props.filterMyOwned(this.props.gameList);
-    switch (this.props.displayOption) {
-      case gameDisplayOptions.all:
-        return (
+
+    return (
+      <div className='main-body-routes'>
+        <Route exact path='/' render={() => (
           <div className='main-body'>
             <h2 className='section-header' key='section-header'>All Games</h2>
             <br key='br' />
-            <h3 className='sub-section-header' key='my-sought-header'>My Games Sought</h3>
+            <Link to='/my_games/sought' className='sub-section-header' key='my-sought-header'>My Games Sought</Link>
             <GameList firstX={4} gameList={mySoughtGames} key='my-sought-games'/>
-            <h3 className='sub-section-header' key='my-owned-header'>My Games Offered</h3>
+            <Link to='/my_games/owned' className='sub-section-header' key='my-owned-header'>My Games Offered</Link>
             <GameList firstX={4} gameList={myOwnedGames} key='my-owned-games'/>
-            <h3 className='sub-section-header' key='sought-header'>Games Sought</h3>
+            <Link to='/all_games/sought' className='sub-section-header' key='sought-header'>Games Sought</Link>
             <GameList firstX={4} gameList={soughtGames} key='sought-games'/>
-            <h3 className='sub-section-header' key='owned-header'>Games Offered</h3>
+            <Link to='/all_games/owned' className='sub-section-header' key='owned-header'>Games Offered</Link>
             <GameList firstX={4} gameList={ownedGames} key='owned-games'/>
           </div>
-        );
-      case gameDisplayOptions.all_users:
-        return (
+        )} />
+        <Route exact path='/all_games' render={() => (
           <div className='main-body'>
             <h2 className='section-header' key='section-header'>Others' Games</h2>
             <br key='br' />
-            <h3 className='sub-section-header' key='sought-header'>Games Sought</h3>
+            <Link to='/all_games/sought' className='sub-section-header' key='sought-header'>Games Sought</Link>
             <GameList firstX={4} gameList={soughtGames} key='sought-games'/>
-            <h3 className='sub-section-header' key='owned-header'>Games Offered</h3>
+            <Link to='/all_games/owned' className='sub-section-header' key='owned-header'>Games Offered</Link>
             <GameList firstX={4} gameList={ownedGames} key='owned-games'/>
           </div>
-        );
-      case gameDisplayOptions.this_user: 
-        return (
+        )} />
+        <Route exact path='/my_games' render={() => (
           <div className='main-body'>
             <h2 className='section-header' key='section-header'>My Games</h2>
             <br key='br' />
-            <h3 className='sub-section-header' key='my-sought-header'>My Games Sought</h3>
+            <Link to='/my_games/sought' className='sub-section-header' key='my-sought-header'>My Games Sought</Link>
             <GameList firstX={4} gameList={mySoughtGames} key='my-sought-games'/>
-            <h3 className='sub-section-header' key='my-owned-header'>My Games Offered</h3>
+            <Link to='/my_games/owned' className='sub-section-header' key='my-owned-header'>My Games Offered</Link>
             <GameList firstX={4} gameList={myOwnedGames} key='my-owned-games'/>
           </div>
-        );
-      case gameDisplayOptions.this_user_sought:
-        return (
+        )} />
+        <Route exact path='/my_games/sought' render={() => (
           <div className='main-body'>
             <h2 className='section-header' key='my-sought-header'>My Games Sought</h2>
             <GameList firstX={20} gameList={mySoughtGames} key='my-sought-games' />
           </div>
-        );
-      case gameDisplayOptions.this_user_offered:
-        return (
+        )} />
+        <Route exact path='/my_games/owned' render={() => (
           <div className='main-body'>
-            <h2 className='section-header' key='my-owned-header'>My Games Offered</h2>
+            <h2 className='section-header' key='my-owned-header'>My Games Owned</h2>
             <GameList firstX={20} gameList={myOwnedGames} key='my-owned-games' />
           </div>
-        );
-      case gameDisplayOptions.all_users_sought:
-        return (
+        )} />
+        <Route exact path='/all_games/sought' render={() => (
           <div className='main-body'>
-            <h2 className='section-header' key='all-sought-header'>Games Sought</h2>
+            <h2 className='section-header' key='sought-header'>All Games Sought</h2>
             <GameList firstX={20} gameList={soughtGames} key='sought-games' />
           </div>
-        );
-      case gameDisplayOptions.all_users_offered:
-        return (
+        )} />
+        <Route exact path='/all_games/owned' render={() => (
           <div className='main-body'>
-            <h2 className='section-header' key='all-owned-header'>Games Offered</h2>
+            <h2 className='section-header' key='owned-header'>All Games Owned</h2>
             <GameList firstX={20} gameList={ownedGames} key='owned-games' />
           </div>
-        );
-      default:
-        return (
-          <div className='error'>Invalid gameDisplayOption</div>
-        );
-    }
-  }
-  renderTradesSwitch() {
-
+        )} />
+        <Route exact path='/game/:id' component={OneGame}/>   
+      </div>
+    );
   }
 }
 
-export default MainBody;
+MainBody.propTypes = {
+  gameList: React.PropTypes.array.isRequired,
+  filterAllSought: React.PropTypes.func.isRequired,
+  filterAllOwned: React.PropTypes.func.isRequired,
+  filterMySought: React.PropTypes.func.isRequired,
+  filterMyOwned: React.PropTypes.func.isRequired
+}
 
-{/*<div className='app-body'>>
-          <h3>All Games</h3>
-          <h3>Trade For</h3>
-          <h3>Trade With</h3>
-          <h3>Links</h3>
-          <Link to='/about'>Take me to About</Link><br />
-          <Link to='/'>Take me to Home</Link>
-          <Route path='/about' render={() => (
-            <About text='mememe' />
-          )} />
-        </div>*/}
+export default MainBody;

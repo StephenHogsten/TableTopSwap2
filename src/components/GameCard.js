@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 // import '../scss/Game.scss';
 
-class Game extends Component {
+class GameCard extends Component {
   render() {
     // this will mostly be a card (at least without hover) later
     return (
@@ -12,8 +12,8 @@ class Game extends Component {
   }
 }
 
-Game.propTypes = {
+GameCard.propTypes = {
   info: React.PropTypes.object.isRequired
 }
 
-export default Game;
+export default GameCard;
