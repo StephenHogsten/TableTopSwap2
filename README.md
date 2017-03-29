@@ -37,6 +37,7 @@ I'll have mine based no board games instead (use the board game geek api: https:
   - [X] paper sketch out the pages
   - [X] decide on components 
   - [X] where does the state live?
+  - [ ] is the only problem with proxying being offline?
   - [ ] build out unstyled pages
   - [ ] connect them together
 - [ ] build user shell

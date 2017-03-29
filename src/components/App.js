@@ -24,15 +24,88 @@ class App extends Component {
       display: displayOptions.games,
       displayOption: gameDisplayOptions.all
     };
-    this.getAllGames();
   }
-  getAllGames() {
-    d3.json('/api/test', (err, data) => {
-      if (err) throw err;
+  componentDidMount() {
+    this.getAllGames(true);
+  }
+  getAllGames(isFake) {
+    if (isFake) {
       this.setState({
-        gameList: data
+        gameList: [
+          {
+            "_id": 1,
+            "BGG_id": 28143,
+            "user": "hogdog123",
+            "sought_or_owned": "sought",
+            "BGG_info": {
+              "full_image_url": "//cf.geekdo-images.com/images/pic236327.jpg",
+              "thumb_image_url": "//cf.geekdo-images.com/images/pic236327_t.jpg",
+              "title": "Race for the Galaxy",
+              "players_low": 2,
+              "players_high": 4,
+              "difficulty": 2.9706,
+              "minutes_low": 30,
+              "minutes_high": 60
+            }
+          },
+          {
+            "_id": 2,
+            "BGG_id": 55690,
+            "user": "hogdog123",
+            "sought_or_owned": "owned",
+            "BGG_info": {
+              "full_image_url": "//cf.geekdo-images.com/images/pic2931007.jpg",
+              "thumb_image_url": "//cf.geekdo-images.com/images/pic2931007_t.jpg",
+              "title": "Kingdom Death: Monster",
+              "players_low": 1,
+              "players_high": 6,
+              "difficulty": 4.2201,
+              "minutes_low": 30,
+              "minutes_high": 60
+            }
+          },
+          {
+            "_id": 3,
+            "BGG_id": 15987,
+            "user": "joe2nobody",
+            "sought_or_owned": "sought",
+            "BGG_info": {
+              "full_image_url": "//cf.geekdo-images.com/images/pic175966.jpg",
+              "thumb_image_url": "//cf.geekdo-images.com/images/pic175966_t.jpg",
+              "title": "Arkham Horror",
+              "players_low": 1,
+              "players_high": 8,
+              "difficulty": 3.5445,
+              "minutes_low": 120,
+              "minutes_high": 240
+            }
+          },
+          {
+            "_id": 4,
+            "BGG_id": 178900,
+            "user": "joe1nobody",
+            "sought_or_owned": "owned",
+            "BGG_info": {
+              "full_image_url": "//cf.geekdo-images.com/images/pic2582929.jpg",
+              "thumb_image_url": "//cf.geekdo-images.com/images/pic2582929_t.jpg",
+              "title": "Codenames",
+              "players_low": 2,
+              "players_high": 8,
+              "difficulty": 1.3749,
+              "minutes_low": 15,
+              "minutes_high": 15
+            }
+          }
+        ]
       });
-    });
+    } else {
+      d3.json('/api/test', (err, data) => {
+        if (err) throw err;
+        this.setState({
+          gameList: data
+        });
+      });
+    }
   }
   // probably need to add something that checks whether user is logged in, and if so 
   filterAllSought(gameList) {

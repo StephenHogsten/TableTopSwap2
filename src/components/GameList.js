@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Game from './Game.js';
-import '../scss/AllGames';
+// import '../scss/AllGames';
 
 class GameList extends Component {
   render() {
@@ -9,14 +9,17 @@ class GameList extends Component {
     count = Math.min(count, this.props.gameList.length);
     let games = [];
     for(let i=0; i<count; i++) {
-      
+      let thisGame = this.props.gameList[i];
+      games.push(
+        <Game 
+          key={thisGame.BGG_id}
+          info={thisGame.BGG_info}
+        />
+      )
     }
     return (
-      <div className="game-section">
-        <h2 className="game-section-header">{this.props.sectionHeader}</h2>
-        <div className="game-section-holder">
-          {gameList}
-        </div>
+      <div className="game-list">
+        {games}
       </div>
     );
   }
@@ -24,8 +27,8 @@ class GameList extends Component {
 
 GameList.propTypes = {
   // 
-  games: React.PropTypes.object.isRequired,
-  title: React.PropTypes.string.isRequired
+  firstX: React.PropTypes.number,
+  gameList: React.PropTypes.array.isRequired,
 };
 
 export default GameList;

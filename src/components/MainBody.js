@@ -3,9 +3,9 @@ import { Route, Link } from 'react-router-dom';
 import {displayOptions, gameDisplayOptions, tradeDisplayOptions} from './enums.js';
 import GameList from './GameList.js';
 
-import '../scss/MainBody';
+import '../scss/MainBody.scss';
 
-class AppBody extends Component {
+class MainBody extends Component {
   render() {
     switch (this.props.display) {
       case displayOptions.games:
@@ -22,16 +22,16 @@ class AppBody extends Component {
   renderGamesSwitch() {
     switch (this.props.displayOption) {
       case gameDisplayOptions.all_users:
-        let soughtGames = this.props.filterAllSought(this.props.GameList);
-        let ownedGames = this.props.filterAllOwned(this.props.GameList);
+        let soughtGames = this.props.filterAllSought(this.props.gameList);
+        let ownedGames = this.props.filterAllOwned(this.props.gameList);
         return (
           <div className='main-body'>
             <h2 className='section-header' id='section-header'>All Users</h2>
             <br key='br' />
             <h3 className='sub-section-header' id='sought-header'>Games Sought</h3>
-            <GameList firstX='4' gameList={soughtGames} key='sought-games'/>
+            <GameList firstX={4} gameList={soughtGames} key='sought-games'/>
             <h3 className='sub-section-header' id='owned-header'>Games Offered</h3>
-            <GameList firstX='4' gameList={ownedGames} key='owned-games'/>
+            <GameList firstX={4} gameList={ownedGames} key='owned-games'/>
           </div>
         );
       default:
@@ -45,7 +45,7 @@ class AppBody extends Component {
   }
 }
 
-export default AppBody;
+export default MainBody;
 
 {/*<div className='app-body'>>
           <h3>All Games</h3>
