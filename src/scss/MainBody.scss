@@ -1,0 +1,17 @@
+@mixin unstyled {
+  border-style: solid;
+  border-color: blue;
+  color: red;
+}
+
+.main-body {
+  @include unstyled;
+}
+
+.section-header {
+  @include unstyled;
+}
+
+.sub-section-header {
+  @include unstyled;
+}
