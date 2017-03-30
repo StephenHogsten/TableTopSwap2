@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router } from 'react-router-dom';
+import { BrowserRouter, NavLink, Link } from 'react-router-dom';
 import '../scss/App.scss';
 import injectTapEventPlugin from 'react-tap-event-plugin';  
 import * as d3 from 'd3-request';
@@ -8,12 +8,24 @@ import * as d3 from 'd3-request';
 // UI components 
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import AppBar from 'material-ui/AppBar';
-import Menu from 'material-ui/svg-icons/navigation/menu';
+// import IconMenu from 'material-ui/IconMenu';
 import IconButton from 'material-ui/IconButton';
+import MenuItem from 'material-ui/MenuItem';
+import Drawer from 'material-ui/Drawer';
+import Menu from 'material-ui/svg-icons/navigation/menu';
+import Divider from 'material-ui/Divider';
 
 //  my components
 import MainBody from './MainBody.js';
 import {displayOptions, gameDisplayOptions, tradeDisplayOptions} from './enums.js';
+
+
+const MenuLink = ({to, label, clickFn}) => (
+  <NavLink to={'/' + to}>
+    <MenuItem primaryText={label} onTouchTap={clickFn}/>
+  </NavLink>
+);
+
 
 class App extends Component {
   constructor() {
@@ -23,11 +35,12 @@ class App extends Component {
       gameList: [],
       currentUser: null,
       display: displayOptions.games,
-      displayOption: gameDisplayOptions.all
+      displayOption: gameDisplayOptions.all,
+      isDrawerOpen: false
     };
   }
   componentDidMount() {
-    this.getAllGames(true);
+    this.getAllGames();
   }
   getAllGames(isFake) {
     if (isFake) {
@@ -108,7 +121,14 @@ class App extends Component {
       });
     }
   }
+  openDrawer() {
+    this.setState({ isDrawerOpen: true });
+  }
+  closeDrawer() {
+    this.setState({ isDrawerOpen: false });
+  }
   
+  // should exclude games that with accepted / completed status
   filterMySought(gameList) {
     return gameList.filter( (game) => game.sought_or_owned === 'sought' && game.user === this.state.currentUser );
   }
@@ -123,17 +143,33 @@ class App extends Component {
   }
   render() {
     return (
-      <Router> 
+      <BrowserRouter> 
         <MuiThemeProvider>
           <div>
             <AppBar 
-              iconElementLeft={<IconButton><Menu /></IconButton>}
-              title="Tabletop Swap"
+              iconElementLeft={
+                <IconButton onTouchTap={ () => this.openDrawer() }>
+                  <Menu />
+                </IconButton>
+              }
+              title={<Link to='' className='title-link'>Tabletop Swap</Link>}
               iconClassNameRight="App-logo"
             />
 
-            <div className="app-sidebar">
-            </div>
+            <Drawer 
+              docked={false}
+              open={this.state.isDrawerOpen} 
+              onRequestChange={ () => this.closeDrawer() }
+            >
+              <MenuLink to="my_games" label="My Games" clickFn={()=>this.closeDrawer()} />
+              <MenuLink to="my_games/sought" label="  Games I Want" clickFn={()=>this.closeDrawer()} />
+              <MenuLink to="my_games/owned" label="  Games I'm Offering" clickFn={()=>this.closeDrawer()} />
+              <Divider />
+              <MenuLink to="" label="All Games" clickFn={()=>this.closeDrawer()} />
+              <MenuLink to="all_games" label="Community Games" clickFn={()=>this.closeDrawer()} />
+              <MenuLink to="all_games/sought" label="  Games Others Want" clickFn={()=>this.closeDrawer()} />
+              <MenuLink to="all_games/owned" label="  Games Others Offer" clickFn={()=>this.closeDrawer()} />
+            </Drawer>
 
             <MainBody 
               gameList={this.state.gameList}
@@ -144,9 +180,10 @@ class App extends Component {
             />
           </div>
         </MuiThemeProvider>
-      </Router>
+      </BrowserRouter>
     );
   }
 }
+
 
 export default App;

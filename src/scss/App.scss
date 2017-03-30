@@ -5,8 +5,13 @@
   margin: 5px;
 }
 
-div {
-  @include unstyled;
+// div {
+//   @include unstyled;
+// }
+
+.title-link {
+  color: white;
+  text-decoration: none;
 }
 
 .App {

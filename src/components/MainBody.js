@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Route, Link } from 'react-router-dom';
+import { Switch, Route, Link } from 'react-router-dom';
 import GameList from './GameList.js';
 import OneGame from './OneGame.js';
 
@@ -13,7 +13,7 @@ class MainBody extends Component {
     let myOwnedGames = this.props.filterMyOwned(this.props.gameList);
 
     return (
-      <div className='main-body-routes'>
+      <Switch className='main-body-routes'>
         <Route exact path='/' render={() => (
           <div className='main-body'>
             <h2 className='section-header' key='section-header'>All Games</h2>
@@ -72,8 +72,24 @@ class MainBody extends Component {
             <GameList firstX={20} gameList={ownedGames} key='owned-games' />
           </div>
         )} />
-        <Route exact path='/game/:id' component={OneGame}/>   
-      </div>
+        <Route exact path='/game/:id' render={( {match} ) => {
+          console.log('this');
+          console.log(this);
+          console.log('param id');
+          console.log(match.params.id);
+          console.log('games');
+          console.log(this.props.gameList);
+          let matchingGame = this.props.gameList.filter( (game) => game._id == match.params.id)[0];
+          console.log('matchingGame');
+          console.log(matchingGame);
+          return matchingGame?
+            <OneGame game={matchingGame} />:
+            <p className='no-games'>No Game with ID</p>
+        }} />   
+        <Route render={ () => (
+          <div className='no-game'>Invalid URL</div>
+        )} />
+      </Switch>
     );
   }
 }

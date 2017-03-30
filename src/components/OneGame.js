@@ -4,17 +4,13 @@ class OneGame extends Component {
   render() {
     console.log(this);
     return (
-      <div className="game-list">
-        Game Card
-      </div>
+      <h1>{this.props.game.BGG_info.title}</h1>
     );
   }
 }
 
 OneGame.propTypes = {
-  // 
-  firstX: React.PropTypes.number,
-  gameList: React.PropTypes.array.isRequired,
+  game: React.PropTypes.object.isRequired
 };
 
 export default OneGame;
