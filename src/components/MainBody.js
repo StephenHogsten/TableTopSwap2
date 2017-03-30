@@ -9,6 +9,7 @@ import OneTrade from './OneTrade.js';
 import '../scss/MainBody.scss';
 
 class MainBody extends Component {
+  // add the add button
   render() {
     let soughtGames = this.props.filterAllSought(this.props.gameList);
     let ownedGames = this.props.filterAllOwned(this.props.gameList);
@@ -76,7 +77,10 @@ class MainBody extends Component {
           </div>
         )} />
         <Route exact path='/game/:id' render={ ({ match }) => {
-          let matchingGame = this.props.gameList.filter( (game) => game._id === match.params.id)[0];
+          console.log('match');
+          console.log(match);
+          console.log(this.props.GameList);
+          let matchingGame = this.props.gameList.find( (game) => String(game._id) === match.params.id);
           return matchingGame?
             <OneGame game={matchingGame} />:
             <p className='no-games'>No Game with ID</p>
@@ -85,17 +89,19 @@ class MainBody extends Component {
           <TradeList 
             currentUser={this.props.currentUser}
             tradeList={this.props.tradeList}
+            gameList={this.props.gameList}
           />
         )} />   
         <Route exact path='/trade/:id' render={ ({ match }) => {
           if (!this.props.tradeList) return (
             <p className='error'>You must be logged in to see your trades</p>
           );
-          let matchingTrade = this.props.tradeList.filter( (trade) => trade._id === match.parms.id)[0];
+          let matchingTrade = this.props.tradeList.find( (trade) => String(trade._id) === match.params.id);
           return matchingTrade?
             <OneTrade 
               currentUser={this.props.currentUser}
-              tradeList={this.props.tradeList}
+              trade={matchingTrade}
+              gameList={this.props.gameList}
             />:
             <p className='error'>No Trade with that ID</p> 
         }} />

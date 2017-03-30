@@ -39,12 +39,13 @@ I'll have mine based no board games instead (use the board game geek api: https:
   - [X] where does the state live?
   - [X] build out unstyled pages for games
   - [X] rely on router instead of state
-  - [ ] build out unstyled pages for trades
+  - [X] build out unstyled pages for trades
   - [ ] build pages (steps needed) for initiating a new trade
   - [ ] build out remaining unstyled pages 
   - [ ] connect them together
   - [X] is the only problem with proxying being offline?
   - [ ] build out jest tests?
+  - [ ] add action button
 - [ ] build user shell
   - [ ] how do you log in with single page react?
   - [ ] implement logging in locally
@@ -58,6 +59,7 @@ I'll have mine based no board games instead (use the board game geek api: https:
   - [ ] interact with trades (*this will be creating new 'sought' games if they don't already exist*)
   - [ ] make new games
 - [ ] style everything in the shell
+- [ ] fiddle with all the wording
 
 ## Bonuses
 - [ ] email notification

@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 // import '../scss/Game.scss';
 
 import TradeCard from './TradeCard.js';
@@ -26,7 +25,7 @@ const CompleteButton = () => (
 class OneTrade extends Component {
   makeButtons() {
     let userInitiated = this.props.trade.sender.user === this.props.currentUser;
-    switch ( this.props.game.status ) {
+    switch ( this.props.trade.status ) {
       case 'pending':
         if (userInitiated) return <CancelButton key='cancel'/>;
         else return null;
@@ -56,7 +55,7 @@ class OneTrade extends Component {
     let buttons = this.makeButtons();
     return (
       <div className='trade'>
-        <TradeCard trade={this.props.trade} key='card' />
+        <TradeCard trade={this.props.trade} gameList={this.props.gameList} key='card' />
         {buttons}
         <textarea rows='6' cols='50' className='trade-notes' key='notes'>
           {this.props.trade.notes}
@@ -68,7 +67,8 @@ class OneTrade extends Component {
 
 OneTrade.propTypes = {
   trade: React.PropTypes.object.isRequired,
-  user: React.PropTypes.string.isRequired
+  currentUser: React.PropTypes.string.isRequired,
+  gameList: React.PropTypes.array.isRequired
 }
 
 export default OneTrade;

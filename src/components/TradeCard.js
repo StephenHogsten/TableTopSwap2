@@ -6,23 +6,31 @@ import Paper from 'material-ui/Paper';
 
 class TradeCard extends Component {
   render() {
-    let status = this.props.trade.status;
+    let trade = this.props.trade;
+    let status = trade.status;
+    let senderGame = trade.sender.owned_game_id;
+    senderGame = this.props.gameList.find( (oneGame) => oneGame._id == senderGame);
+    let recipientGame = trade.recipient.owned_game_id;
+    recipientGame = this.props.gameList.find( (oneGame) => oneGame._id == recipientGame);
+    if (!senderGame || !recipientGame) return (
+      <p className='error'>Incorrect Game IDs</p>
+    );
     return (
-      <Link to={'trade/' + this.props.trade._id} class='trade-card'>
+      <Link to={'/trade/' + this.props.trade._id} className='trade-card'>
         <div className={'trade-header trade-status-' + status}>{status}</div>
         <Paper>
-          <div>First picture</div>
-          <div>First title</div>
+          <img src={senderGame.BGG_info.thumb_image_url} alt='main image'/>
+          <h4>{senderGame.BGG_info.title}</h4>
           <div>First avatar</div>
-          <div>First username</div>
+          <h4>{senderGame.user}</h4>
         </Paper>
         <div>Arrow Right</div>
         <div>Arrow Left</div>
         <Paper>
-          <div>Second picture</div>
-          <div>Second title</div>
+          <img src={recipientGame.BGG_info.thumb_image_url} alt='main image'/>
+          <h4>{recipientGame.BGG_info.title}</h4>
           <div>Second avatar</div>
-          <div>Second username</div>
+          <h4>{recipientGame.user}</h4>
         </Paper>
 
       </Link>
@@ -31,7 +39,8 @@ class TradeCard extends Component {
 }
 
 TradeCard.propTypes = {
-  trade: React.PropTypes.object.isRequired
+  trade: React.PropTypes.object.isRequired,
+  gameList: React.PropTypes.array.isRequired
 }
 
 export default TradeCard;

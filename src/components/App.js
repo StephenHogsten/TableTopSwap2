@@ -17,7 +17,6 @@ import Divider from 'material-ui/Divider';
 
 //  my components
 import MainBody from './MainBody.js';
-import {displayOptions, gameDisplayOptions, tradeDisplayOptions} from './enums.js';
 
 
 const MenuLink = ({to, label, clickFn}) => (
@@ -186,6 +185,7 @@ class App extends Component {
             <MainBody 
               currentUser={this.state.currentUser}
               gameList={this.state.gameList}
+              tradeList={this.state.tradeList}
               filterAllSought={(gameList) => this.filterParent(gameList, 'sought', false)}
               filterAllOwned={(gameList) => this.filterParent(gameList, 'owned', false)}
               filterMySought={(gameList) => this.filterParent(gameList, 'sought', true)}
