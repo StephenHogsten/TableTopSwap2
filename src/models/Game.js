@@ -15,6 +15,7 @@ const gameSchema = mongoose.Schema({
     enum: ['sought', 'owned'],
     default: 'sought'
   },
+  "isTradeAccepted": Boolean,
   "BGG_info": {
     "full_image_url": String,
     "thumb_image_url": String,

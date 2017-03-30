@@ -38,7 +38,7 @@ I'll have mine based no board games instead (use the board game geek api: https:
   - [X] decide on components 
   - [X] where does the state live?
   - [X] build out unstyled pages for games
-  - [ ] rely on router instead of state
+  - [X] rely on router instead of state
   - [ ] build out unstyled pages for trades
   - [ ] build out remaining unstyled pages 
   - [ ] connect them together

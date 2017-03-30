@@ -128,18 +128,13 @@ class App extends Component {
     this.setState({ isDrawerOpen: false });
   }
   
-  // should exclude games that with accepted / completed status
-  filterMySought(gameList) {
-    return gameList.filter( (game) => game.sought_or_owned === 'sought' && game.user === this.state.currentUser );
-  }
-  filterMyOwned(gameList) {
-    return gameList.filter( (game) => game.sought_or_owned === 'owned' && game.user === this.state.currentUser );
-  }
-  filterAllSought(gameList) {
-    return gameList.filter( (game) => game.sought_or_owned === 'sought' && game.user !== this.state.currentUser );
-  }
-  filterAllOwned(gameList) {
-    return gameList.filter( (game) => game.sought_or_owned === 'owned' && game.user !== this.state.currentUser );
+  filterParent(gameList, soughtOrOwned, isUser, filterAccepted=true) {
+    return gameList.filter( (game) => {
+      if (game.sought_or_owned !== soughtOrOwned) return false;
+      if ( (game.user === this.state.currentUser) !== isUser ) return false;
+      if (filterAccepted && (game.isTradeAccepted)) return false;
+      return true;
+    })
   }
   render() {
     return (
@@ -173,10 +168,10 @@ class App extends Component {
 
             <MainBody 
               gameList={this.state.gameList}
-              filterAllSought={(gameList) => this.filterAllSought(gameList)}
-              filterAllOwned={(gameList) => this.filterAllOwned(gameList)}
-              filterMySought={(gameList) => this.filterMySought(gameList)}
-              filterMyOwned={(gameList) => this.filterMyOwned(gameList)}
+              filterAllSought={(gameList) => this.filterParent(gameList, 'sought', false)}
+              filterAllOwned={(gameList) => this.filterParent(gameList, 'owned', false)}
+              filterMySought={(gameList) => this.filterParent(gameList, 'sought', true)}
+              filterMyOwned={(gameList) => this.filterParent(gameList, 'owned', true)}
             />
           </div>
         </MuiThemeProvider>
