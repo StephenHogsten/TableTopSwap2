@@ -33,14 +33,18 @@ class App extends Component {
     injectTapEventPlugin(); 
     this.state = {
       gameList: [],
+      tradeList: [],
       currentUser: null,
-      display: displayOptions.games,
-      displayOption: gameDisplayOptions.all,
       isDrawerOpen: false
     };
   }
   componentDidMount() {
     this.getAllGames();
+  }
+  componentWillUpdate(nextProps, nextState) {
+    if (!this.state.currentUser && nextState.currentUser) {
+      this.getAllTrades(nextState.currentUser);
+    }
   }
   getAllGames(isFake) {
     if (isFake) {
@@ -121,6 +125,17 @@ class App extends Component {
       });
     }
   }
+  getAllTrades(user) {
+    user = user? user: this.state.currentUser;
+    if (!user) return;
+    d3.json('/api/testTrade', (err, data) => {
+      if (err) throw err;
+      console.log(data);
+      this.setState({
+        tradeList: data.filter((d) => (d.sender.user === user || d.recipient.user === user))
+      });
+    });
+  }
   openDrawer() {
     this.setState({ isDrawerOpen: true });
   }
@@ -159,6 +174,8 @@ class App extends Component {
               <MenuLink to="my_games" label="My Games" clickFn={()=>this.closeDrawer()} />
               <MenuLink to="my_games/sought" label="  Games I Want" clickFn={()=>this.closeDrawer()} />
               <MenuLink to="my_games/owned" label="  Games I'm Offering" clickFn={()=>this.closeDrawer()} />
+              <MenuLink to="my_trades" label="Trades" clickFn={()=>this.closeDrawer()} />
+              <MenuLink to="trade/me" label="Test Trade" clickFn={()=>this.closeDrawer()} />
               <Divider />
               <MenuLink to="" label="All Games" clickFn={()=>this.closeDrawer()} />
               <MenuLink to="all_games" label="Community Games" clickFn={()=>this.closeDrawer()} />
@@ -167,6 +184,7 @@ class App extends Component {
             </Drawer>
 
             <MainBody 
+              currentUser={this.state.currentUser}
               gameList={this.state.gameList}
               filterAllSought={(gameList) => this.filterParent(gameList, 'sought', false)}
               filterAllOwned={(gameList) => this.filterParent(gameList, 'owned', false)}

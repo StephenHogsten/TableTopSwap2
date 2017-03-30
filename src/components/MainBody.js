@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import { Switch, Route, Link } from 'react-router-dom';
+
 import GameList from './GameList.js';
+import TradeList from './TradeList.js';
 import OneGame from './OneGame.js';
+import OneTrade from './OneTrade.js';
 
 import '../scss/MainBody.scss';
 
@@ -72,20 +75,30 @@ class MainBody extends Component {
             <GameList firstX={20} gameList={ownedGames} key='owned-games' />
           </div>
         )} />
-        <Route exact path='/game/:id' render={( {match} ) => {
-          console.log('this');
-          console.log(this);
-          console.log('param id');
-          console.log(match.params.id);
-          console.log('games');
-          console.log(this.props.gameList);
-          let matchingGame = this.props.gameList.filter( (game) => game._id == match.params.id)[0];
-          console.log('matchingGame');
-          console.log(matchingGame);
+        <Route exact path='/game/:id' render={ ({ match }) => {
+          let matchingGame = this.props.gameList.filter( (game) => game._id === match.params.id)[0];
           return matchingGame?
             <OneGame game={matchingGame} />:
             <p className='no-games'>No Game with ID</p>
-        }} />   
+        }} />
+        <Route exact path='/my_trades' render={ () => (
+          <TradeList 
+            currentUser={this.props.currentUser}
+            tradeList={this.props.tradeList}
+          />
+        )} />   
+        <Route exact path='/trade/:id' render={ ({ match }) => {
+          if (!this.props.tradeList) return (
+            <p className='error'>You must be logged in to see your trades</p>
+          );
+          let matchingTrade = this.props.tradeList.filter( (trade) => trade._id === match.parms.id)[0];
+          return matchingTrade?
+            <OneTrade 
+              currentUser={this.props.currentUser}
+              tradeList={this.props.tradeList}
+            />:
+            <p className='error'>No Trade with that ID</p> 
+        }} />
         <Route render={ () => (
           <div className='no-game'>Invalid URL</div>
         )} />
@@ -96,10 +109,12 @@ class MainBody extends Component {
 
 MainBody.propTypes = {
   gameList: React.PropTypes.array.isRequired,
+  tradeList: React.PropTypes.array,
   filterAllSought: React.PropTypes.func.isRequired,
   filterAllOwned: React.PropTypes.func.isRequired,
   filterMySought: React.PropTypes.func.isRequired,
-  filterMyOwned: React.PropTypes.func.isRequired
+  filterMyOwned: React.PropTypes.func.isRequired,
+  currentUser: React.PropTypes.string
 }
 
 export default MainBody;

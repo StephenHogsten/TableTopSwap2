@@ -34,6 +34,9 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.get('/api/test', (req, res) => {
   res.sendFile(process.cwd() + '/garbo/test_games.json');
 });
+app.get('/api/testTrade', (req, res) => {
+  res.sendFile(process.cwd() + '/garbo/test_trades.json');
+})
 
 const port = process.env.PORT || 3001;
 app.listen(port, () => {

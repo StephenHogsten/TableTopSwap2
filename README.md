@@ -40,19 +40,23 @@ I'll have mine based no board games instead (use the board game geek api: https:
   - [X] build out unstyled pages for games
   - [X] rely on router instead of state
   - [ ] build out unstyled pages for trades
+  - [ ] build pages (steps needed) for initiating a new trade
   - [ ] build out remaining unstyled pages 
   - [ ] connect them together
-  - [ ] is the only problem with proxying being offline?
+  - [X] is the only problem with proxying being offline?
   - [ ] build out jest tests?
 - [ ] build user shell
   - [ ] how do you log in with single page react?
-- [ ] Add APIs
+  - [ ] implement logging in locally
+  - [ ] make all the pages treat being logged in appropriately
+- [ ] Add server APIs / DB interaction
   - [ ] how do you convert xml to json
   - [ ] retrieve all current games (note that i'll filter within the app to reduce API calls)
     - [ ] start with static games list
   - [ ] search for game titles
-- [ ] connect APIs to the shell
-- [ ] connect to DB
+  - [ ] retrieve all trades
+  - [ ] interact with trades (*this will be creating new 'sought' games if they don't already exist*)
+  - [ ] make new games
 - [ ] style everything in the shell
 
 ## Bonuses
