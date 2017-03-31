@@ -7,6 +7,7 @@ import OneGame from './OneGame.js';
 import OneTrade from './OneTrade.js';
 import TradeSteps from './TradeSteps.js';
 import AddGame from './AddGame.js';
+import Profile from './Profile.js';
 
 import '../scss/MainBody.scss';
 
@@ -20,6 +21,9 @@ class MainBody extends Component {
 
     return (
       <Switch className='main-body-routes'>
+        <Route exact path='/profile' render={() => (
+          <Profile user={this.props.currentUser} />
+        )} />
         <Route exact path='/' render={() => (
           <div className='main-body'>
             <h2 className='section-header' key='section-header'>All Games</h2>

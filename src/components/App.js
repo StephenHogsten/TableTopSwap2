@@ -102,7 +102,7 @@ class App extends Component {
                   targetOrigin={{horizontal: 'right', vertical: 'top'}}
                   anchorOrigin={{horizontal: 'right', vertical: 'top'}}
                 >
-                  <MenuItem primaryText="View Profile" />
+                  <MenuLink to="profile" label="View Profile" />
                   <MenuItem primaryText="Sign out" />
                 </IconMenu>:
                 <FlatButton label='Login' className='white-font'/>

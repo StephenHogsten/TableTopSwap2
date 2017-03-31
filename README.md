@@ -44,10 +44,10 @@ I'll have mine based no board games instead (use the board game geek api: https:
   - [X] build page for adding a new game
     - [X] create fake API to test it
   - [X] added login/profile to app bar
-  - [ ] build profile page
-  - [ ] connect them together
+  - [X] build profile page
+  - [X] connect them together
   - [X] is the only problem with proxying being offline?
-  - [ ] build out jest tests?
+  - XXX build out jest tests?
   - [ ] add action button
 - [ ] build user shell
   - [ ] how do you log in with single page react?
