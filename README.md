@@ -40,7 +40,8 @@ I'll have mine based no board games instead (use the board game geek api: https:
   - [X] build out unstyled pages for games
   - [X] rely on router instead of state
   - [X] build out unstyled pages for trades
-  - [ ] build pages (steps needed) for initiating a new trade
+  - [X] build page for initiating a new trade
+  - [ ] build page for adding a new game
   - [ ] build out remaining unstyled pages 
   - [ ] connect them together
   - [X] is the only problem with proxying being offline?
@@ -58,10 +59,12 @@ I'll have mine based no board games instead (use the board game geek api: https:
   - [ ] retrieve all trades
   - [ ] interact with trades (*this will be creating new 'sought' games if they don't already exist*)
   - [ ] make new games
+  - [ ] add a button to the OneGame component to make an offer
 - [ ] style everything in the shell
 - [ ] fiddle with all the wording
 
 ## Bonuses
+- [ ] paginate
 - [ ] email notification
 - [ ] automatically match people
 - [ ] more validators for the game model

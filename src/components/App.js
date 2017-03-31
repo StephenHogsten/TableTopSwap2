@@ -174,7 +174,7 @@ class App extends Component {
               <MenuLink to="my_games/sought" label="  Games I Want" clickFn={()=>this.closeDrawer()} />
               <MenuLink to="my_games/owned" label="  Games I'm Offering" clickFn={()=>this.closeDrawer()} />
               <MenuLink to="my_trades" label="Trades" clickFn={()=>this.closeDrawer()} />
-              <MenuLink to="trade/me" label="Test Trade" clickFn={()=>this.closeDrawer()} />
+              <MenuLink to="new/trade" label="Test Trade" clickFn={()=>this.closeDrawer()} />
               <Divider />
               <MenuLink to="" label="All Games" clickFn={()=>this.closeDrawer()} />
               <MenuLink to="all_games" label="Community Games" clickFn={()=>this.closeDrawer()} />

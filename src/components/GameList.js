@@ -15,8 +15,10 @@ class GameList extends Component {
           key={thisGame._id || thisGame.BGG_id}
           game_id={thisGame._id}
           info={thisGame.BGG_info}
+          onClickFn={ () => this.props.onClickFn(thisGame._id) }
+          selected={this.props.activeId == thisGame._id}
         />
-      )
+      );
     }
     if (games.length === 0) games.push(
       <p className='no-games' key='no-games'>None</p>
@@ -33,6 +35,8 @@ GameList.propTypes = {
   // 
   firstX: React.PropTypes.number,
   gameList: React.PropTypes.array.isRequired,
+  onClickFn: React.PropTypes.func,
+  activeId: React.PropTypes.string
 };
 
 export default GameList;
