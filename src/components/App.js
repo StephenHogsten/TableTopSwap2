@@ -8,12 +8,14 @@ import * as d3 from 'd3-request';
 // UI components 
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import AppBar from 'material-ui/AppBar';
-// import IconMenu from 'material-ui/IconMenu';
+import IconMenu from 'material-ui/IconMenu';
 import IconButton from 'material-ui/IconButton';
 import MenuItem from 'material-ui/MenuItem';
 import Drawer from 'material-ui/Drawer';
-import Menu from 'material-ui/svg-icons/navigation/menu';
 import Divider from 'material-ui/Divider';
+import FlatButton from 'material-ui/FlatButton';
+import MenuIcon from 'material-ui/svg-icons/navigation/menu';
+import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 
 //  my components
 import MainBody from './MainBody.js';
@@ -24,7 +26,6 @@ const MenuLink = ({to, label, clickFn}) => (
     <MenuItem primaryText={label} onTouchTap={clickFn}/>
   </NavLink>
 );
-
 
 class App extends Component {
   constructor() {
@@ -45,84 +46,13 @@ class App extends Component {
       this.getAllTrades(nextState.currentUser);
     }
   }
-  getAllGames(isFake) {
-    if (isFake) {
+  getAllGames() {
+    d3.json('/api/test', (err, data) => {
+      if (err) throw err;
       this.setState({
-        gameList: [
-          {
-            "_id": 1,
-            "BGG_id": 28143,
-            "user": "hogdog123",
-            "sought_or_owned": "sought",
-            "BGG_info": {
-              "full_image_url": "//cf.geekdo-images.com/images/pic236327.jpg",
-              "thumb_image_url": "//cf.geekdo-images.com/images/pic236327_t.jpg",
-              "title": "Race for the Galaxy",
-              "players_low": 2,
-              "players_high": 4,
-              "difficulty": 2.9706,
-              "minutes_low": 30,
-              "minutes_high": 60
-            }
-          },
-          {
-            "_id": 2,
-            "BGG_id": 55690,
-            "user": "hogdog123",
-            "sought_or_owned": "owned",
-            "BGG_info": {
-              "full_image_url": "//cf.geekdo-images.com/images/pic2931007.jpg",
-              "thumb_image_url": "//cf.geekdo-images.com/images/pic2931007_t.jpg",
-              "title": "Kingdom Death: Monster",
-              "players_low": 1,
-              "players_high": 6,
-              "difficulty": 4.2201,
-              "minutes_low": 30,
-              "minutes_high": 60
-            }
-          },
-          {
-            "_id": 3,
-            "BGG_id": 15987,
-            "user": "joe2nobody",
-            "sought_or_owned": "sought",
-            "BGG_info": {
-              "full_image_url": "//cf.geekdo-images.com/images/pic175966.jpg",
-              "thumb_image_url": "//cf.geekdo-images.com/images/pic175966_t.jpg",
-              "title": "Arkham Horror",
-              "players_low": 1,
-              "players_high": 8,
-              "difficulty": 3.5445,
-              "minutes_low": 120,
-              "minutes_high": 240
-            }
-          },
-          {
-            "_id": 4,
-            "BGG_id": 178900,
-            "user": "joe1nobody",
-            "sought_or_owned": "owned",
-            "BGG_info": {
-              "full_image_url": "//cf.geekdo-images.com/images/pic2582929.jpg",
-              "thumb_image_url": "//cf.geekdo-images.com/images/pic2582929_t.jpg",
-              "title": "Codenames",
-              "players_low": 2,
-              "players_high": 8,
-              "difficulty": 1.3749,
-              "minutes_low": 15,
-              "minutes_high": 15
-            }
-          }
-        ]
+        gameList: data
       });
-    } else {
-      d3.json('/api/test', (err, data) => {
-        if (err) throw err;
-        this.setState({
-          gameList: data
-        });
-      });
-    }
+    });
   }
   getAllTrades(user) {
     user = user? user: this.state.currentUser;
@@ -156,13 +86,27 @@ class App extends Component {
         <MuiThemeProvider>
           <div>
             <AppBar 
+              className='white-font'
               iconElementLeft={
                 <IconButton onTouchTap={ () => this.openDrawer() }>
-                  <Menu />
+                  <MenuIcon />
                 </IconButton>
               }
               title={<Link to='' className='title-link'>Tabletop Swap</Link>}
-              iconClassNameRight="App-logo"
+              iconElementRight={
+                this.state.currentUser?
+                <IconMenu
+                  iconButtonElement={
+                    <IconButton><MoreVertIcon /></IconButton>
+                  }
+                  targetOrigin={{horizontal: 'right', vertical: 'top'}}
+                  anchorOrigin={{horizontal: 'right', vertical: 'top'}}
+                >
+                  <MenuItem primaryText="View Profile" />
+                  <MenuItem primaryText="Sign out" />
+                </IconMenu>:
+                <FlatButton label='Login' className='white-font'/>
+              }
             />
 
             <Drawer 

@@ -43,7 +43,8 @@ I'll have mine based no board games instead (use the board game geek api: https:
   - [X] build page for initiating a new trade
   - [X] build page for adding a new game
     - [X] create fake API to test it
-  - [ ] build out remaining unstyled pages 
+  - [X] added login/profile to app bar
+  - [ ] build profile page
   - [ ] connect them together
   - [X] is the only problem with proxying being offline?
   - [ ] build out jest tests?
