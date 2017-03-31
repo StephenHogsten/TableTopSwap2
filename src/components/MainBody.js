@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Switch, Route, Link } from 'react-router-dom';
+import { Switch, Route, Link, withRouter } from 'react-router-dom';
 
 import GameList from './GameList.js';
 import TradeList from './TradeList.js';
@@ -151,4 +151,4 @@ MainBody.propTypes = {
   currentUser: React.PropTypes.string
 }
 
-export default MainBody;
+export default withRouter(MainBody);
