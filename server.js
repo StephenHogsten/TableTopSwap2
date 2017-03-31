@@ -36,7 +36,10 @@ app.get('/api/test', (req, res) => {
 });
 app.get('/api/testTrade', (req, res) => {
   res.sendFile(process.cwd() + '/garbo/test_trades.json');
-})
+});
+app.get('/api/testSearch/:title', (req, res) => {
+  res.sendFile(process.cwd() + '/garbo/test_search.json');
+});
 
 const port = process.env.PORT || 3001;
 app.listen(port, () => {

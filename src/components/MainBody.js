@@ -6,6 +6,7 @@ import TradeList from './TradeList.js';
 import OneGame from './OneGame.js';
 import OneTrade from './OneTrade.js';
 import TradeSteps from './TradeSteps.js';
+import AddGame from './AddGame.js';
 
 import '../scss/MainBody.scss';
 
@@ -106,12 +107,26 @@ class MainBody extends Component {
             />:
             <p className='error'>No Trade with that ID</p> 
         }} />
-        <Route exact path='/new/trade' render={ ({ match }) => (
+        <Route exact path='/new/trade' render={ () => (
           <TradeSteps 
             soughtGames={soughtGames}
             ownedGames={ownedGames}
             mySoughtGames={mySoughtGames}
             myOwnedGames={myOwnedGames}
+          />
+        )} />
+        <Route exact path='/new/game/sought' render={ () => (
+          <AddGame 
+            user={this.props.currentUser}
+            mySoughtGames={mySoughtGames}
+            isGameOwned={false}
+          />
+        )} />
+        <Route exact path='/new/game/owned' render={ () => (
+          <AddGame 
+            user={this.props.currentUser}
+            myOwnedGames={myOwnedGames}
+            isGameOwned={true}
           />
         )} />
         <Route render={ () => (

@@ -41,7 +41,8 @@ I'll have mine based no board games instead (use the board game geek api: https:
   - [X] rely on router instead of state
   - [X] build out unstyled pages for trades
   - [X] build page for initiating a new trade
-  - [ ] build page for adding a new game
+  - [X] build page for adding a new game
+    - [X] create fake API to test it
   - [ ] build out remaining unstyled pages 
   - [ ] connect them together
   - [X] is the only problem with proxying being offline?
