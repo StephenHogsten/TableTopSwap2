@@ -33,7 +33,7 @@ I'll have mine based no board games instead (use the board game geek api: https:
   - [X] how to restrict a mongoose schema to enum (trade.js)
 - [X] set-up gulp / the basic server
 - [X] decide how data / trades will be structured
-- [ ] userless shell
+- [X] userless shell
   - [X] paper sketch out the pages
   - [X] decide on components 
   - [X] where does the state live?
@@ -47,8 +47,6 @@ I'll have mine based no board games instead (use the board game geek api: https:
   - [X] build profile page
   - [X] connect them together
   - [X] is the only problem with proxying being offline?
-  - XXX build out jest tests?
-  - [ ] add action button
 - [ ] build user shell
   - [ ] how do you log in with single page react?
   - [ ] implement logging in locally
@@ -61,12 +59,21 @@ I'll have mine based no board games instead (use the board game geek api: https:
   - [ ] retrieve all trades
   - [ ] interact with trades (*this will be creating new 'sought' games if they don't already exist*)
   - [ ] make new games
-  - [ ] add a button to the OneGame component to make an offer
+- [ ] Add Buttons
+  - [ ] add a button to the trade page to create a new trade
+  - [ ] add a button when viewing someone else's game to start a trade (make it select their game already)
+  - [ ] add a button when viewing your games to start a trade (make it select your game already)
+  - [ ] remove the testing menu options
 - [ ] style everything in the shell
+  - [ ] replace things like text fields with the appropriate material components
+- [ ] jest
+  - [ ] for react components
+  - [ ] for server endpoints?
 - [ ] fiddle with all the wording
 
 ## Bonuses
 - [ ] paginate
+- [ ] messaging
 - [ ] email notification
 - [ ] automatically match people
 - [ ] more validators for the game model
