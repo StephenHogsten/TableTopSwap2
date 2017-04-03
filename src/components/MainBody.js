@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Switch, Route, Link, withRouter } from 'react-router-dom';
+import { Switch, Route, Link, Redirect } from 'react-router-dom';
 
 import GameList from './GameList.js';
 import TradeList from './TradeList.js';
@@ -8,8 +8,21 @@ import OneTrade from './OneTrade.js';
 import TradeSteps from './TradeSteps.js';
 import AddGame from './AddGame.js';
 import Profile from './Profile.js';
+import LoginForm from './LoginForm.js';
+import ProxyText from './ProxyTest.js';
 
 import '../scss/MainBody.scss';
+
+class SaveUserAndRedirect extends Component {
+  componentWillMount() {
+    this.props.saveUser( this.props.match.params.username );
+  }
+  render() {
+    return (
+      <Redirect to='/' /> 
+    );
+  }
+}
 
 class MainBody extends Component {
   // add the add button
@@ -21,9 +34,7 @@ class MainBody extends Component {
 
     return (
       <Switch className='main-body-routes'>
-        <Route exact path='/profile' render={() => (
-          <Profile user={this.props.currentUser} />
-        )} />
+        <Route path='/proxyme/:toproxy' component={ProxyText} />
         <Route exact path='/' render={() => (
           <div className='main-body'>
             <h2 className='section-header' key='section-header'>All Games</h2>
@@ -37,6 +48,16 @@ class MainBody extends Component {
             <Link to='/all_games/owned' className='sub-section-header' key='owned-header'>Games Offered</Link>
             <GameList firstX={4} gameList={ownedGames} key='owned-games'/>
           </div>
+        )} />
+        <Route exact path='/login' component={LoginForm} />
+        <Route exact path='/login_failed/' render={({match}) => (
+          <LoginForm loginFailed='true' />
+        )}/>
+        <Route path='/store_user/:username' render={({match}) => (
+          <SaveUserAndRedirect match={match} saveUser={(user) => this.props.saveUser(user)} />
+        )} />
+        <Route exact path='/profile' render={() => (
+          <Profile user={this.props.currentUser} />
         )} />
         <Route exact path='/all_games' render={() => (
           <div className='main-body'>
@@ -148,7 +169,8 @@ MainBody.propTypes = {
   filterAllOwned: React.PropTypes.func.isRequired,
   filterMySought: React.PropTypes.func.isRequired,
   filterMyOwned: React.PropTypes.func.isRequired,
-  currentUser: React.PropTypes.string
+  currentUser: React.PropTypes.string,
+  saveUser: React.PropTypes.func
 }
 
-export default withRouter(MainBody);
+export default MainBody;

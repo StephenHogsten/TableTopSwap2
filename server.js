@@ -8,7 +8,6 @@ const MongoStore = require('connect-mongo')(session);
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const passport = require('passport');
-const flash = require('connect-flash');
 
 mongoose.Promise = global.Promise;
 mongoose.connect(process.env.MONGO_URI, (err) => {
@@ -33,15 +32,31 @@ if (process.env.ENV_TYPE === 'PRODUCTION') {
 }
 
 // execute my passport set-up
-require('./configurePassport.js')();
+require('./configurePassport.js')(passport);
 
 app.use(bodyParser.urlencoded({extended: false}));
-app.use(flash());
 app.use(cookieParser());
 app.use(session( sessionOptions ));
 app.use(passport.initialize());
 app.use(passport.session());
 
+// real routes
+//  login
+app.post('/api/login', passport.authenticate('local', {
+  failureRedict: '/login_failed'
+}), (req, res) => {
+  // we only get here if successful
+  res.redirect('/store_user/' + req.user.username);
+});
+//  logout
+app.get('/api/logout', (req, res) => {
+  req.logout();
+  res.redirect('/');
+});
+
+
+
+//send fake data for testing
 app.get('/api/test', (req, res) => {
   res.sendFile(process.cwd() + '/garbo/test_games.json');
 });
@@ -53,7 +68,7 @@ app.get('/api/testSearch/:title', (req, res) => {
 });
 
 //testing auth stuff
-const http = require('http');
+// create user
 const User = require('./src/models/User.js');
 app.get('/api/createuser/:user/:pw', (req, res) => {
   console.log(req.params.user)
@@ -68,15 +83,12 @@ app.get('/api/createuser/:user/:pw', (req, res) => {
   }).then(res.send('success?'));
 });
 app.get('/api/isLoggedIn', (req, res) => {
-  res.send("authenticated: " + req.isAuthenticated());
+  res.send("authenticated: " + req.isAuthenticated() + ' ' + JSON.stringify(req.user));
 });
-app.get('/api/logIn/:username/:password', (req, res) => {
-  passport.authenticate('local', {
-    successRedirect: '/api/sendText/success',
-    failureRedict: '/api/sendText/failure',
-    failureFlash: true
-  });
-});
+app.post('/api/logMeIn', passport.authenticate('local', {
+  successRedirect: '/proxyme/isLoggedIn',
+  failureRedict: '/proxyme/isLoggedIn'
+}));
 app.get('/api/sendText/:message', (req, res) => {
   res.send(req.params.message);
 });

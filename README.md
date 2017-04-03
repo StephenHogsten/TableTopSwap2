@@ -48,7 +48,7 @@ I'll have mine based no board games instead (use the board game geek api: https:
   - [X] connect them together
   - [X] is the only problem with proxying being offline?
 - [ ] build user shell
-  - [ ] how do you log in with single page react?
+  - [X] how do you log in with single page react?
   - [ ] implement logging in locally
   - [ ] make all the pages treat being logged in appropriately
 - [ ] Add server APIs / DB interaction
@@ -75,5 +75,6 @@ I'll have mine based no board games instead (use the board game geek api: https:
 - [ ] paginate
 - [ ] messaging
 - [ ] email notification
+- [ ] require an email on login
 - [ ] automatically match people
 - [ ] more validators for the game model

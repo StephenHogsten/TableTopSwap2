@@ -7,18 +7,13 @@ import * as d3 from 'd3-request';
 
 // UI components 
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import AppBar from 'material-ui/AppBar';
-import IconMenu from 'material-ui/IconMenu';
-import IconButton from 'material-ui/IconButton';
 import MenuItem from 'material-ui/MenuItem';
 import Drawer from 'material-ui/Drawer';
 import Divider from 'material-ui/Divider';
-import FlatButton from 'material-ui/FlatButton';
-import MenuIcon from 'material-ui/svg-icons/navigation/menu';
-import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 
 //  my components
 import MainBody from './MainBody.js';
+import TopBar from './TopBar.js';
 
 
 const MenuLink = ({to, label, clickFn}) => (
@@ -65,6 +60,13 @@ class App extends Component {
       });
     });
   }
+  saveUser(username) {
+    username = username.trim();
+    if (!username) { console.log('invalid username'); return;}
+    this.setState({
+      currentUser: username
+    });
+  }
   openDrawer() {
     this.setState({ isDrawerOpen: true });
   }
@@ -82,31 +84,12 @@ class App extends Component {
   }
   render() {
     return (
-      <BrowserRouter> 
-        <MuiThemeProvider>
+      <MuiThemeProvider>
+        <BrowserRouter>   
           <div>
-            <AppBar 
-              className='white-font'
-              iconElementLeft={
-                <IconButton onTouchTap={ () => this.openDrawer() }>
-                  <MenuIcon />
-                </IconButton>
-              }
-              title={<Link to='' className='title-link'>Tabletop Swap</Link>}
-              iconElementRight={
-                this.state.currentUser?
-                <IconMenu
-                  iconButtonElement={
-                    <IconButton><MoreVertIcon /></IconButton>
-                  }
-                  targetOrigin={{horizontal: 'right', vertical: 'top'}}
-                  anchorOrigin={{horizontal: 'right', vertical: 'top'}}
-                >
-                  <MenuLink to="profile" label="View Profile" />
-                  <MenuItem primaryText="Sign out" />
-                </IconMenu>:
-                <FlatButton label='Login' className='white-font'/>
-              }
+            <TopBar 
+              currentUser={this.state.currentUser} 
+              openDrawer={ () => this.openDrawer() }
             />
 
             <Drawer 
@@ -131,14 +114,15 @@ class App extends Component {
               currentUser={this.state.currentUser}
               gameList={this.state.gameList}
               tradeList={this.state.tradeList}
+              saveUser={ (username) => this.saveUser(username) }
               filterAllSought={(gameList) => this.filterParent(gameList, 'sought', false)}
               filterAllOwned={(gameList) => this.filterParent(gameList, 'owned', false)}
               filterMySought={(gameList) => this.filterParent(gameList, 'sought', true)}
               filterMyOwned={(gameList) => this.filterParent(gameList, 'owned', true)}
             />
           </div>
-        </MuiThemeProvider>
-      </BrowserRouter>
+        </BrowserRouter>    
+      </MuiThemeProvider>
     );
   }
 }
