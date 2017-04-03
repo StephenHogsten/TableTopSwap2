@@ -52,8 +52,9 @@ I'll have mine based no board games instead (use the board game geek api: https:
   - [X] implement logging in locally
   - [X] implement failed logins
   - [X] implement logging out
-  - [ ] make all the pages treat being logged in appropriately
+  - [X] make all the pages treat being logged in appropriately
   - [ ] have the home page check for an active session if the user is empty
+- [ ] create something to check if they're logged in properly periodically
 - [ ] Add server APIs / DB interaction
   - [ ] how do you convert xml to json
   - [ ] retrieve all current games (note that i'll filter within the app to reduce API calls)
