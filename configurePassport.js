@@ -1,7 +1,7 @@
 const passport =  require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 
-import User from './src/models/User.js';
+const User = require('./src/models/User.js');
 
 // intended to be called as soon as it's required
 module.exports =  (() => {

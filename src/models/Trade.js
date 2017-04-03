@@ -39,4 +39,4 @@ const gameSchema = mongoose.Schema({
   }
 });
 
-export default mongoose.model('trade_request', gameSchema);
+module.exports = mongoose.model('trade_request', gameSchema);

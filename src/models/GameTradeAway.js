@@ -20,4 +20,4 @@ const gameSchema = mongoose.Schema({
   }
 });
 
-export default mongoose.model('trade_game_away', gameSchema);
+module.exports = mongoose.model('trade_game_away', gameSchema);

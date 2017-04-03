@@ -134,7 +134,7 @@ class MainBody extends Component {
           />
         )} />
         <Route render={ () => (
-          <div className='erro'>Invalid URL</div>
+          <div className='error'>Invalid URL</div>
         )} />
       </Switch>
     );

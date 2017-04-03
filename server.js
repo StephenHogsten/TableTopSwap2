@@ -52,6 +52,35 @@ app.get('/api/testSearch/:title', (req, res) => {
   res.sendFile(process.cwd() + '/garbo/test_search.json');
 });
 
+//testing auth stuff
+const http = require('http');
+const User = require('./src/models/User.js');
+app.get('/api/createuser/:user/:pw', (req, res) => {
+  console.log(req.params.user)
+  User.create({
+    "username": req.params.user,
+    "email": 'test123@gmail.com',
+    "password": req.params.pw
+  }, (err, data) => {
+    if (err) console.log(err);
+    console.log('hmmm');
+    console.log(data);
+  }).then(res.send('success?'));
+});
+app.get('/api/isLoggedIn', (req, res) => {
+  res.send("authenticated: " + req.isAuthenticated());
+});
+app.get('/api/logIn/:username/:password', (req, res) => {
+  passport.authenticate('local', {
+    successRedirect: '/api/sendText/success',
+    failureRedict: '/api/sendText/failure',
+    failureFlash: true
+  });
+});
+app.get('/api/sendText/:message', (req, res) => {
+  res.send(req.params.message);
+});
+
 const port = process.env.PORT || 3001;
 app.listen(port, () => {
   // eslint-disable-next-line
