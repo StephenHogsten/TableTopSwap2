@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Switch, Route, Link, Redirect } from 'react-router-dom';
 
+import Divider from 'material-ui/Divider';
+
 import GameList from './GameList.js';
 import TradeList from './TradeList.js';
 import OneGame from './OneGame.js';
@@ -46,18 +48,21 @@ class MainBody extends Component {
       <Switch className='main-body-routes'>
         <Route path='/proxyme/:toproxy' component={ProxyText} />
         <Route exact path='/' render={() => (
-          <div className='main-body'>
-            <h2 className='section-header' key='section-header'>All Games</h2>
-            <br key='br' />
-            <Link to='/my_games/sought' className='sub-section-header' key='my-sought-header'>My Games Sought</Link>
-            <GameList firstX={4} gameList={mySoughtGames} key='my-sought-games'/>
-            <Link to='/my_games/owned' className='sub-section-header' key='my-owned-header'>My Games Offered</Link>
-            <GameList firstX={4} gameList={myOwnedGames} key='my-owned-games'/>
-            <Link to='/all_games/sought' className='sub-section-header' key='sought-header'>Games Sought</Link>
-            <GameList firstX={4} gameList={soughtGames} key='sought-games'/>
-            <Link to='/all_games/owned' className='sub-section-header' key='owned-header'>Games Offered</Link>
-            <GameList firstX={4} gameList={ownedGames} key='owned-games'/>
-          </div>
+          (!this.props.currentUser)? <Redirect to='/all_games' />: (
+            <div className='main-body'>
+              <h2 className='section-header' key='section-header'>All Games</h2>
+              <br key='br' />
+              <Link to='/my_games/sought' className='sub-section-header' key='my-sought-header'>My Games Sought</Link>
+              <GameList firstX={4} gameList={mySoughtGames} key='my-sought-games'/>
+              <Link to='/my_games/owned' className='sub-section-header' key='my-owned-header'>My Games Offered</Link>
+              <GameList firstX={4} gameList={myOwnedGames} key='my-owned-games'/>
+              <Divider /><br />
+              <Link to='/all_games/sought' className='sub-section-header' key='sought-header'>Games Sought</Link>
+              <GameList firstX={4} gameList={soughtGames} key='sought-games'/>
+              <Link to='/all_games/owned' className='sub-section-header' key='owned-header'>Games Offered</Link>
+              <GameList firstX={4} gameList={ownedGames} key='owned-games'/>
+            </div>
+          )
         )} />
         <Route exact path='/login' component={LoginForm} />
         <Route exact path='/login_failed' render={({match}) => (
@@ -74,7 +79,7 @@ class MainBody extends Component {
         )} />
         <Route exact path='/all_games' render={() => (
           <div className='main-body'>
-            <h2 className='section-header' key='section-header'>Others' Games</h2>
+            <h2 className='section-header' key='section-header'>Community Games</h2>
             <br key='br' />
             <Link to='/all_games/sought' className='sub-section-header' key='sought-header'>Games Sought</Link>
             <GameList firstX={4} gameList={soughtGames} key='sought-games'/>

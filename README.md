@@ -58,6 +58,7 @@ I'll have mine based no board games instead (use the board game geek api: https:
   - [ ] how do you convert xml to json
   - [ ] retrieve all current games (note that i'll filter within the app to reduce API calls)
     - [ ] start with static games list
+  - [ ] create new user
   - [ ] search for game titles
   - [ ] retrieve all trades
   - [ ] interact with trades (*this will be creating new 'sought' games if they don't already exist*)

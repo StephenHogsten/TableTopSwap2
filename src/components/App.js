@@ -89,6 +89,35 @@ class App extends Component {
     })
   }
   render() {
+    const drawer = this.state.currentUser? (
+      <Drawer 
+        docked={false}
+        open={this.state.isDrawerOpen} 
+        onRequestChange={ () => this.closeDrawer() }
+      >
+        <MenuLink to="" label="All Games" clickFn={()=>this.closeDrawer()} />
+        <Divider />
+        <MenuLink to="my_games" label="My Games" clickFn={()=>this.closeDrawer()} />
+        <MenuLink to="my_games/sought" label="  Games I Want" clickFn={()=>this.closeDrawer()} />
+        <MenuLink to="my_games/owned" label="  Games I'm Offering" clickFn={()=>this.closeDrawer()} />
+        <MenuLink to="my_trades" label="My Trades" clickFn={()=>this.closeDrawer()} />
+        <Divider />
+        <MenuLink to="all_games" label="Community Games" clickFn={()=>this.closeDrawer()} />
+        <MenuLink to="all_games/sought" label="  Games Others Want" clickFn={()=>this.closeDrawer()} />
+        <MenuLink to="all_games/owned" label="  Games Others Offer" clickFn={()=>this.closeDrawer()} />
+      </Drawer>
+    ) : (
+      <Drawer 
+        docked={false}
+        open={this.state.isDrawerOpen} 
+        onRequestChange={ () => this.closeDrawer() }
+      >
+        <MenuLink to="all_games" label="Community Games" clickFn={()=>this.closeDrawer()} />
+        <MenuLink to="all_games/sought" label="  Games Others Want" clickFn={()=>this.closeDrawer()} />
+        <MenuLink to="all_games/owned" label="  Games Others Offer" clickFn={()=>this.closeDrawer()} />
+      </Drawer>
+    );
+
     return (
       <MuiThemeProvider>
         <BrowserRouter>   
@@ -98,23 +127,7 @@ class App extends Component {
               openDrawer={ () => this.openDrawer() }
             />
 
-            <Drawer 
-              docked={false}
-              open={this.state.isDrawerOpen} 
-              onRequestChange={ () => this.closeDrawer() }
-            >
-              <MenuLink to="my_games" label="My Games" clickFn={()=>this.closeDrawer()} />
-              <MenuLink to="my_games/sought" label="  Games I Want" clickFn={()=>this.closeDrawer()} />
-              <MenuLink to="my_games/owned" label="  Games I'm Offering" clickFn={()=>this.closeDrawer()} />
-              <MenuLink to="my_trades" label="Trades" clickFn={()=>this.closeDrawer()} />
-              <MenuLink to="new/trade" label="Test Trade" clickFn={()=>this.closeDrawer()} />
-              <MenuLink to="new/game/sought" label="Test add" clickFn={()=>this.closeDrawer()} />
-              <Divider />
-              <MenuLink to="" label="All Games" clickFn={()=>this.closeDrawer()} />
-              <MenuLink to="all_games" label="Community Games" clickFn={()=>this.closeDrawer()} />
-              <MenuLink to="all_games/sought" label="  Games Others Want" clickFn={()=>this.closeDrawer()} />
-              <MenuLink to="all_games/owned" label="  Games Others Offer" clickFn={()=>this.closeDrawer()} />
-            </Drawer>
+            {drawer}
 
             <MainBody 
               currentUser={this.state.currentUser}

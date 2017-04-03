@@ -17,7 +17,6 @@ const MenuLink = ({to, label, clickFn}) => (
 
 class TopBar extends Component {
   render() {
-    console.log(this.props.history.push)
     return (
       <AppBar 
         iconElementLeft={
