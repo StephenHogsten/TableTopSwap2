@@ -20,7 +20,6 @@ class TopBar extends Component {
     console.log(this.props.history.push)
     return (
       <AppBar 
-        className='white-font'
         iconElementLeft={
           <IconButton onTouchTap={ () => this.props.openDrawer() }>
             <MenuIcon />
@@ -37,9 +36,9 @@ class TopBar extends Component {
             anchorOrigin={{horizontal: 'right', vertical: 'top'}}
           >
             <MenuLink to="profile" label="View Profile" />
-            <MenuLink to='api/logout' primaryText="Sign out" />
+            <MenuLink to='logout' label="Sign out" />
           </IconMenu>:
-          <FlatButton label='Login' className='white-font' onClick={ () => {
+          <FlatButton label='Login' onClick={ () => {
             console.log(this.props.history.push);
             this.props.history.push('/login')
           }}/>

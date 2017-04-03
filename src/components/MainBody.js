@@ -23,6 +23,16 @@ class SaveUserAndRedirect extends Component {
     );
   }
 }
+class ClearUserAndRedirect extends Component {
+  componentWillMount() {
+    this.props.clearUser()
+  }
+  render() {
+    return (
+      <Redirect to='/' />
+    );
+  }
+}
 
 class MainBody extends Component {
   // add the add button
@@ -50,11 +60,14 @@ class MainBody extends Component {
           </div>
         )} />
         <Route exact path='/login' component={LoginForm} />
-        <Route exact path='/login_failed/' render={({match}) => (
-          <LoginForm loginFailed='true' />
+        <Route exact path='/login_failed' render={({match}) => (
+          <LoginForm failure='true' />
         )}/>
         <Route path='/store_user/:username' render={({match}) => (
           <SaveUserAndRedirect match={match} saveUser={(user) => this.props.saveUser(user)} />
+        )} />
+        <Route exact path='/logout' render={ () => (
+          <ClearUserAndRedirect clearUser={ this.props.clearUser } />
         )} />
         <Route exact path='/profile' render={() => (
           <Profile user={this.props.currentUser} />
@@ -170,7 +183,8 @@ MainBody.propTypes = {
   filterMySought: React.PropTypes.func.isRequired,
   filterMyOwned: React.PropTypes.func.isRequired,
   currentUser: React.PropTypes.string,
-  saveUser: React.PropTypes.func
+  saveUser: React.PropTypes.func.isRequired,
+  clearUser: React.PropTypes.func.isRequired
 }
 
 export default MainBody;

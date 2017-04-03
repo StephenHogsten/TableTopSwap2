@@ -30,7 +30,8 @@ class App extends Component {
       gameList: [],
       tradeList: [],
       currentUser: null,
-      isDrawerOpen: false
+      isDrawerOpen: false,
+      lastUpdated: new Date()
     };
   }
   componentDidMount() {
@@ -65,6 +66,11 @@ class App extends Component {
     if (!username) { console.log('invalid username'); return;}
     this.setState({
       currentUser: username
+    });
+  }
+  clearUser() {
+    this.setState({
+      currentUser: null
     });
   }
   openDrawer() {
@@ -115,6 +121,7 @@ class App extends Component {
               gameList={this.state.gameList}
               tradeList={this.state.tradeList}
               saveUser={ (username) => this.saveUser(username) }
+              clearUser={ () => this.clearUser() }
               filterAllSought={(gameList) => this.filterParent(gameList, 'sought', false)}
               filterAllOwned={(gameList) => this.filterParent(gameList, 'owned', false)}
               filterMySought={(gameList) => this.filterParent(gameList, 'sought', true)}

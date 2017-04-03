@@ -43,7 +43,7 @@ app.use(passport.session());
 // real routes
 //  login
 app.post('/api/login', passport.authenticate('local', {
-  failureRedict: '/login_failed'
+  failureRedirect: '/login_failed'
 }), (req, res) => {
   // we only get here if successful
   res.redirect('/store_user/' + req.user.username);
