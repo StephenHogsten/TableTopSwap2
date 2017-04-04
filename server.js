@@ -51,8 +51,15 @@ app.post('/api/login', passport.authenticate('local', {
 //  logout
 app.get('/api/logout', (req, res) => {
   req.logout();
-  res.redirect('/');
+  res.send('logging out');
 });
+app.get('/api/checksession', (req, res) => {
+  if (req.user) {
+    res.send(req.user.username);
+  } else {
+    res.send('');
+  }
+})
 
 
 

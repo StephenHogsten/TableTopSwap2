@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { Switch, Route, Link, Redirect } from 'react-router-dom';
 
-import Divider from 'material-ui/Divider';
+import { text as d3Text } from 'd3-request';
 
+import Divider from 'material-ui/Divider';
 import GameList from './GameList.js';
 import TradeList from './TradeList.js';
 import OneGame from './OneGame.js';
@@ -27,16 +28,31 @@ class SaveUserAndRedirect extends Component {
 }
 class ClearUserAndRedirect extends Component {
   componentWillMount() {
-    this.props.clearUser()
+    d3Text('/api/logout', (err, data) => {
+      if (err) throw err;
+    });
+    this.props.clearUser();
   }
   render() {
     return (
+      (this.props.user)?
+      <div className='error'>Logging you out...</div>:
       <Redirect to='/' />
     );
   }
 }
 
 class MainBody extends Component {
+  componentWillMount() {
+    if (this.props.user) return;
+    d3Text('/api/checksession', (err, data) => {
+      if (err) return;
+      if (data) {
+        console.log('data: ' + data);
+        this.props.saveUser( data );
+      }
+    });
+  }
   // add the add button
   render() {
     let soughtGames = this.props.filterAllSought(this.props.gameList);
@@ -47,23 +63,27 @@ class MainBody extends Component {
     return (
       <Switch className='main-body-routes'>
         <Route path='/proxyme/:toproxy' component={ProxyText} />
-        <Route exact path='/' render={() => (
-          (!this.props.currentUser)? <Redirect to='/all_games' />: (
+        <Route exact path='/' render={() => {
+          let userSpecifics = (!this.props.currentUser)? null: [
+            (<Link to='/my_games/sought' className='sub-section-header' key='my-sought-header'>My Games Sought</Link>),
+            (<GameList firstX={4} gameList={mySoughtGames} key='my-sought-games'/>),
+            (<Link to='/my_games/owned' className='sub-section-header' key='my-own)ed-header'>My Games Offered</Link>),
+            (<GameList firstX={4} gameList={myOwnedGames} key='my-owned-games'/>),
+            (<Divider />),
+            (<br />)
+          ];
+          return (
             <div className='main-body'>
               <h2 className='section-header' key='section-header'>All Games</h2>
               <br key='br' />
-              <Link to='/my_games/sought' className='sub-section-header' key='my-sought-header'>My Games Sought</Link>
-              <GameList firstX={4} gameList={mySoughtGames} key='my-sought-games'/>
-              <Link to='/my_games/owned' className='sub-section-header' key='my-owned-header'>My Games Offered</Link>
-              <GameList firstX={4} gameList={myOwnedGames} key='my-owned-games'/>
-              <Divider /><br />
+              {userSpecifics}
               <Link to='/all_games/sought' className='sub-section-header' key='sought-header'>Games Sought</Link>
               <GameList firstX={4} gameList={soughtGames} key='sought-games'/>
               <Link to='/all_games/owned' className='sub-section-header' key='owned-header'>Games Offered</Link>
               <GameList firstX={4} gameList={ownedGames} key='owned-games'/>
             </div>
-          )
-        )} />
+          );
+        }} />
         <Route exact path='/login' component={LoginForm} />
         <Route exact path='/login_failed' render={({match}) => (
           <LoginForm failure='true' />
@@ -72,7 +92,7 @@ class MainBody extends Component {
           <SaveUserAndRedirect match={match} saveUser={(user) => this.props.saveUser(user)} />
         )} />
         <Route exact path='/logout' render={ () => (
-          <ClearUserAndRedirect clearUser={ this.props.clearUser } />
+          <ClearUserAndRedirect clearUser={ () => this.props.clearUser() } user={this.props.currentUser} />
         )} />
         <Route exact path='/profile' render={() => (
           <Profile user={this.props.currentUser} />

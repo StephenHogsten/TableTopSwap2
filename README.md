@@ -47,13 +47,13 @@ I'll have mine based no board games instead (use the board game geek api: https:
   - [X] build profile page
   - [X] connect them together
   - [X] is the only problem with proxying being offline?
-- [ ] build user shell
+- [X] build user shell
   - [X] how do you log in with single page react?
   - [X] implement logging in locally
   - [X] implement failed logins
   - [X] implement logging out
   - [X] make all the pages treat being logged in appropriately
-  - [ ] have the home page check for an active session if the user is empty
+  - [X] have the home page check for an active session if the user is empty
 - [ ] create something to check if they're logged in properly periodically
 - [ ] Add server APIs / DB interaction
   - [ ] how do you convert xml to json
