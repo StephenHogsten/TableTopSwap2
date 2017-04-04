@@ -24,7 +24,9 @@ const gameSchema = mongoose.Schema({
     "players_high": Number,
     "difficulty": Number,
     "minutes_low": Number,
-    "minutes_hight": Number
+    "minutes_hight": Number,
+    "description": String,
+    "rating": Number
   }
 });
 

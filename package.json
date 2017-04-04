@@ -15,13 +15,15 @@
     "material-ui": "^0.17.1",
     "mongoose": "^4.9.2",
     "node-sass": "^4.5.1",
+    "nodemon": "^1.11.0",
     "passport": "^0.3.2",
     "passport-local": "^1.0.0",
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
     "react-router-dom": "^4.0.0",
     "react-tap-event-plugin": "^2.0.1",
-    "sass-loader": "^6.0.3"
+    "sass-loader": "^6.0.3",
+    "xml2js": "^0.4.17"
   },
   "devDependencies": {
     "autoprefixer": "6.7.2",
@@ -65,7 +67,7 @@
   },
   "scripts": {
     "start_client": "node scripts/start.js",
-    "start_server": "node server.js",
+    "start_server": "nodemon ./server/server.js",
     "start": "concurrently \"yarn start_server\" \"yarn start_client\"",
     "build": "node scripts/build.js",
     "test": "node scripts/test.js --env=jsdom"
