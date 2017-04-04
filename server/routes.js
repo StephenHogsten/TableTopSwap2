@@ -71,10 +71,10 @@ module.exports = (passport) => {
     }
   });
 
-  // trying out game stuff
-  router.get('/findGames', (req, res) => {
-    console.log('finding games');
-    makeRequest('https://www.boardgamegeek.com/xmlapi/boardgame/28143,55690?stats=1', (err, data) => {
+  // expects a 
+  router.get('/bggGames/:ids', (req, res) => {
+    let searchFor = 'https://www.boardgamegeek.com/xmlapi/boardgame/' +req.params.ids+ '?stats=1'
+    makeRequest(searchFor, (err, data) => {
       if (err) res.send('error' + err);
       xml2js(data, (err, gameData) => {
         if (err) res.send('parse error' + err);

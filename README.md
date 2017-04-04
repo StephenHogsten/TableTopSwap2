@@ -56,10 +56,10 @@ I'll have mine based no board games instead (use the board game geek api: https:
   - [X] have the home page check for an active session if the user is empty
 - [ ] Add server APIs / DB interaction
   - [X] how do you convert xml to json
+  - [ ] search for game titles
   - [ ] retrieve all current games (note that i'll filter within the app to reduce API calls)
     - [ ] start with static games list
   - [ ] create new user
-  - [ ] search for game titles
   - [ ] retrieve all trades
   - [ ] interact with trades (*this will be creating new 'sought' games if they don't already exist*)
   - [ ] make new games
