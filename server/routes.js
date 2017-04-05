@@ -228,6 +228,56 @@ module.exports = (passport) => {
       res.send(trades);
     })
   });
+  // expects query parameters of:
+  //  id - trade's id
+  //  status - the status we want to assign
+  router.get('/set_trade', (req, res) => {
+    if (!req.isAuthenticated()) { res.send({ error: 'not logged in' }); }
+    Trade.findById( req.query.id, (err, trade) => {
+      if (err) { res.send({ error: 'no trade with that id' }); return; }
+      let user = String(req.user.id);
+      console.log('user: ' + user + ' ' + user.length);
+      console.log('user: ' + typeof(user));
+      console.log('trade sender: ' + trade.sender.user + ' ' + trade.sender.user.length);
+      console.log('trade recipient: ' + trade.recipient.user);
+      console.log('equal? ' + user === trade.sender.user);
+      console.log('equal? ' + user.length === trade.sender.user.length);
+      switch (req.query.status) {
+        case 'accepted':
+          if (user !== trade.recipient.user) {
+            res.send({ error: 'user is not the recipient' }); return; }
+          if (trade.status !== 'sent') {
+            res.send({ error: 'can only accept sent trades' }); return; }
+          break;
+        case 'rejected':
+          if (user !== trade.sender.user && user !== trade.recipient.user) {
+            res.send({ error: 'user is not part of the trade' }); return; }
+          if (trade.status !== 'sent') {
+            res.send({ error: 'can only modify sent trades' }); return; }
+          break;
+        case 'modified':
+          if (user !== trade.recipient) { 
+            res.send({ error: 'user is not the recipient' }); return }
+          if (trade.status !== 'sent') {
+            res.send({ error: 'can only modify sent trades' }); return; }
+          break;
+        case 'sent':
+        case 'pending':
+        case "cancelled":
+        case "completed":
+          if (user !== trade.sender.user && user !== trade.recipient.user) {
+            res.send({ error: 'user is not part of the trade' }); return; }
+          break;
+        default:
+          res.send({ error: 'new status is not a valid option' }); return;
+      }
+      // if we made it here, we should be modifying the trade
+      trade.status = req.query.status;
+      trade.save( (err) => {
+        res.send(err? {error: 'trade did not save successfully'}: {success: true});
+      });
+    });
+  });
 
 
   // TESTING

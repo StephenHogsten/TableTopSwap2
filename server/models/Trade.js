@@ -33,7 +33,8 @@ const gameSchema = mongoose.Schema({
       'accepted',   //recipient has accepted the trade. send emails for details
       'rejected',   //recipient has seen and rejected the trade. send notification to requestor
       'modified',   //recipient has seen and proposed an alternate trade. This results in a new trade request
-      'completed'   //trade has actually occurred (just one user needs to say this)
+      'completed',  //trade has actually occurred (just one user needs to say this)
+      'cancelled'   //someone has called the trade off
     ],
     required: true
   }
