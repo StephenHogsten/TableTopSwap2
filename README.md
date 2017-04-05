@@ -62,8 +62,9 @@ I'll have mine based no board games instead (use the board game geek api: https:
   - [X] retrieve all current games (note that i'll filter within the app to reduce API calls)
   - [X] retrieve all trades
   - [X] switch around to not pass the user id through a parameter
-  - [ ] interact with trades (*this will be creating new 'sought' games if they don't already exist*)
-  - [ ] link client code to real API endpoints
+  - [X] interact with trades 
+- [ ] link client code to real API endpoints 
+  - [ ] create new 'sought' games if they don't already exist fromm trades
 - [ ] create something to check if they're logged in properly periodically
 - [ ] Add Buttons
   - [ ] add a button to the trade page to create a new trade
