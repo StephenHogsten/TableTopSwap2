@@ -40,6 +40,7 @@ module.exports =  ((passport) => {
     console.log('deserializing');
     User.findById(id, (err, user) => {
       return done(err, {
+        id: user._id,
         username: user.username,
         email: user.email
       });

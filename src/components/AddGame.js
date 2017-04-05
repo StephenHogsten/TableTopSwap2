@@ -34,7 +34,7 @@ class AddGame extends Component {
           className='game-search-result'
           onClick={ () => this.saveGame(oneGame.id) }
         >
-          {oneGame.title + ' (' + oneGame.date + ')'}
+          {oneGame.title + ' (' + oneGame.year + ')'}
         </p>
       ));
       this.setState({

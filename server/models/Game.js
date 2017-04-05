@@ -3,7 +3,7 @@ mongoose.Promise = global.Promise;
 
 const gameSchema = mongoose.Schema({
   "BGG_id": {
-    type: String,
+    type: Number,
     required: [true, 'board game geek ID is required']
   },
   "user": {
@@ -29,5 +29,7 @@ const gameSchema = mongoose.Schema({
     "rating": Number
   }
 });
+
+gameSchema.index({ user: 1, BGG_id: 1, sought_or_owned: 1 }, { unique: true });
 
 module.exports = mongoose.model('trade_game', gameSchema);

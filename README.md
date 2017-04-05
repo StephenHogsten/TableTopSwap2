@@ -56,13 +56,13 @@ I'll have mine based no board games instead (use the board game geek api: https:
   - [X] have the home page check for an active session if the user is empty
 - [ ] Add server APIs / DB interaction
   - [X] how do you convert xml to json
-  - [ ] search for game titles
-  - [ ] retrieve all current games (note that i'll filter within the app to reduce API calls)
-    - [ ] start with static games list
+  - [X] search for game titles
+  - [X] make new games
   - [ ] create new user
-  - [ ] retrieve all trades
+  - [X] retrieve all current games (note that i'll filter within the app to reduce API calls)
+  - [X] retrieve all trades
   - [ ] interact with trades (*this will be creating new 'sought' games if they don't already exist*)
-  - [ ] make new games
+  - [ ] link client code to real API endpoints
 - [ ] create something to check if they're logged in properly periodically
 - [ ] Add Buttons
   - [ ] add a button to the trade page to create a new trade
@@ -82,4 +82,5 @@ I'll have mine based no board games instead (use the board game geek api: https:
 - [ ] email notification
 - [ ] require an email on login
 - [ ] automatically match people
-- [ ] more validators for the game model
+- [ ] more validators for mongoose models
+  - [ ] user fields should check that the user actually exists (not sure how to do this)
