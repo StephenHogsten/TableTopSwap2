@@ -62,10 +62,12 @@ class App extends Component {
     });
   }
   saveUser(username) {
-    username = username.trim();
-    if (!username) { console.log('invalid username'); return;}
-    this.setState({
-      currentUser: username
+    d3.json('/api/checksession', (err, data) => {
+      if (data.username) {
+        this.setState({ currentUser: data.username});
+      } else {
+        this.setState({ currentUser: null });
+      }
     });
   }
   clearUser() {

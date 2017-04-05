@@ -18,7 +18,7 @@ import '../scss/MainBody.scss';
 
 class SaveUserAndRedirect extends Component {
   componentWillMount() {
-    this.props.saveUser( this.props.match.params.username );
+    this.props.saveUser();
   }
   render() {
     return (
@@ -88,8 +88,8 @@ class MainBody extends Component {
         <Route exact path='/login_failed' render={({match}) => (
           <LoginForm failure='true' />
         )}/>
-        <Route path='/store_user/:username' render={({match}) => (
-          <SaveUserAndRedirect match={match} saveUser={(user) => this.props.saveUser(user)} />
+        <Route path='/store_user' render={() => (
+          <SaveUserAndRedirect saveUser={() => this.props.saveUser()} />
         )} />
         <Route exact path='/logout' render={ () => (
           <ClearUserAndRedirect clearUser={ () => this.props.clearUser() } user={this.props.currentUser} />

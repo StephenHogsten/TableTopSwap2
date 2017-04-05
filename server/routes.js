@@ -98,9 +98,9 @@ module.exports = (passport) => {
   });
   router.get('/checksession', (req, res) => {
     if (req.user) {
-      res.send(req.user.username);
+      res.send({ username: req.user.username });
     } else {
-      res.send('');
+      res.send({ message: 'no active session' });
     }
   });
   router.post('/add_user', (req, res, next) => {
