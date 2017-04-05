@@ -17,10 +17,23 @@ class LoginForm extends Component {
     // <input type='text' name='username2' placeholder='username' />
     // <input type='text' name='password2' placeholder='password' />
   render() {
-    const loginFailed =  this.props.failure? <div className='error'>{this.props.failReason || 'login attempt failed'}</div>: null;
-    return (
+    const loginFailed =  !this.props.failure? null: (
+      <div className='create-user'>
+        <p>Login Failed. Do you want to create new user?</p>
+      </div>
+    );
+    return loginFailed? (
       <div className='login-form'>
-        {loginFailed}
+        <form action='/api/add_user' method='post'> 
+          <TextField name='username' floatingLabelText='username' />
+          <br />
+          <TextField name='password' floatingLabelText='password' type='password' />
+          <br />
+          <input type='submit' value='Create' />
+        </form>
+      </div>
+      ):(
+      <div className='login-form'>
         <form action='/api/login' method='post'> 
           <TextField name='username' floatingLabelText='username' />
           <br />

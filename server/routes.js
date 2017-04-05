@@ -81,6 +81,7 @@ const queryBggInfo = (ids, cb) => {
 }
 
 module.exports = (passport) => {
+
   const router = express.Router();
 
   //LOGIN
@@ -102,8 +103,23 @@ module.exports = (passport) => {
       res.send('');
     }
   });
-  router.get('/add_user', (req, res) => {
-
+  router.post('/add_user', (req, res, next) => {
+      let newUser = new User({
+        username: req.body.username,
+        email: req.body.email,
+        password: req.body.password
+      });
+      newUser.save( (err) => {
+        if (err) { res.send({ error: err }); }
+        else {
+          next();
+        }
+      });
+    }, passport.authenticate('local', {
+        failureRedirect: '/login_failed'
+      }), (req, res) => {
+        // we only get here if successful
+        res.redirect('/store_user/' + req.user.username);
   });
 
   //BOARD GAME GEEK

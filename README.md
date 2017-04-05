@@ -58,12 +58,13 @@ I'll have mine based no board games instead (use the board game geek api: https:
   - [X] how do you convert xml to json
   - [X] search for game titles
   - [X] make new games
-  - [ ] create new user
+  - [X] create new user
   - [X] retrieve all current games (note that i'll filter within the app to reduce API calls)
   - [X] retrieve all trades
   - [ ] interact with trades (*this will be creating new 'sought' games if they don't already exist*)
   - [ ] link client code to real API endpoints
 - [ ] create something to check if they're logged in properly periodically
+ - [ ] switch around to not pass the user id through a parameter
 - [ ] Add Buttons
   - [ ] add a button to the trade page to create a new trade
   - [ ] add a button when viewing someone else's game to start a trade (make it select their game already)
