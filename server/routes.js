@@ -98,7 +98,12 @@ module.exports = (passport) => {
   });
   router.get('/checksession', (req, res) => {
     if (req.user) {
-      res.send({ username: req.user.username });
+      res.send({ 
+        username: req.user.username,
+        email: req.user.email,
+        join_date: 'n/a',
+        picture: null
+      });
     } else {
       res.send({ message: 'no active session' });
     }

@@ -43,7 +43,7 @@ class App extends Component {
     }
   }
   getAllGames() {
-    d3.json('/api/test', (err, data) => {
+    d3.json('/api/all_games', (err, data) => {
       if (err) throw err;
       this.setState({
         gameList: data
@@ -53,7 +53,7 @@ class App extends Component {
   getAllTrades(user) {
     user = user? user: this.state.currentUser;
     if (!user) return;
-    d3.json('/api/testTrade', (err, data) => {
+    d3.json('/api/all_trades', (err, data) => {
       if (err) throw err;
       console.log(data);
       this.setState({

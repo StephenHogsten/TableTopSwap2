@@ -22,14 +22,13 @@ const SingleActionButton = ({onTouchTap}) => (
 
 class AddButton extends Component {
   render() {
+    if (!this.props.user) return <span />;
     let menuItems = [];
     console.log('mode: ' + this.props.mode);
     switch (this.props.mode) {
       case undefined:
       case 'all':
-        if (this.props.user) {
-          menuItems.push(<MenuItem primaryText="Trade Request" onTouchTap={ () => { this.props.history.push('/new/trade') }} />);
-        }
+        menuItems.push(<MenuItem primaryText="Trade Request" onTouchTap={ () => { this.props.history.push('/new/trade') }} />);
       case 'game':
         menuItems.push(<MenuItem primaryText="Wanted Game" onTouchTap={ () => { this.props.history.push('/new/game/sought')}} />);
         menuItems.push(<MenuItem primaryText="Owned Game" onTouchTap={ () => { this.props.history.push('/new/game/owned') }} />);

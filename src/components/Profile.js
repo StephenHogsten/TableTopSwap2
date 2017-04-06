@@ -12,13 +12,13 @@ class OneGame extends Component {
     }
   }
   componentDidMount() {
-    d3Json('/api/test_user', (err, json) => {
+    d3Json('/api/checksession', (err, json) => {
       if (err) throw err;
       this.setState({
         email: json.email,
         picture: json.picture,
         join_date: json.join_date,
-        nickname: json.nickname
+        nickname: json.username
       });
     });
   }

@@ -60,12 +60,13 @@ class MainBody extends Component {
     let ownedGames = this.props.filterAllOwned(this.props.gameList);
     let mySoughtGames = this.props.filterMySought(this.props.gameList);
     let myOwnedGames = this.props.filterMyOwned(this.props.gameList);
+    let user = this.props.currentUser;
 
     return (
       <Switch className='main-body-routes'>
         <Route path='/proxyme/:toproxy' component={ProxyText} />
         <Route exact path='/' render={() => {
-          let userSpecifics = (!this.props.currentUser)? null: [
+          let userSpecifics = (!user)? null: [
             (<Link to='/my_games/sought' className='sub-section-header' key='my-sought-header'>My Games Sought</Link>),
             (<GameList firstX={4} gameList={mySoughtGames} key='my-sought-games'/>),
             (<Link to='/my_games/owned' className='sub-section-header' key='my-own)ed-header'>My Games Offered</Link>),
@@ -82,7 +83,7 @@ class MainBody extends Component {
               <GameList firstX={4} gameList={soughtGames} key='sought-games'/>
               <Link to='/all_games/owned' className='sub-section-header' key='owned-header'>Games Offered</Link>
               <GameList firstX={4} gameList={ownedGames} key='owned-games'/>
-              <AddButton />
+              <AddButton user={user}/>
             </div>
           );
         }} />
@@ -94,11 +95,15 @@ class MainBody extends Component {
           <SaveUserAndRedirect saveUser={() => this.props.saveUser()} />
         )} />
         <Route exact path='/logout' render={ () => (
-          <ClearUserAndRedirect clearUser={ () => this.props.clearUser() } user={this.props.currentUser} />
+          <ClearUserAndRedirect clearUser={ () => this.props.clearUser() } user={user} />
         )} />
-        <Route exact path='/profile' render={() => (
-          <Profile user={this.props.currentUser} />
-        )} />
+        <Route exact path='/profile' render={() => 
+          user? (
+            <Profile user={user} />
+          ) : (
+            <Redirect to='/' />
+          )
+        } />
         <Route exact path='/all_games' render={() => (
           <div className='main-body'>
             <h2 className='section-header' key='section-header'>Community Games</h2>
@@ -107,34 +112,46 @@ class MainBody extends Component {
             <GameList firstX={4} gameList={soughtGames} key='sought-games'/>
             <Link to='/all_games/owned' className='sub-section-header' key='owned-header'>Games Offered</Link>
             <GameList firstX={4} gameList={ownedGames} key='owned-games'/>
-            <AddButton mode='game' />
+            <AddButton user={user}mode='game' />
           </div>
         )} />
-        <Route exact path='/my_games' render={() => (
-          <div className='main-body'>
-            <h2 className='section-header' key='section-header'>My Games</h2>
-            <br key='br' />
-            <Link to='/my_games/sought' className='sub-section-header' key='my-sought-header'>My Games Sought</Link>
-            <GameList firstX={4} gameList={mySoughtGames} key='my-sought-games'/>
-            <Link to='/my_games/owned' className='sub-section-header' key='my-owned-header'>My Games Offered</Link>
-            <GameList firstX={4} gameList={myOwnedGames} key='my-owned-games'/>
-            <AddButton mode='game' />
-          </div>
-        )} />
-        <Route exact path='/my_games/sought' render={() => (
-          <div className='main-body'>
-            <h2 className='section-header' key='my-sought-header'>My Games Sought</h2>
-            <GameList firstX={20} gameList={mySoughtGames} key='my-sought-games' />
-            <AddButton mode='sought_game' />
-          </div>
-        )} />
-        <Route exact path='/my_games/owned' render={() => (
-          <div className='main-body'>
-            <h2 className='section-header' key='my-owned-header'>My Games Owned</h2>
-            <GameList firstX={20} gameList={myOwnedGames} key='my-owned-games' />
-            <AddButton mode='owned_game' />
-          </div>
-        )} />
+        <Route exact path='/my_games' render={() => 
+          user? (
+            <div className='main-body'>
+              <h2 className='section-header' key='section-header'>My Games</h2>
+              <br key='br' />
+              <Link to='/my_games/sought' className='sub-section-header' key='my-sought-header'>My Games Sought</Link>
+              <GameList firstX={4} gameList={mySoughtGames} key='my-sought-games'/>
+              <Link to='/my_games/owned' className='sub-section-header' key='my-owned-header'>My Games Offered</Link>
+              <GameList firstX={4} gameList={myOwnedGames} key='my-owned-games'/>
+              <AddButton user={user}mode='game' />
+            </div>
+          ) : (
+            <Redirect to='/' />
+          )
+        } />
+        <Route exact path='/my_games/sought' render={() => 
+          user? (
+            <div className='main-body'>
+              <h2 className='section-header' key='my-sought-header'>My Games Sought</h2>
+              <GameList firstX={20} gameList={mySoughtGames} key='my-sought-games' />
+              <AddButton user={user}mode='sought_game' />
+            </div>
+          ) : (
+            <Redirect to='/' />
+          )
+        } />
+        <Route exact path='/my_games/owned' render={() => 
+          user? (
+            <div className='main-body'>
+              <h2 className='section-header' key='my-owned-header'>My Games Owned</h2>
+              <GameList firstX={20} gameList={myOwnedGames} key='my-owned-games' />
+              <AddButton user={user}mode='owned_game' />
+            </div>
+          ) : (
+            <Redirect to='/' />
+          )
+        } />
         <Route exact path='/all_games/sought' render={() => (
           <div className='main-body'>
             <h2 className='section-header' key='sought-header'>All Games Sought</h2>
@@ -156,16 +173,20 @@ class MainBody extends Component {
             <OneGame game={matchingGame} />:
             <p className='no-games'>No Game with ID</p>
         }} />
-        <Route exact path='/my_trades' render={ () => (
-          <div>
-            <TradeList 
-              currentUser={this.props.currentUser}
-              tradeList={this.props.tradeList}
-              gameList={this.props.gameList}
-            />
-            <AddButton mode='trade' />
-          </div>
-        )} />   
+        <Route exact path='/my_trades' render={ () => 
+          user? (
+            <div>
+              <TradeList 
+                currentUser={user}
+                tradeList={this.props.tradeList}
+                gameList={this.props.gameList}
+              />
+              <AddButton user={user}mode='trade' />
+            </div>
+          ) : (
+            <Redirect to='/' />
+          )
+        } />
         <Route exact path='/trade/:id' render={ ({ match }) => {
           if (!this.props.tradeList) return (
             <p className='error'>You must be logged in to see your trades</p>
@@ -173,34 +194,46 @@ class MainBody extends Component {
           let matchingTrade = this.props.tradeList.find( (trade) => String(trade._id) === match.params.id);
           return matchingTrade?
             <OneTrade 
-              currentUser={this.props.currentUser}
+              currentUser={user}
               trade={matchingTrade}
               gameList={this.props.gameList}
             />:
             <p className='error'>No Trade with that ID</p> 
         }} />
-        <Route exact path='/new/trade' render={ () => (
-          <TradeSteps 
-            soughtGames={soughtGames}
-            ownedGames={ownedGames}
-            mySoughtGames={mySoughtGames}
-            myOwnedGames={myOwnedGames}
-          />
-        )} />
-        <Route exact path='/new/game/sought' render={ () => (
-          <AddGame 
-            user={this.props.currentUser}
-            mySoughtGames={mySoughtGames}
-            isGameOwned={false}
-          />
-        )} />
-        <Route exact path='/new/game/owned' render={ () => (
-          <AddGame 
-            user={this.props.currentUser}
-            myOwnedGames={myOwnedGames}
-            isGameOwned={true}
-          />
-        )} />
+        <Route exact path='/new/trade' render={ () => 
+          user? (
+            <TradeSteps 
+              soughtGames={soughtGames}
+              ownedGames={ownedGames}
+              mySoughtGames={mySoughtGames}
+              myOwnedGames={myOwnedGames}
+            />
+          ) : (
+            <Redirect to='/' />
+          )
+        } />
+        <Route exact path='/new/game/sought' render={ () =>
+          user ? (
+            <AddGame 
+              user={user}
+              mySoughtGames={mySoughtGames}
+              isGameOwned={false}
+            />
+          ) : (
+            <Redirect to='/' />
+          )
+        } />
+        <Route exact path='/new/game/owned' render={ () => 
+          user? (
+            <AddGame 
+              user={user}
+              myOwnedGames={myOwnedGames}
+              isGameOwned={true}
+            />
+          ) : (
+            <Redirect to='/' />
+          )
+        } />
         <Route render={ () => (
           <div className='error'>Invalid URL</div>
         )} />

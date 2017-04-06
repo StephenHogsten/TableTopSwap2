@@ -28,7 +28,7 @@ class GameCard extends Component {
 
 GameCard.propTypes = {
   info: React.PropTypes.object.isRequired,
-  game_id: React.PropTypes.number.isRequired,
+  game_id: React.PropTypes.string.isRequired,
   selected: React.PropTypes.bool,
   onClickFn: React.PropTypes.func
 }

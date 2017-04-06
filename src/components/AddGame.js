@@ -2,14 +2,16 @@ import React, { Component } from 'react';
 import { json as d3Json } from 'd3-request';
 
 import SearchIcon from 'material-ui/svg-icons/action/search';
+import AutoRenewIcon from 'material-ui/svg-icons/action/autorenew';
 
 class AddGame extends Component {
   constructor() {
     super();
     this.state = {
       isGameOwned: false,
-      gameResults: []
-    }
+      gameResults: [],
+      isSaving: false
+    };
   }
   searchForGameDelay(event, delay=600) {
     clearTimeout( this.searchTimeout );
@@ -19,10 +21,15 @@ class AddGame extends Component {
   }
   saveGame(gameId) {
     console.log('we\'re supposed to save the game to db');
+    let searchFor = '/api/add-game?id=' + gameId + '&sought=' + !this.state.isGameOwned;
+    d3Json(searchFor, (err, data) => {
+
+    })
     history.back();
   }
   searchForGame(gameTitle) {
-    d3Json('/api/testSearch/' + gameTitle, (err, data) => {
+    console.log('searching...');
+    d3Json('/api/bggSearch/' + gameTitle, (err, data) => {
       console.log('error');
       console.log(err);
       console.log('data');
@@ -43,6 +50,9 @@ class AddGame extends Component {
     });
   }
   render() {
+    if (this.state.isSaving) return (
+      <AutoRenewIcon className='loading' />
+    );
     return (
       <div className='new-game'>
         <h2>{

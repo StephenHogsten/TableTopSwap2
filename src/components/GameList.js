@@ -15,7 +15,10 @@ class GameList extends Component {
           key={thisGame._id || thisGame.BGG_id}
           game_id={thisGame._id}
           info={thisGame.BGG_info}
-          onClickFn={ () => this.props.onClickFn(thisGame._id) }
+          onClickFn={ this.props.onClickFn?
+            () => this.props.onClickFn(thisGame._id):
+            null
+          }
           selected={this.props.activeId == thisGame._id}
         />
       );

@@ -53,7 +53,7 @@ I'll have mine based no board games instead (use the board game geek api: https:
   - [X] implement failed logins
   - [X] implement logging out
   - [X] make all the pages treat being logged in appropriately 
-    - [ ] forgot about trades
+    - [X] forgot about trades and maybe my games?
   - [X] have the home page check for an active session if the user is empty
 - [X] Add server APIs / DB interaction
   - [X] how do you convert xml to json
@@ -65,6 +65,13 @@ I'll have mine based no board games instead (use the board game geek api: https:
   - [X] switch around to not pass the user id through a parameter
   - [X] interact with trades 
 - [ ] link client code to real API endpoints 
+  - [X] add all games to state
+  - [X] add all trades to state
+  - [X] adding new game
+  - [X] fix clicking on gamecard
+    - [ ] needs testing
+  - [ ] add new trade
+  - [ ] advance trade
   - [ ] create new 'sought' games if they don't already exist fromm trades
 - [ ] create something to check if they're logged in properly periodically
 - [X] Add Buttons
