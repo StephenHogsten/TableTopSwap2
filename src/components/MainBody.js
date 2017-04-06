@@ -12,6 +12,7 @@ import TradeSteps from './TradeSteps.js';
 import AddGame from './AddGame.js';
 import Profile from './Profile.js';
 import LoginForm from './LoginForm.js';
+import AddButton from './AddButton.js';
 import ProxyText from './ProxyTest.js';
 
 import '../scss/MainBody.scss';
@@ -81,6 +82,7 @@ class MainBody extends Component {
               <GameList firstX={4} gameList={soughtGames} key='sought-games'/>
               <Link to='/all_games/owned' className='sub-section-header' key='owned-header'>Games Offered</Link>
               <GameList firstX={4} gameList={ownedGames} key='owned-games'/>
+              <AddButton />
             </div>
           );
         }} />
@@ -105,6 +107,7 @@ class MainBody extends Component {
             <GameList firstX={4} gameList={soughtGames} key='sought-games'/>
             <Link to='/all_games/owned' className='sub-section-header' key='owned-header'>Games Offered</Link>
             <GameList firstX={4} gameList={ownedGames} key='owned-games'/>
+            <AddButton mode='game' />
           </div>
         )} />
         <Route exact path='/my_games' render={() => (
@@ -115,18 +118,21 @@ class MainBody extends Component {
             <GameList firstX={4} gameList={mySoughtGames} key='my-sought-games'/>
             <Link to='/my_games/owned' className='sub-section-header' key='my-owned-header'>My Games Offered</Link>
             <GameList firstX={4} gameList={myOwnedGames} key='my-owned-games'/>
+            <AddButton mode='game' />
           </div>
         )} />
         <Route exact path='/my_games/sought' render={() => (
           <div className='main-body'>
             <h2 className='section-header' key='my-sought-header'>My Games Sought</h2>
             <GameList firstX={20} gameList={mySoughtGames} key='my-sought-games' />
+            <AddButton mode='sought_game' />
           </div>
         )} />
         <Route exact path='/my_games/owned' render={() => (
           <div className='main-body'>
             <h2 className='section-header' key='my-owned-header'>My Games Owned</h2>
             <GameList firstX={20} gameList={myOwnedGames} key='my-owned-games' />
+            <AddButton mode='owned_game' />
           </div>
         )} />
         <Route exact path='/all_games/sought' render={() => (
@@ -151,11 +157,14 @@ class MainBody extends Component {
             <p className='no-games'>No Game with ID</p>
         }} />
         <Route exact path='/my_trades' render={ () => (
-          <TradeList 
-            currentUser={this.props.currentUser}
-            tradeList={this.props.tradeList}
-            gameList={this.props.gameList}
-          />
+          <div>
+            <TradeList 
+              currentUser={this.props.currentUser}
+              tradeList={this.props.tradeList}
+              gameList={this.props.gameList}
+            />
+            <AddButton mode='trade' />
+          </div>
         )} />   
         <Route exact path='/trade/:id' render={ ({ match }) => {
           if (!this.props.tradeList) return (

@@ -52,9 +52,10 @@ I'll have mine based no board games instead (use the board game geek api: https:
   - [X] implement logging in locally
   - [X] implement failed logins
   - [X] implement logging out
-  - [X] make all the pages treat being logged in appropriately
+  - [X] make all the pages treat being logged in appropriately 
+    - [ ] forgot about trades
   - [X] have the home page check for an active session if the user is empty
-- [ ] Add server APIs / DB interaction
+- [X] Add server APIs / DB interaction
   - [X] how do you convert xml to json
   - [X] search for game titles
   - [X] make new games
@@ -66,8 +67,10 @@ I'll have mine based no board games instead (use the board game geek api: https:
 - [ ] link client code to real API endpoints 
   - [ ] create new 'sought' games if they don't already exist fromm trades
 - [ ] create something to check if they're logged in properly periodically
-- [ ] Add Buttons
-  - [ ] add a button to the trade page to create a new trade
+- [X] Add Buttons
+  - [X] add a button to the main page to add either games or trades (trades only if logged in)
+  - [X] add a button to the trade page to create a new trade
+  - [X] add buttons to my games pages to add a new game
   - [ ] add a button when viewing someone else's game to start a trade (make it select their game already)
   - [ ] add a button when viewing your games to start a trade (make it select your game already)
   - [ ] remove the testing menu options
@@ -84,5 +87,8 @@ I'll have mine based no board games instead (use the board game geek api: https:
 - [ ] email notification
 - [ ] require an email on login
 - [ ] automatically match people
+- [ ] style the add buttons better 
+  - [ ] make them show more plus buttons with text to the left instead of a menu
+  - [ ] make text to the left show on hover for the just trade mode
 - [ ] more validators for mongoose models
   - [ ] user fields should check that the user actually exists (not sure how to do this)
