@@ -86,6 +86,7 @@ class TradeSteps extends Component {
     this.setState({ step: step });
   }
   handleSubmit() {
+    this.setState({ saveState: savestates.loading });
     let searchFor = '/api/add_trade?sender_game=' + this.state.senderOwnedId 
       + '&receiver_game=' + this.state.recipientOwnedId
       + '&receiver=' + this.state.recipient

@@ -71,8 +71,10 @@ I'll have mine based no board games instead (use the board game geek api: https:
   - [X] adding new game
   - [X] fix clicking on gamecard
   - [X] add new trade
-  - [ ] advance trade
+  - [X] advance trade
   - [ ] create new 'sought' games if they don't already exist fromm trades
+    - [ ] when sending, add sought for sender
+    - [ ] when accepting add sought for recipient
 - [ ] create something to check if they're logged in properly periodically
 - [X] Add Buttons
   - [X] add a button to the main page to add either games or trades (trades only if logged in)
@@ -87,6 +89,7 @@ I'll have mine based no board games instead (use the board game geek api: https:
   - [ ] for react components
   - [ ] for server endpoints?
 - [ ] fiddle with all the wording
+- [ ] for saving, does done need to be in componentwillmount?
 
 ## Bonuses
 - [ ] paginate

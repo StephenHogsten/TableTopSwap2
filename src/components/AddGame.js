@@ -29,6 +29,7 @@ class AddGame extends Component {
   }
   saveGame(gameId) {
     console.log('we\'re supposed to save the game to db');
+    this.setState({ saveState: savestates.loading });
     let searchFor = '/api/add-game?id=' + gameId + '&sought=' + !this.state.isGameOwned;
     d3Json(searchFor, (err, data) => {
       if (err) {
