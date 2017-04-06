@@ -4,13 +4,21 @@ import { json as d3Json } from 'd3-request';
 import SearchIcon from 'material-ui/svg-icons/action/search';
 import AutoRenewIcon from 'material-ui/svg-icons/action/autorenew';
 
+const saveStates = {
+  'none': 'none',
+  'in_process': 'in_process',
+  'done': 'done',
+  'error': 'error'
+};
+
 class AddGame extends Component {
   constructor() {
     super();
     this.state = {
       isGameOwned: false,
       gameResults: [],
-      isSaving: false
+      saveState: saveStates.none,
+      error: null
     };
   }
   searchForGameDelay(event, delay=600) {
@@ -23,9 +31,12 @@ class AddGame extends Component {
     console.log('we\'re supposed to save the game to db');
     let searchFor = '/api/add-game?id=' + gameId + '&sought=' + !this.state.isGameOwned;
     d3Json(searchFor, (err, data) => {
-
-    })
-    history.back();
+      if (err) {
+        this.setState({ saveState: this.saveStates.error, error: err });
+      } else {
+        this.setState({ saveState: this.saveStates.done });
+      }
+    });
   }
   searchForGame(gameTitle) {
     console.log('searching...');
@@ -49,10 +60,23 @@ class AddGame extends Component {
       });
     });
   }
+  componentWillMount() {
+    if (this.state.saveState === saveStates.done) {
+      history.back();
+    }
+  }
   render() {
-    if (this.state.isSaving) return (
-      <AutoRenewIcon className='loading' />
-    );
+    switch (this.state.saveState) {
+      case saveStates.none:
+        break;
+      case saveStates.in_process:
+        return <AutoRenewIcon className='loading' />;
+      case saveStates.error:
+        return <div className='error'>{JSON.stringify(this.state.error)}</div>;
+      default:
+        // done should've been handled in componentWillMount
+        return <div className='error'>Error: invalid save state</div>;
+    }
     return (
       <div className='new-game'>
         <h2>{

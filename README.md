@@ -67,10 +67,10 @@ I'll have mine based no board games instead (use the board game geek api: https:
 - [ ] link client code to real API endpoints 
   - [X] add all games to state
   - [X] add all trades to state
+    - [ ] everything below this needs testing
   - [X] adding new game
   - [X] fix clicking on gamecard
-    - [ ] needs testing
-  - [ ] add new trade
+  - [X] add new trade
   - [ ] advance trade
   - [ ] create new 'sought' games if they don't already exist fromm trades
 - [ ] create something to check if they're logged in properly periodically
