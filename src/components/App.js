@@ -56,6 +56,8 @@ class App extends Component {
     d3.json('/api/all_trades', (err, data) => {
       if (err) throw err;
       console.log(data);
+      console.log('user: ', user);
+      console.log(data.filter((d) => (d.sender.user === user || d.recipient.user === user)));
       this.setState({
         tradeList: data.filter((d) => (d.sender.user === user || d.recipient.user === user))
       });
@@ -63,8 +65,10 @@ class App extends Component {
   }
   saveUser(username) {
     d3.json('/api/checksession', (err, data) => {
+      console.log('saveUser user:');
+      console.log(data);
       if (data.username) {
-        this.setState({ currentUser: data.username});
+        this.setState({ currentUser: data._id});
       } else {
         this.setState({ currentUser: null });
       }

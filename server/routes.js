@@ -99,6 +99,7 @@ module.exports = (passport) => {
   router.get('/checksession', (req, res) => {
     if (req.user) {
       res.send({ 
+        _id: req.user._id,
         username: req.user.username,
         email: req.user.email,
         join_date: 'n/a',
@@ -148,9 +149,10 @@ module.exports = (passport) => {
         else {
           let results = gameData.map( (val) => {
             let name = val.name[0];
+            let year = val.yearpublished? val.yearpublished[0]: 'none'
             return {
               id: val.$.objectid,
-              year: val.yearpublished[0],
+              year: year,
               title: (typeof(name) === 'string')? name: name._
             }
           });
@@ -161,7 +163,10 @@ module.exports = (passport) => {
   });
 
   //GAME DATABASE
-  // add game (expects query parameters of id (number) and sought (bool)
+  // add game expects query parameters:
+  //  id (number - BGG game id)
+  //  issought (bool)
+  //  user (optional)
   router.get('/add_game', (req, res) => {
     if (!req.isAuthenticated()) {
       res.send('not logged in');
@@ -173,6 +178,12 @@ module.exports = (passport) => {
     }
     console.log('req.query');
     console.log(req.query);
+    console.log('req user _id');
+    console.log(req.user._id);
+    console.log('sought or owned');
+    console.log(req.query.sought);
+    console.log(Boolean(req.query.sought)? 'sought': 'owned');
+    let user = req.query.user? req.query.user: req.user._id
     queryBggInfo(req.query.id, (err, data) => {
       if (err) { res.send({ error: err }); return; }
       data = data[0];
@@ -181,13 +192,13 @@ module.exports = (passport) => {
       // we should prevent user from creating duplicates
       let game = new Game({
         BGG_id: BGGid,
-        user: req.user.id,
-        sought_or_owned: Boolean(req.query.sought)? 'sought': 'owned',
+        user: user,
+        sought_or_owned: req.query.issought === 'true'? 'sought': 'owned',
         isTradeAccepted: false,
         BGG_info: data
       });
       game.save((err) => {
-        res.send( err? {error: err}: {success: true} );
+        res.send( err? {error: err}: {success: game._id} );
       });
     });
   });
@@ -202,33 +213,43 @@ module.exports = (passport) => {
   // TRADE DATABASE
   //  expected query parameters:
   //    reciever
-  //    sender_game
-  //    receiver_game
+  //    sender_owned_game
+  //    receiver_owned_game
   //    notes
   //    status (defaults to sent but pending also accepted)
+  //  optionally:
+  //    sender_sought_game
+  //    receiver_sought_game
   router.get('/add_trade', (req, res) => {
     if (!req.isAuthenticated()) { res.send({ error: 'not logged in' }); return; }
-
+    console.log('adding trade');
+    console.log(req.query);
+    console.log(req.user);
     let trade = new Trade({
       sender: {
-        user: req.user.username,
-        owned_game_id: req.query.sender_game
+        user: req.user._id,
+        owned_game_id: req.query.sender_owned_game
       },
       recipient: {
         user: req.query.receiver,
-        owned_game_id: req.query.receiver_game
+        owned_game_id: req.query.receiver_owned_game
       },
       notes: decodeURIComponent(req.query.notes),
       status: req.query.status || 'sent'
     });
-    // could search db for matching sought games here 
+    if (req.query.sender_sought_game) trade.sender.sought_game_id = req.query.sender_sought_game;
+    if (req.query.receiver_sought_game) trade.receiver.sought_game_id = req.query.receiver_sought_game;
+    // could verify games here
     trade.save( (err) => {
       res.send( err? {error: err}: {success: true});
     });
   })
   router.get('/all_trades', (req, res) => {
+    console.log('all_trades');
     console.log(req.user);
     Trade.find( {}, (err, trades) => {
+      console.log('inside');
+      console.log(trades);
       if (err) { res.send({ error: err }); return; }
       res.send(trades);
     })
@@ -237,10 +258,11 @@ module.exports = (passport) => {
   //  id - trade's id
   //  status - the status we want to assign
   router.get('/set_trade', (req, res) => {
+    console.log('setting trade:', req.query);
     if (!req.isAuthenticated()) { res.send({ error: 'not logged in' }); }
     Trade.findById( req.query.id, (err, trade) => {
       if (err) { res.send({ error: 'no trade with that id' }); return; }
-      let user = String(req.user.id);
+      let user = String(req.user._id);
       console.log('user: ' + user + ' ' + user.length);
       console.log('user: ' + typeof(user));
       console.log('trade sender: ' + trade.sender.user + ' ' + trade.sender.user.length);

@@ -5,25 +5,25 @@ import { json as d3Json } from 'd3-request';
 import TradeCard from './TradeCard.js';
 
 import RaisedButton from 'material-ui/RaisedButton';
+import AutoRenewIcon from 'material-ui/svg-icons/action/autorenew';
 
 // separating these out since we'll have to add interaction with server
-const setTrade = (id, status) => {
-  d3.request
-}
-const CancelButton = ({ tradeId }) => (
-  <RaisedButton label='Cancel' onTouchTap={() => }/>
+
+const CancelButton = ({ onTouchTap }) => (
+  <RaisedButton label='Cancel' onTouchTap={() => onTouchTap('cancelled')}/>
 );
-const AcceptButton = ({ tradeId }) => (
-  <RaisedButton label='Accept' primary={true} onTouchTap={onTouchTap} />
+const AcceptButton = ({ onTouchTap, trade, bggId }) => (
+  <RaisedButton label='Accept' primary={true} onTouchTap={() => onTouchTap('accepted')} />
 );
-const RejectButton = ({ tradeId }) => (
-  <RaisedButton label='Reject' onTouchTap={onTouchTap} />
+const RejectButton = ({ onTouchTap }) => (
+  <RaisedButton label='Reject' onTouchTap={() => onTouchTap('rejected')} />
 );
-const ModifyButton = ({ tradeId }) => (
-  <RaisedButton label='Modify' secondary={true} onTouchTap={onTouchTap} />
+// need to redirect to create new trade w/ defaults
+const ModifyButton = ({ onTouchTap }) => (
+  <RaisedButton label='Modify' secondary={true} onTouchTap={() => onTouchTap('modified')} />
 );
-const CompleteButton = ({ tradeId }) => (
-  <RaisedButton label='Mark Complete' primary={true} onTouchTap={onTouchTap} />
+const CompleteButton = ({ onTouchTap }) => (
+  <RaisedButton label='Mark Complete' primary={true} onTouchTap={() => onTouchTap('completed')} />
 );
 
 const saveStates = {
@@ -42,13 +42,19 @@ class OneTrade extends Component {
     };
   }
   setTrade(status) {
-    this.setState({ saveState: savestates.loading });
-    let searchFor = '/api/set_trade?id=' + this.props.trade.id + '&status=' + status;
+    console.log('setting status: ', status);
+    this.setState({ saveState: saveStates.loading });
+    let searchFor = '/api/set_trade?id=' + this.props.trade._id + '&status=' + status;
     d3Json(searchFor, (err, data) => {
       if (err) {
         this.setState({ error: err, saveState: saveStates.error });
       } else {
-        this.setState({ saveState: savestates.done });
+        if (data.hasOwnProperty('error')) {
+          this.setState({ error: data.error, saveState: saveStates.error });
+        } else {
+          console.log('data', data);
+          this.setState({ saveState: saveStates.done });
+        }
       }
     });
   }
@@ -56,19 +62,19 @@ class OneTrade extends Component {
     let userInitiated = this.props.trade.sender.user === this.props.currentUser;
     switch ( this.props.trade.status ) {
       case 'pending':
-        if (userInitiated) return <CancelButton key='cancel'/>;
+        if (userInitiated) return <CancelButton key='cancel' onTouchTap={a => this.setTrade(a)} />;
         else return null;
       case 'sent':
-        if (userInitiated) return <CancelButton key='cancel'/>;
+        if (userInitiated) return <CancelButton key='cancel' onTouchTap={a => this.setTrade(a)} />;
         else return [
-          <RejectButton key='reject'/>,
-          <ModifyButton key='modify'/>,
-          <AcceptButton key='accept'/>
+          <RejectButton key='reject' onTouchTap={a => this.setTrade(a)} />,
+          <ModifyButton key='modify' onTouchTap={a => this.setTrade(a)} />,
+          <AcceptButton key='accept' onTouchTap={a => this.setTrade(a)} />
         ];
       case 'accepted':
         return [
-          <CancelButton key='cancel'/>,
-          <CompleteButton key='complete'/>
+          <CancelButton key='cancel' onTouchTap={a => this.setTrade(a)} />,
+          <CompleteButton key='complete' onTouchTap={a => this.setTrade(a)} />
         ];
       case 'rejected':    // no interaction
       case 'modified':    // shouldn't even be visible to user
@@ -80,30 +86,30 @@ class OneTrade extends Component {
         );
     }
   }
-  componentWillMount() {
-    if (this.state.saveState === saveStates.done) {
+  componentWillUpdate(nextProps, nextState) {
+    if (nextState.saveState === saveStates.done) {
       history.back();
     }
   }
   render() {
-    switch (this.state.saveState) {
-      case saveStates.none:
-        break;
-      case saveStates.loading:
-        return <AutoRenewIcon className='loading' />;
-      case saveStates.error:
-        return <div className='error'>{JSON.stringify(this.state.error)}</div>
-      default: 
-        return <div className='error'>Invalid save state</div>
-    }
+    // switch (this.state.saveState) {
+    //   case saveStates.none:
+    //     break;
+    //   case saveStates.done:
+    //     console.log('we\'re done');
+    //   case saveStates.saving:
+    //     return <AutoRenewIcon className='loading' />;
+    //   case saveStates.error:
+    //     return <div className='error'>{JSON.stringify(this.state.error)}</div>
+    //   default: 
+    //     return <div className='error'>Invalid save state</div>
+    // }
     let buttons = this.makeButtons();
     return (
       <div className='trade'>
         <TradeCard trade={this.props.trade} gameList={this.props.gameList} key='card' />
         {buttons}
-        <textarea rows='6' cols='50' className='trade-notes' key='notes'>
-          {this.props.trade.notes}
-        </textarea>
+        <textarea rows='6' cols='50' className='trade-notes' key='notes' defaultValue={this.props.trade.notes} />
       </div>
     );
   }

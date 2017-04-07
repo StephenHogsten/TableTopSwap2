@@ -17,13 +17,15 @@ const saveStates = {
 }
 
 class TradeSteps extends Component {
-  constructor() {
+  constructor(props) {
     super();
+    console.log('this.props');
+    console.log(props);
     this.state = {
       step: 0,
       recipient: null,
-      recipientOwnedId: -1,
-      senderOwnedId: -1,
+      recipientOwned: props.ownedGame || -1,
+      senderOwned: props.myOwnedGame || -1,
       notes: "",
       saveState: saveStates.none,
       error: null
@@ -32,6 +34,8 @@ class TradeSteps extends Component {
     console.log(laststep);
   }
   stepDetails() {
+    console.log('this.props 2');
+    console.log(this.props);
     switch (this.state.step) {
       case 0:
         return (
@@ -39,8 +43,8 @@ class TradeSteps extends Component {
             <h5>Choose a game from our community that you would like to trade for</h5>
             <GameList 
               gameList={this.props.ownedGames} 
-              activeId={String(this.state.recipientOwnedId)} 
-              onClickFn={ (id, user) => { this.setState({ recipientOwnedId: id, recipient: user }); } } 
+              activeId={String(this.state.recipientOwned._id)} 
+              onClickFn={ (game) => { this.setState({ recipientOwned: game, recipient: game.user }); } } 
             />
           </div>
         );
@@ -50,8 +54,8 @@ class TradeSteps extends Component {
             <h5>Choose a game from your collection that you would like to offer</h5>
             <GameList 
               gameList={this.props.myOwnedGames} 
-              activeId={String(this.state.senderOwnedId)} 
-              onClickFn={ (id) => { this.setState({ senderOwnedId: id }); } } 
+              activeId={String(this.state.senderOwned._id)} 
+              onClickFn={ (game) => { this.setState({ senderOwned: game }); } } 
             />
           </div>
         );
@@ -71,10 +75,10 @@ class TradeSteps extends Component {
   isNextDisabled(step) {
     switch (step) {
       case 0:
-        if (this.state.recipientOwnedId === -1) return true;
+        if (this.state.recipientOwned === -1) return true;
         else return false;
       case 1:
-        if (this.state.senderOwnedId === -1) return true;
+        if (this.state.senderOwned === -1) return true;
         else return false;
       default:
         return true;
@@ -86,22 +90,33 @@ class TradeSteps extends Component {
     this.setState({ step: step });
   }
   handleSubmit() {
-    this.setState({ saveState: savestates.loading });
-    let searchFor = '/api/add_trade?sender_game=' + this.state.senderOwnedId 
-      + '&receiver_game=' + this.state.recipientOwnedId
+    this.setState({ saveState: saveStates.saving });
+    // see if there's already corresponding sought games
+    let senderOwned = this.state.senderOwned;
+    let recipientOwned = this.state.recipientOwned;
+    let mySought = this.props.mySoughtGames.find( (game) => game.BGG_id === senderOwned.BGG_id );
+    let sought = this.props.soughtGames.find( (game) => game.BGG_id === recipientOwned.BGG_id)
+    let searchFor = '/api/add_trade?sender_owned_game=' + senderOwned._id 
+      + '&receiver_owned_game=' + recipientOwned._id
       + '&receiver=' + this.state.recipient
       + '&notes=' + this.state.notes
-      + '&status=' + 'sent';      
+      + '&status=' + 'sent';
+    if (mySought) searchFor += '&sender_sought_game=' + mySought._id;
+    if (sought) searchFor += '&recever_sought_game=' + sought._id;
     d3Json(searchFor, (err, data) => {
       if (err) {
         this.setState({ saveState: saveStates.error, error: err });
       } else {
-        this.setState({ saveState: saveStates.done });
+        if (data.hasOwnProperty('error')) {
+          this.setState({ saveState: saveStates.error, error: data.error });
+        } else {
+          this.setState({ saveState: saveStates.done });
+        }
       }
-    })
+    });
   }
-  componentWillMount() {
-      if (this.state.saveState === saveStates.done) {
+  componentWillUpdate(nextProps, nextState) {
+      if (nextState.saveState === saveStates.done) {
         history.back();
       }
   }
@@ -109,11 +124,14 @@ class TradeSteps extends Component {
     switch (this.state.saveState) {
       case saveStates.none:
         break;
-      case saveStates.loading:
+      case saveStates.done:
+        console.log('done');
+      case saveStates.saving:
         return <AutoRenewIcon className='loading' />;
       case saveStates.error:
         return <div className='error'>{JSON.stringify(this.state.error)}</div>
       default: 
+        console.log('invalid save state: ' + this.state.saveState);
         return <div className='error'>Invalid save state</div>
     }
     const step = this.state.step;
@@ -164,7 +182,9 @@ TradeSteps.propTypes = {
   soughtGames: React.PropTypes.array.isRequired,
   ownedGames: React.PropTypes.array.isRequired,
   mySoughtGames: React.PropTypes.array.isRequired,
-  myOwnedGames: React.PropTypes.array.isRequired
+  myOwnedGames: React.PropTypes.array.isRequired,
+  ownedGame: React.PropTypes.object,
+  myOwnedGame: React.PropTypes.object
 };
 
 export default TradeSteps;

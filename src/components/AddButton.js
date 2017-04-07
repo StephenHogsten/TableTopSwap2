@@ -14,6 +14,7 @@ import '../scss/AddButton.scss';
 const SingleActionButton = ({onTouchTap}) => (
   <div className='add-button-container'>
     <FloatingActionButton
+      secondary={true}
       children={<ContentAddIcon />}
       onTouchTap={ onTouchTap }
     />
@@ -28,10 +29,10 @@ class AddButton extends Component {
     switch (this.props.mode) {
       case undefined:
       case 'all':
-        menuItems.push(<MenuItem primaryText="Trade Request" onTouchTap={ () => { this.props.history.push('/new/trade') }} />);
+        menuItems.push(<MenuItem key='trade' primaryText="Trade Request" onTouchTap={ () => { this.props.history.push('/new/trade') }} />);
       case 'game':
-        menuItems.push(<MenuItem primaryText="Wanted Game" onTouchTap={ () => { this.props.history.push('/new/game/sought')}} />);
-        menuItems.push(<MenuItem primaryText="Owned Game" onTouchTap={ () => { this.props.history.push('/new/game/owned') }} />);
+        menuItems.push(<MenuItem key='wanted-game' primaryText="Wanted Game" onTouchTap={ () => { this.props.history.push('/new/game/sought')}} />);
+        menuItems.push(<MenuItem key='owned-game' primaryText="Owned Game" onTouchTap={ () => { this.props.history.push('/new/game/owned') }} />);
         break;
       case 'owned_game':
         return (
@@ -45,6 +46,14 @@ class AddButton extends Component {
         return (
           <SingleActionButton onTouchTap={ () => this.props.history.push('/new/trade') } />
         );
+      case 'trade_sender':
+        return (
+          <SingleActionButton onTouchTap={ () => this.props.history.push('/new/trade/sender/' + encodeURIComponent(JSON.stringify(this.props.game))) } />
+        );
+      case 'trade_receiver':
+        return (
+          <SingleActionButton onTouchTap={ () => this.props.history.push('/new/trade/receiver/' + encodeURIComponent(JSON.stringify(this.props.game))) } />
+        );
       default:
         console.log('error');
         menuItems.push(<MenuItem primaryText="error" />);
@@ -52,7 +61,7 @@ class AddButton extends Component {
     return (
       <div className='add-button-container'>
         <IconMenu
-          iconButtonElement={<FloatingActionButton children={<ContentAddIcon />} />}
+          iconButtonElement={<FloatingActionButton secondary={true} children={<ContentAddIcon />} />}
           anchorOrigin={{horizontal: 'middle', vertical: 'center'}}
           targetOrigin={{horizontal: 'right', vertical: 'bottom'}}
         >
@@ -65,7 +74,8 @@ class AddButton extends Component {
 
 AddButton.propTypes = {
   mode: React.PropTypes.string,
-  user: React.PropTypes.string
+  user: React.PropTypes.string,
+  game: React.PropTypes.object
 };
 
 export default withRouter(AddButton);

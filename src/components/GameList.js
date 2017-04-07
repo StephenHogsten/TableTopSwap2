@@ -16,7 +16,7 @@ class GameList extends Component {
           game_id={thisGame._id}
           info={thisGame.BGG_info}
           onClickFn={ this.props.onClickFn?
-            () => this.props.onClickFn(thisGame._id, thisGame.user):
+            () => this.props.onClickFn(thisGame):
             null
           }
           selected={this.props.activeId == thisGame._id}

@@ -6,7 +6,7 @@ import AutoRenewIcon from 'material-ui/svg-icons/action/autorenew';
 
 const saveStates = {
   'none': 'none',
-  'in_process': 'in_process',
+  'saving': 'saving',
   'done': 'done',
   'error': 'error'
 };
@@ -15,7 +15,6 @@ class AddGame extends Component {
   constructor() {
     super();
     this.state = {
-      isGameOwned: false,
       gameResults: [],
       saveState: saveStates.none,
       error: null
@@ -29,13 +28,20 @@ class AddGame extends Component {
   }
   saveGame(gameId) {
     console.log('we\'re supposed to save the game to db');
-    this.setState({ saveState: savestates.loading });
-    let searchFor = '/api/add-game?id=' + gameId + '&sought=' + !this.state.isGameOwned;
+    this.setState({ saveState: saveStates.saving });
+    let searchFor = '/api/add_game?id=' + gameId + '&sought=' + !this.props.isGameOwned;
+    console.log('searchFor: ' + searchFor);
     d3Json(searchFor, (err, data) => {
       if (err) {
-        this.setState({ saveState: this.saveStates.error, error: err });
+        this.setState({ saveState: saveStates.error, error: err });
       } else {
-        this.setState({ saveState: this.saveStates.done });
+        if (data.hasOwnProperty('error')) {
+          this.setState({ saveState: saveStates.error, error: data.error });
+        } else {
+          console.log('save successful?');
+          console.log(data);
+          this.setState({ saveState: saveStates.done });
+        }
       }
     });
   }
@@ -49,7 +55,7 @@ class AddGame extends Component {
       if (err) throw err;
       let games = data.map( (oneGame) => (
         <p 
-          key={oneGame.title} 
+          key={oneGame.id} 
           className='game-search-result'
           onClick={ () => this.saveGame(oneGame.id) }
         >
@@ -61,8 +67,9 @@ class AddGame extends Component {
       });
     });
   }
-  componentWillMount() {
-    if (this.state.saveState === saveStates.done) {
+  componentWillUpdate(nextProps, nextState) {
+    console.log('component will update ' + nextState.saveState);
+    if (nextState.saveState === saveStates.done) {
       history.back();
     }
   }
@@ -70,12 +77,14 @@ class AddGame extends Component {
     switch (this.state.saveState) {
       case saveStates.none:
         break;
-      case saveStates.in_process:
+      case saveStates.done:
+        console.log('state: done');
+      case saveStates.saving:
         return <AutoRenewIcon className='loading' />;
       case saveStates.error:
         return <div className='error'>{JSON.stringify(this.state.error)}</div>;
       default:
-        // done should've been handled in componentWillMount
+        console.log('invalid state: ' + this.state.saveState);
         return <div className='error'>Error: invalid save state</div>;
     }
     return (

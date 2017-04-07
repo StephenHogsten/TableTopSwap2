@@ -67,7 +67,6 @@ I'll have mine based no board games instead (use the board game geek api: https:
 - [ ] link client code to real API endpoints 
   - [X] add all games to state
   - [X] add all trades to state
-    - [ ] everything below this needs testing
   - [X] adding new game
   - [X] fix clicking on gamecard
   - [X] add new trade
@@ -80,22 +79,32 @@ I'll have mine based no board games instead (use the board game geek api: https:
   - [X] add a button to the main page to add either games or trades (trades only if logged in)
   - [X] add a button to the trade page to create a new trade
   - [X] add buttons to my games pages to add a new game
-  - [ ] add a button when viewing someone else's game to start a trade (make it select their game already)
-  - [ ] add a button when viewing your games to start a trade (make it select your game already)
-  - [ ] remove the testing menu options
+  - [X] add a button when viewing someone else's game to start a trade (make it select their game already)
+  - [X] add a button when viewing your games to start a trade (make it select your game already)
+  - [X] remove the testing menu options
+- [ ] check that it's always _id when it should be (and vice versa?)
 - [ ] style everything in the shell
   - [ ] replace things like text fields with the appropriate material components
+  ---
+- [ ] test more advancing scenarios
+- [ ] retrigger getting trades and games when appropriate
+- [ ] add loading when getting search results back
+- [ ] AddButton.js "iconButton.setKeyboardFocus is not a fn" on ESC
 - [ ] jest
   - [ ] for react components
   - [ ] for server endpoints?
+- [ ] indicate in GameList if they have more than four
+- [ ] sort GameList by most recent first
 - [ ] fiddle with all the wording
 - [ ] for saving, does done need to be in componentwillmount?
 
 ## Bonuses
 - [ ] paginate
+- [ ] fix refreshing never having a user
 - [ ] messaging
 - [ ] email notification
 - [ ] require an email on login
+- [ ] indicate games sought by the person you're sending too
 - [ ] automatically match people
 - [ ] style the add buttons better 
   - [ ] make them show more plus buttons with text to the left instead of a menu
