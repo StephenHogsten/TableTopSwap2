@@ -240,6 +240,7 @@ module.exports = (passport) => {
     if (req.query.sender_sought_game) trade.sender.sought_game_id = req.query.sender_sought_game;
     if (req.query.receiver_sought_game) trade.receiver.sought_game_id = req.query.receiver_sought_game;
     // could verify games here
+    console.log('new trade: ', trade);
     trade.save( (err) => {
       res.send( err? {error: err}: {success: true});
     });
@@ -275,6 +276,10 @@ module.exports = (passport) => {
             res.send({ error: 'user is not the recipient' }); return; }
           if (trade.status !== 'sent') {
             res.send({ error: 'can only accept sent trades' }); return; }
+          // create a sought game for recipient if it doesn't exist
+          // if (!trade.recipient.sought_game_id) {
+
+          // }
           break;
         case 'rejected':
           if (user !== trade.sender.user && user !== trade.recipient.user) {
@@ -304,45 +309,6 @@ module.exports = (passport) => {
         res.send(err? {error: 'trade did not save successfully'}: {success: true});
       });
     });
-  });
-
-
-  // TESTING
-  //send fake data for testing
-  router.get('/test', (req, res) => {
-    res.sendFile(process.cwd() + '/garbo/test_games.json');
-  });
-  router.get('/testTrade', (req, res) => {
-    res.sendFile(process.cwd() + '/garbo/test_trades.json');
-  });
-  router.get('/testSearch/:title', (req, res) => {
-    res.sendFile(process.cwd() + '/garbo/test_search.json');
-  });
-
-  //TESTING
-  // create user
-  const User = require('./models/User.js');
-  router.get('/createuser/:user/:pw', (req, res) => {
-    console.log(req.params.user)
-    User.create({
-      "username": req.params.user,
-      "email": 'test123@gmail.com',
-      "password": req.params.pw
-    }, (err, data) => {
-      if (err) console.log(err);
-      console.log('hmmm');
-      console.log(data);
-    }).then(res.send('success?'));
-  });
-  router.get('/isLoggedIn', (req, res) => {
-    res.send("authenticated: " + req.isAuthenticated() + ' ' + JSON.stringify(req.user));
-  });
-  router.post('/logMeIn', passport.authenticate('local', {
-    successRedirect: '/proxyme/isLoggedIn',
-    failureRedict: '/proxyme/isLoggedIn'
-  }));
-  router.get('/sendText/:message', (req, res) => {
-    res.send(req.params.message);
   });
 
   return router;

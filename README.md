@@ -71,9 +71,6 @@ I'll have mine based no board games instead (use the board game geek api: https:
   - [X] fix clicking on gamecard
   - [X] add new trade
   - [X] advance trade
-  - [ ] create new 'sought' games if they don't already exist fromm trades
-    - [ ] when sending, add sought for sender
-    - [ ] when accepting add sought for recipient
 - [ ] create something to check if they're logged in properly periodically
 - [X] Add Buttons
   - [X] add a button to the main page to add either games or trades (trades only if logged in)
@@ -82,7 +79,7 @@ I'll have mine based no board games instead (use the board game geek api: https:
   - [X] add a button when viewing someone else's game to start a trade (make it select their game already)
   - [X] add a button when viewing your games to start a trade (make it select your game already)
   - [X] remove the testing menu options
-- [ ] check that it's always _id when it should be (and vice versa?)
+- [X] check that it's always _id when it should be (and vice versa?)
 - [ ] style everything in the shell
   - [ ] replace things like text fields with the appropriate material components
   ---
@@ -93,12 +90,16 @@ I'll have mine based no board games instead (use the board game geek api: https:
 - [ ] jest
   - [ ] for react components
   - [ ] for server endpoints?
+  - [ ] create new 'sought' games if they don't already exist fromm trades
+    - [ ] when sending, add sought for sender
+    - [ ] when accepting add sought for recipient
 - [ ] indicate in GameList if they have more than four
 - [ ] sort GameList by most recent first
 - [ ] fiddle with all the wording
 - [ ] for saving, does done need to be in componentwillmount?
 
 ## Bonuses
+- [ ] default focus where it belongs
 - [ ] paginate
 - [ ] fix refreshing never having a user
 - [ ] messaging

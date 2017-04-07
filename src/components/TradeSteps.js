@@ -94,8 +94,11 @@ class TradeSteps extends Component {
     // see if there's already corresponding sought games
     let senderOwned = this.state.senderOwned;
     let recipientOwned = this.state.recipientOwned;
-    let mySought = this.props.mySoughtGames.find( (game) => game.BGG_id === senderOwned.BGG_id );
-    let sought = this.props.soughtGames.find( (game) => game.BGG_id === recipientOwned.BGG_id)
+    console.log('recipientOwned.bggid: ', recipientOwned.BGG_id);
+    console.log('senderOwned.bggid: ', senderOwned.BGG_id);
+    let mySought = this.props.mySoughtGames.find( (game) => game.BGG_id === recipientOwned.BGG_id );
+    let sought = this.props.soughtGames.find( (game) => game.BGG_id === senderOwned.BGG_id)
+    console.log('mySought: ', mySought);
     let searchFor = '/api/add_trade?sender_owned_game=' + senderOwned._id 
       + '&receiver_owned_game=' + recipientOwned._id
       + '&receiver=' + this.state.recipient
