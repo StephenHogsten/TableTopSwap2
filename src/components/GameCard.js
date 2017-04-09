@@ -1,11 +1,24 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import {Card, CardMedia, CardTitle, CardText} from 'material-ui/Card';
+import dice from '../../public/dice.png';
 import '../scss/GameCard.scss';
 
 class GameCard extends Component {
   render() {
     let innards = (
-      <p key='title' className='one-game-title'>{this.props.info.title}</p>
+      <Card className='game-card' style={{whiteSpace:'nowrap', textOverflow:'ellipsis'}}>
+        <div 
+          style={{backgroundImage: 'url(' + (this.props.info.full_image_url || dice) + ')'}}
+          className='game-image'
+        >
+        </div>
+        <CardTitle 
+          title={this.props.info.title} 
+          subtitle={'rating: ' + (parseFloat(this.props.info.rating).toFixed(2) || 'none') } 
+          titleStyle={{overflow:'hidden', textOverflow: 'ellipsis', maxHeight:'33px'}}
+        />
+      </Card>
     )
     if (this.props.onClickFn) return (
       <div 
@@ -18,7 +31,6 @@ class GameCard extends Component {
     return (
       <Link 
         to={'/game/' + this.props.game_id}
-        className={this.props.selected? 'active-game': 'one-game'}
       >
         {innards}
       </Link>

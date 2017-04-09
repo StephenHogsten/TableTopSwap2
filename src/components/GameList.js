@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
+import GridList from 'material-ui/GridList';
+import Subheader from 'material-ui/Subheader';
 import GameCard from './GameCard.js';
-// import '../scss/AllGames';
+import '../scss/GameList.scss';
 
 class GameList extends Component {
   render() {
