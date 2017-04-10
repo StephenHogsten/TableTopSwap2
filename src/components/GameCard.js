@@ -7,7 +7,8 @@ import '../scss/GameCard.scss';
 class GameCard extends Component {
   render() {
     let innards = (
-      <Card className='game-card' style={{whiteSpace:'nowrap', textOverflow:'ellipsis'}}>
+      <Card className='game-card' style={{whiteSpace:'nowrap', textOverflow:'ellipsis'}} >
+        <div className={this.props.selected? 'active-game': 'inactive-game'} />
         <div 
           style={{backgroundImage: 'url(' + (this.props.info.full_image_url || dice) + ')'}}
           className='game-image'
@@ -22,7 +23,6 @@ class GameCard extends Component {
     )
     if (this.props.onClickFn) return (
       <div 
-        className={this.props.selected? 'active-game': 'one-game'}
         onClick={ () => this.props.onClickFn() }
       >
         {innards}
@@ -42,7 +42,8 @@ GameCard.propTypes = {
   info: React.PropTypes.object.isRequired,
   game_id: React.PropTypes.string.isRequired,
   selected: React.PropTypes.bool,
-  onClickFn: React.PropTypes.func
+  onClickFn: React.PropTypes.func,
+  expanded: React.PropTypes.bool
 }
 
 export default GameCard;

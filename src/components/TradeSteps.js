@@ -63,7 +63,11 @@ class TradeSteps extends Component {
         return (
           <div className='trade-details-body'>
             <h5>(optional) Add a message to your request</h5>
-            <textarea id='trade-notes' onBlur={ (event) => this.setState({ notes: event.target.value }) }/>
+            <textarea 
+              id='trade-notes' 
+              defaultValue={this.state.notes}
+              onBlur={ (event) => this.setState({ notes: event.target.value }) }
+            />
           </div>
         );
       default:

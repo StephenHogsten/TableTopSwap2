@@ -105,6 +105,7 @@ I'll have mine based no board games instead (use the board game geek api: https:
 - [ ] messaging
 - [ ] email notification
 - [ ] require an email on login
+- [ ] put usre in local storage or something
 - [ ] indicate games sought by the person you're sending too
 - [ ] automatically match people
 - [ ] style the add buttons better 

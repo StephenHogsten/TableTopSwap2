@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 
 import AddButton from './AddButton.js';
+import GameCard from './GameCard.js';
+impor
 
 class OneGame extends Component {
   render() {
@@ -12,7 +14,10 @@ class OneGame extends Component {
     }
     return (
       <div className='one-game'>
-        <h1>{this.props.game.BGG_info.title}</h1>
+        <GameCard 
+          info={this.props.game.BGG_info} 
+          game_id={this.props.game._id}
+        />
         {addButton}
       </div>
     );

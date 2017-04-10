@@ -1,22 +1,19 @@
 $game-width: 300px;
 $game-height: 300px;
+$game-width-expanded: 350px;
+$game-height-expanded: 400px;
 $picture-height: 210px;
 
-// normal game fader
-.one-game {
-  position: absolute;
-  top: 0px;
-  left: 0px;
-  z-index: 50;
-  background: linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0) %20, rgba(0,0,0,.8) 70%, rgba(0,0,0,1));
-  width: $game-width;
-  height: $game-height;
-}
 // active game fader
 .active-game {
-  background: linear-gradient(rgba(0,255,0,1), rgba(0,0,255, 1) 50%, rgba(0,0,255,0))
+  position: absolute;
+  width: $game-width;
+  height: $game-height;
+  top: 0px;
+  left: 0px;
+  z-index: 0;
+  background: rgba(0,205,255,.3);
 }
-
 .game-card {
   background-repeat: no-repeat;
   width: $game-width;
@@ -26,9 +23,15 @@ $picture-height: 210px;
   position: relative;
 }
 
+.game-card-expanded {
+  @extend .game-card;
+  height: $game-height-expanded;
+  width: $game-width-expanded;
+}
+
 .game-image {
   background-size: cover;
-  background-position: 50% 30%;
+  background-position: 50% 20%;
   width: $game-width;
   height: $picture-height;
 }
