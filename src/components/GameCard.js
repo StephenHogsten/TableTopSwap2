@@ -1,24 +1,41 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import {Card, CardMedia, CardTitle, CardText} from 'material-ui/Card';
+import AccessTimeIcon from 'material-ui/svg-icons/device/access-time';
+import PersonOutlineIcon from 'material-ui/svg-icons/social/person-outline';
+import SchoolIcon from 'material-ui/svg-icons/social/school';
 import dice from '../../public/dice.png';
 import '../scss/GameCard.scss';
 
 class GameCard extends Component {
+  info2Num(property, digits) {
+    let num = Number(this.props.info[property]);
+    return digits? parseFloat(num).toFixed(digits) || 'n/a': num || 'n/a';
+  }
   render() {
     let innards = (
-      <Card className='game-card' style={{whiteSpace:'nowrap', textOverflow:'ellipsis'}} >
+      <Card 
+        className={this.props.expanded? 'game-card-expanded': 'game-card'}
+        style={{whiteSpace:'nowrap', textOverflow:'ellipsis'}} 
+      >
         <div className={this.props.selected? 'active-game': 'inactive-game'} />
         <div 
           style={{backgroundImage: 'url(' + (this.props.info.full_image_url || dice) + ')'}}
-          className='game-image'
+          className={this.props.expanded? 'game-image-expanded': 'game-image'}
         >
         </div>
         <CardTitle 
           title={this.props.info.title} 
-          subtitle={'rating: ' + (parseFloat(this.props.info.rating).toFixed(2) || 'none') } 
+          subtitle={'Rating: ' + this.info2Num('rating', 2) } 
           titleStyle={{overflow:'hidden', textOverflow: 'ellipsis', maxHeight:'33px'}}
         />
+        {this.props.expanded? (
+          <CardText style={{padding:'5px'}} color='rgba(0, 0, 0, 0.541176)'>
+            <span className='game-text-row'><AccessTimeIcon className='game-text-icon'/><span>{this.info2Num('minutes_low') + '-' + this.info2Num('minutes_high')}</span></span>
+            <span className='game-text-row'><PersonOutlineIcon className='game-text-icon'/><span>{+this.info2Num('players_low') + '-' + +this.info2Num('players_high')}</span></span>
+            <span className='game-text-row'><SchoolIcon className='game-text-icon'/><span>{this.info2Num('difficulty', 2)}</span></span>
+          </CardText>
+        ): null}
       </Card>
     )
     if (this.props.onClickFn) return (

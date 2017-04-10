@@ -1,7 +1,7 @@
 $game-width: 300px;
 $game-height: 300px;
 $game-width-expanded: 350px;
-$game-height-expanded: 400px;
+$game-height-expanded: 430px;
 $picture-height: 210px;
 
 // active game fader
@@ -14,6 +14,7 @@ $picture-height: 210px;
   z-index: 0;
   background: rgba(0,205,255,.3);
 }
+
 .game-card {
   background-repeat: no-repeat;
   width: $game-width;
@@ -22,11 +23,13 @@ $picture-height: 210px;
   margin: 20px;
   position: relative;
 }
-
 .game-card-expanded {
   @extend .game-card;
   height: $game-height-expanded;
   width: $game-width-expanded;
+  &:hover {
+    cursor: pointer;
+  }
 }
 
 .game-image {
@@ -34,4 +37,20 @@ $picture-height: 210px;
   background-position: 50% 20%;
   width: $game-width;
   height: $picture-height;
+}
+.game-image-expanded {
+  @extend .game-image;
+  width: $game-width-expanded;
+}
+
+.game-text-row {
+  display: flex;
+  align-items: center;
+  padding: 2px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+.game-text-icon {
+  padding: 5px;
 }

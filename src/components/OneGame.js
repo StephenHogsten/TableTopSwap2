@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import AddButton from './AddButton.js';
 import GameCard from './GameCard.js';
-impor
+import '../scss/OneGame.scss';
 
 class OneGame extends Component {
   render() {
@@ -17,6 +17,8 @@ class OneGame extends Component {
         <GameCard 
           info={this.props.game.BGG_info} 
           game_id={this.props.game._id}
+          expanded={true}
+          onClickFn={ () => window.open('https://boardgamegeek.com/boardgame/' + this.props.game.BGG_id)}
         />
         {addButton}
       </div>
