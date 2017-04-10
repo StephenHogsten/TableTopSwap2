@@ -106,8 +106,7 @@ class MainBody extends Component {
         } />
         <Route key='all' exact path='/all_games' render={() => (
           <div className='main-body'>
-            <h2 className='section-header' key='section-header'>Community Games</h2>
-            <br key='br' />
+            <span className='section-header' key='section-header'>Community Games</span>
             <Link to='/all_games/sought' className='sub-section-header' key='sought-header'>Games Sought</Link>
             <GameList firstX={4} gameList={soughtGames} key='sought-games'/>
             <Link to='/all_games/owned' className='sub-section-header' key='owned-header'>Games Offered</Link>
@@ -118,8 +117,7 @@ class MainBody extends Component {
         <Route key='my' exact path='/my_games' render={() => 
           user? (
             <div className='main-body'>
-              <h2 className='section-header' key='section-header'>My Games</h2>
-              <br key='br' />
+              <span className='section-header' key='section-header'>My Games</span>
               <Link to='/my_games/sought' className='sub-section-header' key='my-sought-header'>My Games Sought</Link>
               <GameList firstX={4} gameList={mySoughtGames} key='my-sought-games'/>
               <Link to='/my_games/owned' className='sub-section-header' key='my-owned-header'>My Games Offered</Link>
@@ -173,8 +171,8 @@ class MainBody extends Component {
             <p className='no-games'>No Game with ID</p>
         }} />
         <Route key='trades' exact path='/my_trades' render={ () => 
-          user? (
-            <div>
+          true? (
+            <div className='main-body'>
               <TradeList 
                 currentUser={user}
                 tradeList={this.props.tradeList}
@@ -188,16 +186,21 @@ class MainBody extends Component {
         } />
         <Route key='trade' exact path='/trade/:id' render={ ({ match }) => {
           if (!this.props.tradeList) return (
-            <p className='error'>You must be logged in to see your trades</p>
+            <div className='main-body'>
+              <p className='error'>You must be logged in to see your trades</p>
+            </div>
           );
           let matchingTrade = this.props.tradeList.find( (trade) => String(trade._id) === match.params.id);
           return matchingTrade?
-            <OneTrade 
-              currentUser={user}
-              trade={matchingTrade}
-              gameList={this.props.gameList}
-            />:
-            <p className='error'>No Trade with that ID</p> 
+            <div className='main-body'>
+              <OneTrade 
+                currentUser={user}
+                trade={matchingTrade}
+                gameList={this.props.gameList}
+                expanded={true}
+              />
+            </div>:
+            <div className='main-body'><p className='error'>No Trade with that ID</p></div>
         }} />
         <Route key='new_trade' exact path='/new/trade' render={ () => 
           user? (

@@ -82,6 +82,9 @@ I'll have mine based no board games instead (use the board game geek api: https:
 - [X] check that it's always _id when it should be (and vice versa?)
 - [ ] style everything in the shell
   - [ ] replace things like text fields with the appropriate material components
+  - [ ] fiddle with the linking within trades
+  - [ ] add owner to card
+- [ ] deploy to heroku
   ---
 - [ ] test more advancing scenarios
 - [ ] retrigger getting trades and games when appropriate

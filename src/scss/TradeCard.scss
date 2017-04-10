@@ -1,0 +1,44 @@
+$trade-width: 250px;
+
+.trade-paper {
+  min-width: $trade-width;
+  min-height: 300px;
+  padding: 12px;
+  margin: 12px;
+}
+
+.trade-paper-row {
+  min-width: $trade-width;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  flex-flow: wrap;
+  margin-bottom: 16px;
+}
+
+.trade-info-label {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 300;
+  margin: 8px 4px 16px 24px;
+}
+
+.trade-status-text {
+  font-family: 'Roboto', sans-serif;
+  font-weight: bold;
+}
+
+.trade-notes {
+  border-style: solid;
+  border-width: 1px;
+  border-color: #999;
+  min-width: 100px;
+  min-height: 50px;
+  overflow: auto;
+  margin: 16px;
+  margin-top: 8px;
+  padding: 3px;
+}
+
+.trade-button {
+  margin: 12px;
+}

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { json as d3Json } from 'd3-request';
-// import '../scss/Game.scss';
+// import '../scss/OneTrade.scss';
 
 import TradeCard from './TradeCard.js';
 
@@ -10,20 +10,20 @@ import AutoRenewIcon from 'material-ui/svg-icons/action/autorenew';
 // separating these out since we'll have to add interaction with server
 
 const CancelButton = ({ onTouchTap }) => (
-  <RaisedButton label='Cancel' onTouchTap={() => onTouchTap('cancelled')}/>
+  <RaisedButton className='trade-button' label='Cancel' onTouchTap={() => onTouchTap('cancelled')}/>
 );
 const AcceptButton = ({ onTouchTap, trade, bggId }) => (
-  <RaisedButton label='Accept' primary={true} onTouchTap={() => onTouchTap('accepted')} />
+  <RaisedButton className='trade-button' label='Accept' primary={true} onTouchTap={() => onTouchTap('accepted')} />
 );
 const RejectButton = ({ onTouchTap }) => (
-  <RaisedButton label='Reject' onTouchTap={() => onTouchTap('rejected')} />
+  <RaisedButton className='trade-button' label='Reject' onTouchTap={() => onTouchTap('rejected')} />
 );
 // need to redirect to create new trade w/ defaults
 const ModifyButton = ({ onTouchTap }) => (
-  <RaisedButton label='Modify' secondary={true} onTouchTap={() => onTouchTap('modified')} />
+  <RaisedButton className='trade-button' label='Modify' secondary={true} onTouchTap={() => onTouchTap('modified')} />
 );
 const CompleteButton = ({ onTouchTap }) => (
-  <RaisedButton label='Mark Complete' primary={true} onTouchTap={() => onTouchTap('completed')} />
+  <RaisedButton className='trade-button' label='Mark Complete' primary={true} onTouchTap={() => onTouchTap('completed')} />
 );
 
 const saveStates = {
@@ -78,6 +78,7 @@ class OneTrade extends Component {
         ];
       case 'rejected':    // no interaction
       case 'modified':    // shouldn't even be visible to user
+      case 'cancelled':   // no interaction
       case 'completed':   // no interaction
         return null;
       default:
@@ -107,9 +108,13 @@ class OneTrade extends Component {
     let buttons = this.makeButtons();
     return (
       <div className='trade'>
-        <TradeCard trade={this.props.trade} gameList={this.props.gameList} key='card' />
+        <TradeCard 
+          trade={this.props.trade} 
+          gameList={this.props.gameList} 
+          key='card' 
+          expanded={true}
+        />
         {buttons}
-        <textarea rows='6' cols='50' className='trade-notes' key='notes' defaultValue={this.props.trade.notes} />
       </div>
     );
   }

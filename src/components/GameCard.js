@@ -12,6 +12,12 @@ class GameCard extends Component {
     let num = Number(this.props.info[property]);
     return digits? parseFloat(num).toFixed(digits) || 'n/a': num || 'n/a';
   }
+  lowHigh(property) {
+    let low = this.info2Num(property + '_low');
+    let high = this.info2Num(property + '_high');
+    if (high > low) return low + '-' + high;
+    return low + '+';
+  }
   render() {
     let innards = (
       <Card 
@@ -31,9 +37,15 @@ class GameCard extends Component {
         />
         {this.props.expanded? (
           <CardText style={{padding:'5px'}} color='rgba(0, 0, 0, 0.541176)'>
-            <span className='game-text-row'><AccessTimeIcon className='game-text-icon'/><span>{this.info2Num('minutes_low') + '-' + this.info2Num('minutes_high')}</span></span>
-            <span className='game-text-row'><PersonOutlineIcon className='game-text-icon'/><span>{+this.info2Num('players_low') + '-' + +this.info2Num('players_high')}</span></span>
-            <span className='game-text-row'><SchoolIcon className='game-text-icon'/><span>{this.info2Num('difficulty', 2)}</span></span>
+            <span className='game-text-row'><AccessTimeIcon className='game-text-icon'/><span>{
+                this.lowHigh('minutes')
+              }</span></span>
+            <span className='game-text-row'><PersonOutlineIcon className='game-text-icon'/><span>{
+                this.lowHigh('players')
+              }</span></span>
+            <span className='game-text-row'><SchoolIcon className='game-text-icon'/><span>{
+                this.info2Num('difficulty', 2)
+              }</span></span>
           </CardText>
         ): null}
       </Card>

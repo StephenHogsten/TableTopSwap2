@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-// import '../scss/Game.scss';
 
 import Paper from 'material-ui/Paper';
+import CompareArrowsIcon from 'material-ui/svg-icons/action/compare-arrows';
+
+import GameCard from './GameCard';
+import '../scss/TradeCard.scss';
 
 class TradeCard extends Component {
   render() {
@@ -12,27 +15,35 @@ class TradeCard extends Component {
     senderGame = this.props.gameList.find( (oneGame) => oneGame._id == senderGame);
     let recipientGame = trade.recipient.owned_game_id;
     recipientGame = this.props.gameList.find( (oneGame) => oneGame._id == recipientGame);
+    console.log('sender', senderGame);
+    console.log('recip', recipientGame);
     if (!senderGame || !recipientGame) return (
       <p className='error'>Incorrect Game IDs</p>
     );
     return (
-      <Link to={'/trade/' + this.props.trade._id} className='trade-card'>
-        <div className={'trade-header trade-status-' + status}>{status}</div>
-        <Paper>
-          <img src={senderGame.BGG_info.thumb_image_url} alt='main image'/>
-          <h4>{senderGame.BGG_info.title}</h4>
-          <div>First avatar</div>
-          <h4>{senderGame.user}</h4>
+      <Link to={'/trade/' + this.props.trade._id}>
+        <Paper className='trade-paper'>
+          <p className='trade-info-label'>Status: <span className='trade-status-text'>{status}</span></p>
+          <div className='trade-paper-row'>
+            <GameCard 
+              info={senderGame.BGG_info} 
+              game_id={senderGame._id} 
+              expanded={this.props.expanded}
+              onClickFn={ () => null }
+              key='sender-card'
+            />
+            <CompareArrowsIcon key='icon' style={{width:'60px',height:'60px',color:'#555'}}/>
+            <GameCard 
+              info={recipientGame.BGG_info}
+              game_id={recipientGame._id}
+              expanded={this.props.expanded}
+              onClickFn={ () => null }
+              key='recipient-card'
+            />
+          </div>
+          <p className='trade-info-label'>Notes:</p>
+          <p className='trade-notes'>{this.props.trade.notes || 'no notes'}</p>
         </Paper>
-        <div>Arrow Right</div>
-        <div>Arrow Left</div>
-        <Paper>
-          <img src={recipientGame.BGG_info.thumb_image_url} alt='main image'/>
-          <h4>{recipientGame.BGG_info.title}</h4>
-          <div>Second avatar</div>
-          <h4>{recipientGame.user}</h4>
-        </Paper>
-
       </Link>
     );
   }
@@ -40,7 +51,8 @@ class TradeCard extends Component {
 
 TradeCard.propTypes = {
   trade: React.PropTypes.object.isRequired,
-  gameList: React.PropTypes.array.isRequired
+  gameList: React.PropTypes.array.isRequired,
+  expanded: React.PropTypes.bool
 }
 
 export default TradeCard;
