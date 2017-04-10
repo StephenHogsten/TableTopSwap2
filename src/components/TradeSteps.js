@@ -6,6 +6,7 @@ import GameList from './GameList.js';
 import {Step, Stepper, StepLabel} from 'material-ui/Stepper';
 import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
+import TextField from 'material-ui/TextField';
 import AutoRenewIcon from 'material-ui/svg-icons/action/autorenew';
 
 const laststep = 2;
@@ -19,8 +20,6 @@ const saveStates = {
 class TradeSteps extends Component {
   constructor(props) {
     super();
-    console.log('this.props');
-    console.log(props);
     this.state = {
       step: 0,
       recipient: null,
@@ -30,12 +29,8 @@ class TradeSteps extends Component {
       saveState: saveStates.none,
       error: null
     };
-    console.log('laststep');
-    console.log(laststep);
   }
   stepDetails() {
-    console.log('this.props 2');
-    console.log(this.props);
     switch (this.state.step) {
       case 0:
         return (
@@ -63,10 +58,11 @@ class TradeSteps extends Component {
         return (
           <div className='trade-details-body'>
             <h5>(optional) Add a message to your request</h5>
-            <textarea 
+            <TextField 
+              multiLine={true} 
               id='trade-notes' 
-              defaultValue={this.state.notes}
-              onBlur={ (event) => this.setState({ notes: event.target.value }) }
+              value={this.state.notes}
+              onChange={ (event) => this.setState({ notes: event.target.value }) }
             />
           </div>
         );
@@ -98,11 +94,8 @@ class TradeSteps extends Component {
     // see if there's already corresponding sought games
     let senderOwned = this.state.senderOwned;
     let recipientOwned = this.state.recipientOwned;
-    console.log('recipientOwned.bggid: ', recipientOwned.BGG_id);
-    console.log('senderOwned.bggid: ', senderOwned.BGG_id);
     let mySought = this.props.mySoughtGames.find( (game) => game.BGG_id === recipientOwned.BGG_id );
     let sought = this.props.soughtGames.find( (game) => game.BGG_id === senderOwned.BGG_id)
-    console.log('mySought: ', mySought);
     let searchFor = '/api/add_trade?sender_owned_game=' + senderOwned._id 
       + '&receiver_owned_game=' + recipientOwned._id
       + '&receiver=' + this.state.recipient
@@ -132,13 +125,11 @@ class TradeSteps extends Component {
       case saveStates.none:
         break;
       case saveStates.done:
-        console.log('done');
       case saveStates.saving:
         return <AutoRenewIcon className='loading' />;
       case saveStates.error:
         return <div className='error'>{JSON.stringify(this.state.error)}</div>
       default: 
-        console.log('invalid save state: ' + this.state.saveState);
         return <div className='error'>Invalid save state</div>
     }
     const step = this.state.step;

@@ -171,7 +171,7 @@ class MainBody extends Component {
             <p className='no-games'>No Game with ID</p>
         }} />
         <Route key='trades' exact path='/my_trades' render={ () => 
-          true? (
+          user? (
             <div className='main-body'>
               <TradeList 
                 currentUser={user}
@@ -204,38 +204,44 @@ class MainBody extends Component {
         }} />
         <Route key='new_trade' exact path='/new/trade' render={ () => 
           user? (
-            <TradeSteps 
-              soughtGames={soughtGames}
-              ownedGames={ownedGames}
-              mySoughtGames={mySoughtGames}
-              myOwnedGames={myOwnedGames}
-            />
+            <div className='main-body'>
+              <TradeSteps 
+                soughtGames={soughtGames}
+                ownedGames={ownedGames}
+                mySoughtGames={mySoughtGames}
+                myOwnedGames={myOwnedGames}
+              />
+            </div>
           ) : (
             <Redirect to='/' />
           )
         } />
         <Route key='new_trade_sender' path='/new/trade/sender/:game' render={ ({match}) => (
           user? (
-            <TradeSteps 
-              soughtGames={soughtGames}
-              ownedGames={ownedGames}
-              mySoughtGames={mySoughtGames}
-              myOwnedGames={myOwnedGames}
-              myOwnedGame={JSON.parse(decodeURIComponent(match.params.game))}
-            />
+            <div className='main-body'>
+              <TradeSteps 
+                soughtGames={soughtGames}
+                ownedGames={ownedGames}
+                mySoughtGames={mySoughtGames}
+                myOwnedGames={myOwnedGames}
+                myOwnedGame={JSON.parse(decodeURIComponent(match.params.game))}
+              />
+            </div>
           ) : (
             <Redirect to='/' />
           )
         )} />
         <Route key='new_trade_receiver' path='/new/trade/receiver/:game' render={ ({match}) => (
           user? (
-            <TradeSteps 
-              soughtGames={soughtGames}
-              ownedGames={ownedGames}
-              mySoughtGames={mySoughtGames}
-              myOwnedGames={myOwnedGames}
-              ownedGame={JSON.parse(decodeURIComponent(match.params.game))}
-            />
+            <div className='main-body'>
+              <TradeSteps 
+                soughtGames={soughtGames}
+                ownedGames={ownedGames}
+                mySoughtGames={mySoughtGames}
+                myOwnedGames={myOwnedGames}
+                ownedGame={JSON.parse(decodeURIComponent(match.params.game))}
+              />
+            </div>
           ) : (
             <Redirect to='/' />
           )
