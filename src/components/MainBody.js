@@ -67,18 +67,18 @@ class MainBody extends Component {
         <Route key='proxy' path='/proxyme/:toproxy' component={ProxyText} />
         <Route key='home' exact path='/' render={() => {
           let userSpecifics = (!user)? null: [
+            (<Link to='/my' className='section-header' key='header'>My Games</Link>),
             (<Link to='/my_games/sought' className='sub-section-header' key='my-sought-header'>My Games Sought</Link>),
             (<GameList firstX={4} gameList={mySoughtGames} key='my-sought-games'/>),
             (<Link to='/my_games/owned' className='sub-section-header' key='my-own)ed-header'>My Games Offered</Link>),
             (<GameList firstX={4} gameList={myOwnedGames} key='my-owned-games'/>),
-            (<Divider key='divider'/>),
+            (<Divider className='section-divider' key='divider'/>),
             (<br key='br'/>)
           ];
           return (
             <div className='main-body'>
-              <h2 className='section-header' key='section-header'>All Games</h2>
-              <br key='br' />
               {userSpecifics}
+              <Link to='/all' className='section-header' key='section-header'>Community Games</Link>
               <Link to='/all_games/sought' className='sub-section-header' key='sought-header'>Games Sought</Link>
               <GameList firstX={4} gameList={soughtGames} key='sought-games'/>
               <Link to='/all_games/owned' className='sub-section-header' key='owned-header'>Games Offered</Link>

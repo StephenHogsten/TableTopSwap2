@@ -1,4 +1,4 @@
-$game-width: 300px;
+$game-width: 250px;
 $game-height: 300px;
 $game-width-expanded: 350px;
 $game-height-expanded: 430px;
@@ -20,7 +20,7 @@ $picture-height: 210px;
   width: $game-width;
   height: $game-height;
   color: white;
-  margin: 20px;
+  margin: 8px;
   position: relative;
 }
 .game-card-expanded {
