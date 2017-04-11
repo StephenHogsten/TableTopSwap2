@@ -81,8 +81,10 @@ I'll have mine based no board games instead (use the board game geek api: https:
   - [X] remove the testing menu options
 - [X] check that it's always _id when it should be (and vice versa?)
 - [ ] style everything in the shell
-  - [ ] add game screen
+  - [X] add game screen
+  - [ ] profile
   - [ ] login screen
+  - [ ] 'none'
   - [ ] replace things like text fields with the appropriate material components
   - [ ] fiddle with the linking within trades
   - [ ] add owner to card
@@ -106,6 +108,7 @@ I'll have mine based no board games instead (use the board game geek api: https:
 ## Bonuses
 - [ ] default focus where it belongs
 - [ ] paginate
+- [ ] handle delayed BGG search results
 - [ ] fix refreshing never having a user
 - [ ] messaging
 - [ ] email notification

@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
 import { json as d3Json } from 'd3-request';
 
+import TextField from 'material-ui/TextField';
 import SearchIcon from 'material-ui/svg-icons/action/search';
 import AutoRenewIcon from 'material-ui/svg-icons/action/autorenew';
+
+import '../scss/AddGame.scss';
 
 const saveStates = {
   'none': 'none',
@@ -94,16 +97,19 @@ class AddGame extends Component {
           "What game do you want to trade away?":
           "What game are you looking for?"
         }</h2>
-        <input 
-          type='text' 
-          id='game-title' 
-          placeholder='title' 
-          onFocus={(event) => event.target.select()}
-          onChange={(event) => this.searchForGameDelay(event) }
-        />
-        <SearchIcon />
-        <div className='game-list'>
+        <div className='search-bar'>
+          <TextField 
+            type='text' 
+            id='game-title' 
+            hintText='game title'
+            onChange={(event) => this.searchForGameDelay(event) }
+          />
+          <SearchIcon style={{color:"#666"}}/>
+        </div>
+        <div className='game-search-list'>
           {this.state.gameResults}
+          <p>test</p>
+          <p>test2</p>
         </div>
       </div>
     )

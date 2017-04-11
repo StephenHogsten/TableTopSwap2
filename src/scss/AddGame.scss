@@ -1,0 +1,23 @@
+.search-bar {
+  display: flex;
+  align-items: center;
+}
+
+.game-search-result {
+  background-color: white;
+  border-top: 1px solid #999;
+  display: block;
+  padding: 10px;
+  margin: 0px;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 300;
+  width: 400px;
+  text-overflow: ellipsis;
+  &:first-child {
+    border: none;
+  }
+  &:hover {
+    background: rgba(0,205,255,.3);
+    cursor: pointer;
+  }
+}

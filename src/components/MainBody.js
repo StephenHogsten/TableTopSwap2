@@ -248,22 +248,26 @@ class MainBody extends Component {
         )} />
         <Route key='new_sought' exact path='/new/game/sought' render={ () =>
           user ? (
-            <AddGame 
-              user={user}
-              mySoughtGames={mySoughtGames}
-              isGameOwned={false}
-            />
+            <div className='main-body'>
+              <AddGame 
+                user={user}
+                mySoughtGames={mySoughtGames}
+                isGameOwned={false}
+              />
+            </div>
           ) : (
             <Redirect to='/' />
           )
         } />
         <Route key='new_owned' exact path='/new/game/owned' render={ () => 
           user? (
-            <AddGame 
-              user={user}
-              myOwnedGames={myOwnedGames}
-              isGameOwned={true}
-            />
+            <div className='main-body'>
+              <AddGame 
+                user={user}
+                myOwnedGames={myOwnedGames}
+                isGameOwned={true}
+              />
+            </div>
           ) : (
             <Redirect to='/' />
           )
