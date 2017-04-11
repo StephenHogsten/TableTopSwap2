@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import GridList from 'material-ui/GridList';
-import Subheader from 'material-ui/Subheader';
 import GameCard from './GameCard.js';
 import '../scss/GameList.scss';
 
@@ -21,7 +19,7 @@ class GameList extends Component {
             () => this.props.onClickFn(thisGame):
             null
           }
-          selected={this.props.activeId == thisGame._id}
+          selected={this.props.activeId === thisGame._id}
         />
       );
     }

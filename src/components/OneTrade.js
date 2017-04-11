@@ -5,7 +5,7 @@ import { json as d3Json } from 'd3-request';
 import TradeCard from './TradeCard.js';
 
 import RaisedButton from 'material-ui/RaisedButton';
-import AutoRenewIcon from 'material-ui/svg-icons/action/autorenew';
+// import AutoRenewIcon from 'material-ui/svg-icons/action/autorenew';
 
 // separating these out since we'll have to add interaction with server
 

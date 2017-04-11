@@ -78,10 +78,10 @@ class AddGame extends Component {
   }
   render() {
     switch (this.state.saveState) {
-      case saveStates.none:
-        break;
       case saveStates.done:
         console.log('state: done');
+      case saveStates.none:   // eslint-disable-line
+        break;
       case saveStates.saving:
         return <AutoRenewIcon className='loading' />;
       case saveStates.error:

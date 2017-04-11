@@ -83,9 +83,9 @@ I'll have mine based no board games instead (use the board game geek api: https:
 - [ ] style everything in the shell
   - [X] add game screen
   - [X] profile
-  - [ ] login screen
+  - [X] login screen
   - [ ] 'none'
-  - [ ] replace things like text fields with the appropriate material components
+  - [X] replace things like text fields with the appropriate material components
   - [ ] fiddle with the linking within trades
   - [ ] add owner to card
 - [ ] deploy to heroku
@@ -99,6 +99,7 @@ I'll have mine based no board games instead (use the board game geek api: https:
   - [ ] for server endpoints?
 - [ ] indicate in GameList if they have more than four
 - [ ] sort GameList by most recent first
+- [ ] close icon menu when navigating to profile
 - [ ] fiddle with all the wording
 - [ ] for saving, does done need to be in componentwillmount?
 

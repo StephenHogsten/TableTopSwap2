@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter, NavLink, Link } from 'react-router-dom';
+import { BrowserRouter, NavLink } from 'react-router-dom';
 import '../scss/App.scss';
 import injectTapEventPlugin from 'react-tap-event-plugin';  
 import * as d3 from 'd3-request';

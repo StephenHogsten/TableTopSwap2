@@ -12,9 +12,9 @@ class TradeCard extends Component {
     let trade = this.props.trade;
     let status = trade.status;
     let senderGame = trade.sender.owned_game_id;
-    senderGame = this.props.gameList.find( (oneGame) => oneGame._id == senderGame);
+    senderGame = this.props.gameList.find( (oneGame) => oneGame._id == senderGame);   // eslint-disable-line
     let recipientGame = trade.recipient.owned_game_id;
-    recipientGame = this.props.gameList.find( (oneGame) => oneGame._id == recipientGame);
+    recipientGame = this.props.gameList.find( (oneGame) => oneGame._id == recipientGame);   // eslint-disable-line
     console.log('sender', senderGame);
     console.log('recip', recipientGame);
     if (!senderGame || !recipientGame) return (

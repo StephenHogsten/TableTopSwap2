@@ -87,10 +87,8 @@ class MainBody extends Component {
             </div>
           );
         }} />
-        <Route key='login' exact path='/login' component={LoginForm} />
-        <Route key='login_failed' exact path='/login_failed' render={() => (
-          <LoginForm failure='true' />
-        )}/>
+        <Route key='login' exact path='/login/' component={LoginForm} />
+        <Route key='login_info' exact path='/login/:info' component={LoginForm} />
         <Route key='user' path='/store_user' render={() => (
           <SaveUserAndRedirect saveUser={() => this.props.saveUser()} />
         )} />

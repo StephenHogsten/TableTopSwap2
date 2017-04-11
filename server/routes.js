@@ -85,11 +85,19 @@ module.exports = (passport) => {
   const router = express.Router();
 
   //LOGIN
-  router.post('/login', passport.authenticate('local', {
-    failureRedirect: '/login_failed'
-  }), (req, res) => {
-    // we only get here if successful
-    res.redirect('/store_user/' + req.user.username);
+  router.post('/login', function(req, res, next) {
+    passport.authenticate('local', function(err, user, info) {
+      if (err) { return next(err); }
+      if (!user) { return next(info); }
+      req.logIn(user, function(err) {
+        if (err) { return next(err); }
+        return res.redirect('/store_user/' + req.user.username);
+      });
+    })(req, res, next);
+  }, (error, req, res, next) => {
+    // send errors (if successful we already redirected)
+    console.log('error: ', error);
+    return res.redirect('/login/' + encodeURIComponent(JSON.stringify(error)));
   });
   //  logout
   router.get('/logout', (req, res) => {
@@ -117,8 +125,20 @@ module.exports = (passport) => {
         password: req.body.password
       });
       newUser.save( (err) => {
-        if (err) { res.send({ error: err }); }
-        else {
+        if (err) { 
+          // err - send the user back to login 
+          console.log('-----');
+          console.log('error', err);
+          console.log('-----');
+          let message;
+          if (err.code === 11000) { message = 'username already taken' }
+          else if (err.errors.hasOwnProperty('password') && err.errors.password.message === 'Password must be at least 8 characters') {
+            message = 'password must be at least 8 characters';
+          } else { message = 'unable to create user'; }
+          res.redirect('/login/' + encodeURIComponent(JSON.stringify({
+            message: message
+          })));
+        }  else {
           next();
         }
       });

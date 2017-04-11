@@ -2,7 +2,6 @@
 
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
-import { json as d3Json } from 'd3-request';
 
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import IconMenu from 'material-ui/IconMenu';
@@ -30,7 +29,7 @@ class AddButton extends Component {
       case undefined:
       case 'all':
         menuItems.push(<MenuItem key='trade' primaryText="Trade Request" onTouchTap={ () => { this.props.history.push('/new/trade') }} />);
-      case 'game':
+      case 'game':  // eslint-disable-line
         menuItems.push(<MenuItem key='wanted-game' primaryText="Wanted Game" onTouchTap={ () => { this.props.history.push('/new/game/sought')}} />);
         menuItems.push(<MenuItem key='owned-game' primaryText="Owned Game" onTouchTap={ () => { this.props.history.push('/new/game/owned') }} />);
         break;

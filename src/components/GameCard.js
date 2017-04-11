@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import {Card, CardMedia, CardTitle, CardText} from 'material-ui/Card';
+import {Card, CardTitle, CardText} from 'material-ui/Card';
 import AccessTimeIcon from 'material-ui/svg-icons/device/access-time';
 import PersonOutlineIcon from 'material-ui/svg-icons/social/person-outline';
 import SchoolIcon from 'material-ui/svg-icons/social/school';

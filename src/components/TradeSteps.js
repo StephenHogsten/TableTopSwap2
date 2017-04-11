@@ -100,7 +100,7 @@ class TradeSteps extends Component {
       + '&receiver_owned_game=' + recipientOwned._id
       + '&receiver=' + this.state.recipient
       + '&notes=' + this.state.notes
-      + '&status=' + 'sent';
+      + '&status=' + 'sent';    // eslint-disable-line
     if (mySought) searchFor += '&sender_sought_game=' + mySought._id;
     if (sought) searchFor += '&recever_sought_game=' + sought._id;
     d3Json(searchFor, (err, data) => {
