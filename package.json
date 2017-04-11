@@ -69,7 +69,7 @@
   "scripts": {
     "start_client": "node scripts/start.js",
     "start_server": "nodemon ./server/server.js",
-    "start": "concurrently \"yarn start_server\" \"yarn start_client\"",
+    "start": "yarn build & node server.js",
     "build": "node scripts/build.js",
     "test": "node scripts/test.js --env=jsdom"
   },

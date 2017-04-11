@@ -135,7 +135,7 @@ module.exports = {
           cacheDirectory: true
         }
       },
-			// creat css files from scss
+			// create css files from scss
 			{
 				test: /\.scss$/,
 				include: paths.appSrc,

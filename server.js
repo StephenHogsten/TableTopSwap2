@@ -1,6 +1,7 @@
 'use strict';
 
 require('dotenv').config();
+const path = require('path');
 const express = require('express');
 const session = require('express-session');
 const mongoose = require('mongoose');
@@ -18,6 +19,12 @@ mongoose.connect(process.env.MONGO_URI, (err) => {
 // initialize app
 const app = express();
 
+app.use(express.static('./build'));
+
+app.get('/', function (req, res) {
+  res.sendFile(path.join(__dirname, './build', 'index.html'));
+});
+
 var sessionOptions = {
   secret: process.env.SECRET || 'simplesecret',
   resave: false,
@@ -32,7 +39,7 @@ if (process.env.ENV_TYPE === 'PRODUCTION') {
 }
 
 // execute my passport set-up
-require('./configurePassport.js')(passport);
+require('./server/configurePassport.js')(passport);
 
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(cookieParser());
@@ -40,7 +47,7 @@ app.use(session( sessionOptions ));
 app.use(passport.initialize());
 app.use(passport.session());
 
-const router = require('./routes')(passport);
+const router = require('./server/routes')(passport);
 app.use('/api', router);
 
 const port = process.env.PORT || 3001;
