@@ -15,6 +15,7 @@ $picture-height: 210px;
   background: rgba(0,205,255,.3);
 }
 
+
 .game-card {
   background-repeat: no-repeat;
   width: $game-width;
@@ -30,6 +31,13 @@ $picture-height: 210px;
   &:hover {
     cursor: pointer;
   }
+}
+.none-card {
+  @extend .game-card;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #555;
 }
 
 .game-image {

@@ -84,13 +84,13 @@ I'll have mine based no board games instead (use the board game geek api: https:
   - [X] add game screen
   - [X] profile
   - [X] login screen
-  - [ ] 'none'
+  - [X] 'none'
   - [X] replace things like text fields with the appropriate material components
-  - [ ] fiddle with the linking within trades
-  - [ ] add owner to card
+- [ ] fiddle with the linking within trades
 - [ ] deploy to heroku
   ---
 - [ ] test more advancing scenarios
+- [ ] add owner to game card
 - [ ] retrigger getting trades and games when appropriate
 - [ ] add loading when getting search results back
 - [ ] AddButton.js "iconButton.setKeyboardFocus is not a fn" on ESC
@@ -107,6 +107,7 @@ I'll have mine based no board games instead (use the board game geek api: https:
 - [ ] default focus where it belongs
 - [ ] paginate
 - [ ] handle delayed BGG search results
+- [ ] handle trades with no owned games better
 - [ ] fix refreshing never having a user
 - [ ] messaging
 - [ ] require an email on login

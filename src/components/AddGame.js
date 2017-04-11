@@ -108,8 +108,6 @@ class AddGame extends Component {
         </div>
         <div className='game-search-list'>
           {this.state.gameResults}
-          <p>test</p>
-          <p>test2</p>
         </div>
       </div>
     )

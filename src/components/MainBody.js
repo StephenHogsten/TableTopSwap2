@@ -69,9 +69,9 @@ class MainBody extends Component {
           let userSpecifics = (!user)? null: [
             (<Link to='/my' className='section-header' key='header'>My Games</Link>),
             (<Link to='/my_games/sought' className='sub-section-header' key='my-sought-header'>My Games Sought</Link>),
-            (<GameList firstX={4} gameList={mySoughtGames} key='my-sought-games'/>),
+            (<GameList firstX={4} gameList={mySoughtGames} isOwned={false} key='my-sought-games'/>),
             (<Link to='/my_games/owned' className='sub-section-header' key='my-own)ed-header'>My Games Offered</Link>),
-            (<GameList firstX={4} gameList={myOwnedGames} key='my-owned-games'/>),
+            (<GameList firstX={4} gameList={myOwnedGames} isOwned={true} key='my-owned-games'/>),
             (<Divider className='section-divider' key='divider'/>),
             (<br key='br'/>)
           ];
@@ -108,9 +108,9 @@ class MainBody extends Component {
           <div className='main-body'>
             <span className='section-header' key='section-header'>Community Games</span>
             <Link to='/all_games/sought' className='sub-section-header' key='sought-header'>Games Sought</Link>
-            <GameList firstX={4} gameList={soughtGames} key='sought-games'/>
+            <GameList firstX={4} gameList={soughtGames} key='sought-games' isOwned={false}/>
             <Link to='/all_games/owned' className='sub-section-header' key='owned-header'>Games Offered</Link>
-            <GameList firstX={4} gameList={ownedGames} key='owned-games'/>
+            <GameList firstX={4} gameList={ownedGames} key='owned-games' isOwned={true}/>
             <AddButton user={user} mode='game' />
           </div>
         )} />
@@ -119,9 +119,9 @@ class MainBody extends Component {
             <div className='main-body'>
               <span className='section-header' key='section-header'>My Games</span>
               <Link to='/my_games/sought' className='sub-section-header' key='my-sought-header'>My Games Sought</Link>
-              <GameList firstX={4} gameList={mySoughtGames} key='my-sought-games'/>
+              <GameList firstX={4} gameList={mySoughtGames} isOwned={false} key='my-sought-games'/>
               <Link to='/my_games/owned' className='sub-section-header' key='my-owned-header'>My Games Offered</Link>
-              <GameList firstX={4} gameList={myOwnedGames} key='my-owned-games'/>
+              <GameList firstX={4} gameList={myOwnedGames} isOwned={true} key='my-owned-games'/>
               <AddButton user={user} mode='game' />
             </div>
           ) : (
@@ -132,7 +132,7 @@ class MainBody extends Component {
           user? (
             <div className='main-body'>
               <h2 className='section-header' key='my-sought-header'>My Games Sought</h2>
-              <GameList firstX={20} gameList={mySoughtGames} key='my-sought-games' />
+              <GameList firstX={20} gameList={mySoughtGames} isOwned={false} key='my-sought-games' />
               <AddButton user={user} mode='sought_game' />
             </div>
           ) : (
@@ -143,7 +143,8 @@ class MainBody extends Component {
           user? (
             <div className='main-body'>
               <h2 className='section-header' key='my-owned-header'>My Games Owned</h2>
-              <GameList firstX={20} gameList={myOwnedGames} gameType='my_owned' key='my-owned-games' />
+              <GameList firstX={20} gameList={myOwnedGames} isOwned={true} key='my-owned-games' />
+              <AddButton user={user} mode='sought_game' />
             </div>
           ) : (
             <Redirect to='/' />

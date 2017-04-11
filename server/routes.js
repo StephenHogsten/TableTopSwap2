@@ -84,7 +84,7 @@ module.exports = (passport) => {
 
   const router = express.Router();
 
-  //LOGIN
+  //USER INFO / LOGIN
   router.post('/login', function(req, res, next) {
     passport.authenticate('local', function(err, user, info) {
       if (err) { return next(err); }
@@ -117,6 +117,16 @@ module.exports = (passport) => {
     } else {
       res.send({ message: 'no active session' });
     }
+  });
+  router.get('/user/:id', (req, res) => {
+    if (!req.params.id) {
+      res.send({ error: 'no user id supplied' });
+      return;
+    }
+    User.findById(req.params.id, (err, user) => {
+      if (err) res.send({ error: err });
+      else { res.send({ username: user.username }); console.log('username', user); }
+    });
   });
   router.post('/add_user', (req, res, next) => {
       let newUser = new User({

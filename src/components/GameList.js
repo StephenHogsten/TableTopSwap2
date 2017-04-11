@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import GameCard from './GameCard.js';
+import GameCard, { NoneCard } from './GameCard.js';
 import '../scss/GameList.scss';
 
 class GameList extends Component {
@@ -24,7 +24,11 @@ class GameList extends Component {
       );
     }
     if (games.length === 0) games.push(
-      <p className='no-games' key='no-games'>None</p>
+      <NoneCard linkTo={
+        this.props.hasOwnProperty('isOwned')?
+        (this.props.isOwned? 'new/game/owned': 'new/game/sought'):
+        ""
+      } />
     );
     return (
       <div className="game-list">
@@ -35,7 +39,7 @@ class GameList extends Component {
 }
 
 GameList.propTypes = {
-  // 
+  isOwned: React.PropTypes.bool,
   firstX: React.PropTypes.number,
   gameList: React.PropTypes.array.isRequired,
   onClickFn: React.PropTypes.func,

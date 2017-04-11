@@ -11,7 +11,7 @@ import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 
 const MenuLink = ({to, label, clickFn}) => (
   <Link to={'/' + to}>
-    <MenuItem primaryText={label} onTouchTap={clickFn}/>
+    <MenuItem primaryText={label} className='title-link' onTouchTap={clickFn}/>
   </Link>
 );
 

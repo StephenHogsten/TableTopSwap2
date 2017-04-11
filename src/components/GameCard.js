@@ -76,3 +76,11 @@ GameCard.propTypes = {
 }
 
 export default GameCard;
+
+export const NoneCard = (props) => (
+  <Link to={'/' + props.linkTo}>
+    <Card className='none-card'>
+      <CardTitle title={props.title || 'None'} titleColor='#666' />
+    </Card>
+  </Link>
+);

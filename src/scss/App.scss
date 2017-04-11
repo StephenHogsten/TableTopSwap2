@@ -5,9 +5,6 @@
   margin: 5px;
 }
 
-// div {
-//   @include unstyled;
-// }
 a {
   text-decoration: none;
 }
@@ -17,42 +14,16 @@ body {
   font-family: 'Roboto', sans-serif;
 }
 
-.white-font {
-  color: white;
-}
 .title-link {
   color: white;
   text-decoration: none;
-}
-
-.App {
-  text-align: center;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 300;
 }
 
 .App-logo {
   animation: App-logo-spin infinite 20s linear;
   height: 80px;
-}
-
-.loading {
-  animation: App-logo-spin infinite 5s linear;
-}
-
-.App-header {
-  background-color: #222;
-  height: 150px;
-  padding: 20px;
-  color: white;
-}
-
-.HogDog {
-  background-color: pink;
-  height: 200px;
-  min-width: 200px;
-}
-
-.App-intro {
-  font-size: large;
 }
 
 @keyframes App-logo-spin {

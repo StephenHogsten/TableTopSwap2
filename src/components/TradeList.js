@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 
+import { NoneCard } from './GameCard.js';
 import TradeCard from './TradeCard.js';
 
 class TradeList extends Component {
@@ -10,7 +11,7 @@ class TradeList extends Component {
         <TradeCard trade={oneTrade} key={oneTrade._id} gameList={this.props.gameList}/>
       );
     });
-    if (trades.length === 0) trades = <p className='error'>No current trades</p>
+    if (trades.length === 0) trades = <NoneCard linkTo='new/trade' />;
     
     // display each section that should exist for the user
     return (
