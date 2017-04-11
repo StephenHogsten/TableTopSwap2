@@ -86,9 +86,9 @@ I'll have mine based no board games instead (use the board game geek api: https:
   - [X] login screen
   - [X] 'none'
   - [X] replace things like text fields with the appropriate material components
-- [ ] fiddle with the linking within trades
 - [ ] deploy to heroku
   ---
+- [ ] fiddle with the linking within trades
 - [ ] test more advancing scenarios
 - [ ] add owner to game card
 - [ ] retrigger getting trades and games when appropriate
