@@ -99,7 +99,9 @@ class MainBody extends Component {
         )} />
         <Route key='profile' exact path='/profile' render={() => 
           user? (
-            <Profile user={user} />
+            <div className='main-body'>
+              <Profile currentUser={user} trades={this.props.tradeList} games={this.props.gameList} />
+            </div>
           ) : (
             <Redirect to='/' />
           )

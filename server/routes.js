@@ -97,6 +97,7 @@ module.exports = (passport) => {
     res.send('logging out');
   });
   router.get('/checksession', (req, res) => {
+    console.log('checking session');
     if (req.user) {
       res.send({ 
         _id: req.user._id,

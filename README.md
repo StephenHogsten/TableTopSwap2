@@ -82,7 +82,7 @@ I'll have mine based no board games instead (use the board game geek api: https:
 - [X] check that it's always _id when it should be (and vice versa?)
 - [ ] style everything in the shell
   - [X] add game screen
-  - [ ] profile
+  - [X] profile
   - [ ] login screen
   - [ ] 'none'
   - [ ] replace things like text fields with the appropriate material components
@@ -97,9 +97,6 @@ I'll have mine based no board games instead (use the board game geek api: https:
 - [ ] jest
   - [ ] for react components
   - [ ] for server endpoints?
-  - [ ] create new 'sought' games if they don't already exist fromm trades
-    - [ ] when sending, add sought for sender
-    - [ ] when accepting add sought for recipient
 - [ ] indicate in GameList if they have more than four
 - [ ] sort GameList by most recent first
 - [ ] fiddle with all the wording
@@ -111,9 +108,9 @@ I'll have mine based no board games instead (use the board game geek api: https:
 - [ ] handle delayed BGG search results
 - [ ] fix refreshing never having a user
 - [ ] messaging
-- [ ] email notification
 - [ ] require an email on login
-- [ ] put usre in local storage or something
+- [ ] email notification
+- [ ] put user in local storage or something to navigate properly
 - [ ] indicate games sought by the person you're sending too
 - [ ] automatically match people
 - [ ] style the add buttons better 
