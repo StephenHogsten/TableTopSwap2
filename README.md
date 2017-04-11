@@ -88,35 +88,36 @@ I'll have mine based no board games instead (use the board game geek api: https:
   - [X] replace things like text fields with the appropriate material components
 - [ ] deploy to heroku
   ---
-- [ ] fiddle with the linking within trades
-- [ ] test more advancing scenarios
-- [ ] add owner to game card
-- [ ] retrigger getting trades and games when appropriate
-- [ ] add loading when getting search results back
-- [ ] AddButton.js "iconButton.setKeyboardFocus is not a fn" on ESC
+- [ ] fix refreshing never having a user
 - [ ] jest
+  - [ ] test more advancing scenarios if possible
   - [ ] for react components
   - [ ] for server endpoints?
+- [ ] retrigger getting trades and games when appropriate
+- [ ] add loading when getting search results back
+- [ ] fiddle with the linking within trades
+- [ ] add owner to game card
 - [ ] indicate in GameList if they have more than four
 - [ ] sort GameList by most recent first
-- [ ] close icon menu when navigating to profile
-- [ ] fiddle with all the wording
 - [ ] for saving, does done need to be in componentwillmount?
+- [ ] fiddle with all the wording
 
 ## Bonuses
-- [ ] default focus where it belongs
-- [ ] paginate
 - [ ] handle delayed BGG search results
-- [ ] handle trades with no owned games better
-- [ ] fix refreshing never having a user
-- [ ] messaging
-- [ ] require an email on login
-- [ ] email notification
-- [ ] put user in local storage or something to navigate properly
-- [ ] indicate games sought by the person you're sending too
-- [ ] automatically match people
+- [ ] default focus where it belongs
+  - [ ] enter should submit for login
+- [ ] AddButton.js "iconButton.setKeyboardFocus is not a fn" on ESC
+- [ ] close icon menu when navigating to profile
 - [ ] style the add buttons better 
   - [ ] make them show more plus buttons with text to the left instead of a menu
   - [ ] make text to the left show on hover for the just trade mode
+- [ ] indicate games sought by the person you're sending too
+- [ ] require an email on login
+- [ ] messaging
+- [ ] email notification
+- [ ] handle trades with no owned games better
+- [ ] put user in local storage or something to navigate properly
+- [ ] paginate
+- [ ] automatically match people
 - [ ] more validators for mongoose models
   - [ ] user fields should check that the user actually exists (not sure how to do this)
