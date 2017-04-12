@@ -80,7 +80,7 @@ I'll have mine based no board games instead (use the board game geek api: https:
   - [X] add a button when viewing your games to start a trade (make it select your game already)
   - [X] remove the testing menu options
 - [X] check that it's always _id when it should be (and vice versa?)
-- [ ] style everything in the shell
+- [X] style everything in the shell
   - [X] add game screen
   - [X] profile
   - [X] login screen
@@ -94,6 +94,7 @@ I'll have mine based no board games instead (use the board game geek api: https:
   - [ ] for react components
   - [ ] for server endpoints?
 - [ ] retrigger getting trades and games when appropriate
+  - [ ] make a sidebar for trades
 - [ ] add loading when getting search results back
 - [ ] fiddle with the linking within trades
 - [ ] add owner to game card
