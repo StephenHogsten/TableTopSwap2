@@ -24,7 +24,7 @@ class GameList extends Component {
       );
     }
     if (games.length === 0) games.push(
-      <NoneCard linkTo={
+      <NoneCard key='none' linkTo={
         this.props.hasOwnProperty('isOwned')?
         (this.props.isOwned? 'new/game/owned': 'new/game/sought'):
         ""

@@ -93,6 +93,7 @@ I'll have mine based no board games instead (use the board game geek api: https:
   - [ ] test more advancing scenarios if possible
   - [ ] for react components
   - [ ] for server endpoints?
+- [ ] create sign up button
 - [ ] retrigger getting trades and games when appropriate
   - [ ] make a sidebar for trades
 - [ ] add loading when getting search results back
@@ -101,6 +102,7 @@ I'll have mine based no board games instead (use the board game geek api: https:
 - [ ] indicate in GameList if they have more than four
 - [ ] sort GameList by most recent first
 - [ ] for saving, does done need to be in componentwillmount?
+  - [ ] add spinner to everything that waits?
 - [ ] fiddle with all the wording
 - [ ] remove unnecessary logging
 
