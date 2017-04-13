@@ -42,6 +42,7 @@ class App extends Component {
       }
       this.setState({
         currentUser: data._id,
+        currentUsername: data.username,
         isCheckingSession: false
       });
     });
@@ -90,7 +91,7 @@ class App extends Component {
   filterParent(gameList, soughtOrOwned, isUser, filterAccepted=true) {
     return gameList.filter( (game) => {
       if (game.sought_or_owned !== soughtOrOwned) return false;
-      if ( (game.user === this.state.currentUser) !== isUser ) return false;
+      if ( (game.user._id === this.state.currentUser) !== isUser ) return false;
       if (filterAccepted && (game.isTradeAccepted)) return false;
       return true;
     })

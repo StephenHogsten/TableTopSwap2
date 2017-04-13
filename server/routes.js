@@ -236,10 +236,17 @@ module.exports = (passport) => {
   });
   router.get('/all_games', (req, res) => {
     // is there a way to sort?
-    Game.find( {}, (err, games) => {
-      if (err) { res.send({ error: err }); return; }
-      res.send(games);
-    });
+    Game
+      .find({})
+      .populate('user', {
+        _id: true,
+        username: true,
+        picture: true
+      })
+      .exec( (err, games) => {
+        if (err) { res.send({ error: err }); return; }
+        res.send(games);
+      });
   });
 
   // TRADE DATABASE
