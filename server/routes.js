@@ -69,7 +69,7 @@ const queryBggInfo = (ids, cb) => {
       gameData = gameData.boardgames.boardgame;
       console.log(3);
       // now we have an array of games
-      result = [];
+      let result = [];
       for (let gameIdx=0; gameIdx < gameData.length; gameIdx++) {
         result.push(BGG2Game(gameData[gameIdx]));
         console.log('5.1');
@@ -108,6 +108,7 @@ module.exports = (passport) => {
     console.log('checking session');
     if (req.user) {
       res.send({ 
+        activeSession: true,
         _id: req.user._id,
         username: req.user.username,
         email: req.user.email,
@@ -115,7 +116,7 @@ module.exports = (passport) => {
         picture: null
       });
     } else {
-      res.send({ message: 'no active session' });
+      res.send({ activeSession: false, message: 'no active session' });
     }
   });
   router.get('/user/:id', (req, res) => {

@@ -4,6 +4,8 @@ import { Switch, Route, Link, Redirect } from 'react-router-dom';
 import { text as d3Text } from 'd3-request';
 
 import Divider from 'material-ui/Divider';
+import AutoRenewIcon from 'material-ui/svg-icons/action/autorenew';
+
 import GameList from './GameList.js';
 import TradeList from './TradeList.js';
 import OneGame from './OneGame.js';
@@ -40,6 +42,16 @@ class ClearUserAndRedirect extends Component {
       <div className='error'>Logging you out...</div>:
       <Redirect to='/' />
     );
+  }
+}
+
+const PrivateRoute = (props) => {
+  if (props.isCheckingSession) {
+    return (
+      <div className='main-body'>
+        <AutoRenewIcon className='loading' />
+      </div>
+    )
   }
 }
 
@@ -289,6 +301,7 @@ MainBody.propTypes = {
   filterMySought: React.PropTypes.func.isRequired,
   filterMyOwned: React.PropTypes.func.isRequired,
   currentUser: React.PropTypes.string,
+  isCheckingSession: React.PropTypes.bool.isRequired,
   saveUser: React.PropTypes.func.isRequired,
   clearUser: React.PropTypes.func.isRequired
 }

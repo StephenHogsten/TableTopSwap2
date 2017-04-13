@@ -64,14 +64,13 @@ I'll have mine based no board games instead (use the board game geek api: https:
   - [X] retrieve all trades
   - [X] switch around to not pass the user id through a parameter
   - [X] interact with trades 
-- [ ] link client code to real API endpoints 
+- [X] link client code to real API endpoints 
   - [X] add all games to state
   - [X] add all trades to state
   - [X] adding new game
   - [X] fix clicking on gamecard
   - [X] add new trade
   - [X] advance trade
-- [ ] create something to check if they're logged in properly periodically
 - [X] Add Buttons
   - [X] add a button to the main page to add either games or trades (trades only if logged in)
   - [X] add a button to the trade page to create a new trade
@@ -89,6 +88,7 @@ I'll have mine based no board games instead (use the board game geek api: https:
 - [X] deploy to heroku
   ---
 - [ ] fix refreshing never having a user
+  - [ ] create something to check if they're logged in properly periodically?
 - [ ] jest
   - [ ] test more advancing scenarios if possible
   - [ ] for react components

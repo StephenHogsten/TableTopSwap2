@@ -30,9 +30,21 @@ class App extends Component {
       gameList: [],
       tradeList: [],
       currentUser: null,
+      isCheckingSession: true,
       isDrawerOpen: false,
       lastUpdated: new Date()
     };
+  }
+  componentWillMount() {
+    d3.json('/api/checksession', (err, data) => {
+      if (err) {
+        this.setState({ isCheckingSession: false });
+      }
+      this.setState({
+        currentUser: data._id,
+        isCheckingSession: false
+      });
+    });
   }
   componentDidMount() {
     this.getAllGames();
@@ -137,6 +149,7 @@ class App extends Component {
 
             <MainBody 
               currentUser={this.state.currentUser}
+              isCheckingSession={this.state.isCheckingSession}
               gameList={this.state.gameList}
               tradeList={this.state.tradeList}
               saveUser={ (username) => this.saveUser(username) }

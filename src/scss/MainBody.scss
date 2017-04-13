@@ -39,3 +39,17 @@
   @include material-font(300);
   padding-left: 12px;
 }
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+.loading {
+  animation-name: spin;
+  animation-duration: 1s;
+  animation-iteration-count: infinite;
+}
