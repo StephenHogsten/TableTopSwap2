@@ -57,7 +57,7 @@ class TradeSteps extends Component {
       case 2:
         return (
           <div className='trade-details-body'>
-            <h5>(optional) Add a message to your request</h5>
+            <h5 style={{marginBottom:'5px'}}>(optional) Add a message to your request</h5>
             <TextField 
               multiLine={true} 
               id='trade-notes' 
@@ -117,6 +117,7 @@ class TradeSteps extends Component {
   }
   componentWillUpdate(nextProps, nextState) {
       if (nextState.saveState === saveStates.done) {
+        this.props.refreshTrades();
         history.back();
       }
   }
@@ -177,6 +178,7 @@ class TradeSteps extends Component {
 }
 
 TradeSteps.propTypes = {
+  refreshTrades: React.PropTypes.func.isRequired,
   soughtGames: React.PropTypes.array.isRequired,
   ownedGames: React.PropTypes.array.isRequired,
   mySoughtGames: React.PropTypes.array.isRequired,

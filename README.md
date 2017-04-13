@@ -91,13 +91,11 @@ I'll have mine based no board games instead (use the board game geek api: https:
 - [X] create sign up button
 - [ ] retrigger getting trades and games when appropriate
   - [ ] make a sidebar for trades
-- [ ] jest
-  - [ ] test more advancing scenarios if possible
-  - [ ] for react components
-  - [ ] for server endpoints?
 - [ ] add loading when getting search results back
+  - [ ] handle delayed BGG search results (multiple things)
 - [ ] fiddle with the linking within trades
 - [ ] add owner to game card
+  - [ ] add a color status bar to trade card
 - [ ] indicate in GameList if they have more than four
 - [ ] sort GameList by most recent first
 - [ ] for saving, does done need to be in componentwillmount?
@@ -106,7 +104,11 @@ I'll have mine based no board games instead (use the board game geek api: https:
 - [ ] remove unnecessary logging
 
 ## Bonuses
-- [ ] handle delayed BGG search results
+- [ ] mobile friendly
+- [ ] jest
+  - [ ] test more advancing scenarios if possible
+  - [ ] for react components
+  - [ ] for server endpoints?
 - [ ] default focus where it belongs
   - [ ] enter should submit for login
 - [ ] AddButton.js "iconButton.setKeyboardFocus is not a fn" on ESC
@@ -119,7 +121,6 @@ I'll have mine based no board games instead (use the board game geek api: https:
 - [ ] messaging
 - [ ] email notification
 - [ ] handle trades with no owned games better
-- [ ] put user in local storage or something to navigate properly
 - [ ] paginate
 - [ ] automatically match people
 - [ ] more validators for mongoose models
