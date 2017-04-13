@@ -4,7 +4,6 @@ import { Switch, Route, Link, Redirect } from 'react-router-dom';
 import { text as d3Text } from 'd3-request';
 
 import Divider from 'material-ui/Divider';
-import AutoRenewIcon from 'material-ui/svg-icons/action/autorenew';
 
 import GameList from './GameList.js';
 import TradeList from './TradeList.js';

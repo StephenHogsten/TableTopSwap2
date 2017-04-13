@@ -95,13 +95,16 @@ I'll have mine based no board games instead (use the board game geek api: https:
   - [X] add loading when getting search results back
   - [X] handle delayed BGG search results (multiple things) - pretty sure did it w/ closures
   - [X] add instant search with enter or click button
-- [ ] fiddle with the linking within trades
-- [ ] add owner to game card
-  - [ ] add a color status bar to trade card
+- [X] add owner to game card
+  - [X] create server api to take a list of userIDs and return details
+  - [X] pass game instead of BGG_info and ID
+  - [X] restyle the card
+- [ ] add a color status bar to trade card
 - [ ] indicate in GameList if they have more than four
 - [ ] sort GameList by most recent first
 - [ ] for saving, does done need to be in componentwillmount?
   - [ ] add spinner to everything that waits?
+- [ ] fiddle with the linking within trades
 - [ ] fiddle with all the wording
 - [ ] remove unnecessary logging
 
@@ -122,6 +125,7 @@ I'll have mine based no board games instead (use the board game geek api: https:
   - [ ] make them show more plus buttons with text to the left instead of a menu
   - [ ] make text to the left show on hover for the just trade mode
 - [ ] indicate games sought by the person you're sending too
+- [ ] link to twitter for profile pics
 - [ ] require an email on login
 - [ ] messaging
 - [ ] email notification

@@ -26,16 +26,14 @@ class TradeCard extends Component {
           <p className='trade-info-label'>Status: <span className='trade-status-text'>{status}</span></p>
           <div className='trade-paper-row'>
             <GameCard 
-              info={senderGame.BGG_info} 
-              game_id={senderGame._id} 
+              game={senderGame}
               expanded={this.props.expanded}
               onClickFn={ () => null }
               key='sender-card'
             />
             <CompareArrowsIcon key='icon' style={{width:'60px',height:'60px',color:'#555'}}/>
             <GameCard 
-              info={recipientGame.BGG_info}
-              game_id={recipientGame._id}
+              game={recipientGame}
               expanded={this.props.expanded}
               onClickFn={ () => null }
               key='recipient-card'

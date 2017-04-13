@@ -13,8 +13,7 @@ class GameList extends Component {
       games.push(
         <GameCard 
           key={thisGame._id || thisGame.BGG_id}
-          game_id={thisGame._id}
-          info={thisGame.BGG_info}
+          game={thisGame}
           onClickFn={ this.props.onClickFn?
             () => this.props.onClickFn(thisGame):
             null
