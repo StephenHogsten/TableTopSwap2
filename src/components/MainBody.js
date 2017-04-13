@@ -15,6 +15,7 @@ import AddGame from './AddGame.js';
 import Profile from './Profile.js';
 import LoginForm from './LoginForm.js';
 import AddButton from './AddButton.js';
+import Loading from './Loading.js';
 
 import '../scss/MainBody.scss';
 
@@ -41,9 +42,7 @@ class ClearUserAndRedirect extends Component {
 const UserRender = (props) => {
   if (props.isCheckingSession) {
     return (
-      <div className='main-body loading-body'>
-        <AutoRenewIcon className='loading' />
-      </div>
+      <Loading />
     );
   }
   if (!props.currentUser) {

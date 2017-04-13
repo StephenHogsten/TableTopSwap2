@@ -93,6 +93,7 @@ I'll have mine based no board games instead (use the board game geek api: https:
   - [X] make a sidebar for trades
 - [ ] add loading when getting search results back
   - [ ] handle delayed BGG search results (multiple things)
+  - [ ] add instant search with enter or click button
 - [ ] fiddle with the linking within trades
 - [ ] add owner to game card
   - [ ] add a color status bar to trade card
