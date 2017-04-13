@@ -91,7 +91,7 @@ module.exports = (passport) => {
       if (!user) { return next(info); }
       req.logIn(user, function(err) {
         if (err) { return next(err); }
-        return res.redirect('/store_user/' + req.user.username);
+        return res.redirect('/logged_in')
       });
     })(req, res, next);
   }, (error, req, res, next) => {

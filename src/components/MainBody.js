@@ -19,16 +19,6 @@ import ProxyText from './ProxyTest.js';
 
 import '../scss/MainBody.scss';
 
-class SaveUserAndRedirect extends Component {
-  componentWillMount() {
-    this.props.saveUser();
-  }
-  render() {
-    return (
-      <Redirect to='/' /> 
-    );
-  }
-}
 class ClearUserAndRedirect extends Component {
   componentWillMount() {
     d3Text('/api/logout', (err, data) => {
@@ -45,14 +35,25 @@ class ClearUserAndRedirect extends Component {
   }
 }
 
-const PrivateRoute = (props) => {
+// expects: 
+//   isCheckingSession (bool)
+//   currenUser        (string)
+//   render            (function for what to render)
+const UserRender = (props) => {
   if (props.isCheckingSession) {
     return (
-      <div className='main-body'>
+      <div className='main-body loading-body'>
         <AutoRenewIcon className='loading' />
       </div>
-    )
+    );
   }
+  if (!props.currentUser) {
+    sessionStorage.setItem('path', window.location.pathname);
+    return (
+      <Redirect to='/login/'  />
+    );
+  }
+  return props.render();
 }
 
 class MainBody extends Component {
@@ -73,13 +74,17 @@ class MainBody extends Component {
     let mySoughtGames = this.props.filterMySought(this.props.gameList);
     let myOwnedGames = this.props.filterMyOwned(this.props.gameList);
     let user = this.props.currentUser;
+    console.log('user', user);
+    console.log('test', user? true: false);
 
     return (
       <Switch className='main-body-routes'>
-        <Route key='proxy' path='/proxyme/:toproxy' component={ProxyText} />
+        <Route key='test' path='/testspin' render={() => (
+          <UserRender isCheckingSession={true} />
+        )} />
         <Route key='home' exact path='/' render={() => {
           let userSpecifics = (!user)? null: [
-            (<Link to='/my' className='section-header' key='header'>My Games</Link>),
+            (<Link to='/my_games' className='section-header' key='header'>My Games</Link>),
             (<Link to='/my_games/sought' className='sub-section-header' key='my-sought-header'>My Games Sought</Link>),
             (<GameList firstX={4} gameList={mySoughtGames} isOwned={false} key='my-sought-games'/>),
             (<Link to='/my_games/owned' className='sub-section-header' key='my-own)ed-header'>My Games Offered</Link>),
@@ -90,7 +95,7 @@ class MainBody extends Component {
           return (
             <div className='main-body'>
               {userSpecifics}
-              <Link to='/all' className='section-header' key='section-header'>Community Games</Link>
+              <Link to='/all_games' className='section-header' key='section-header'>Community Games</Link>
               <Link to='/all_games/sought' className='sub-section-header' key='sought-header'>Games Sought</Link>
               <GameList firstX={4} gameList={soughtGames} key='sought-games'/>
               <Link to='/all_games/owned' className='sub-section-header' key='owned-header'>Games Offered</Link>
@@ -99,22 +104,26 @@ class MainBody extends Component {
             </div>
           );
         }} />
-        <Route key='login' exact path='/login/' component={LoginForm} />
-        <Route key='login_info' exact path='/login/:info' component={LoginForm} />
-        <Route key='user' path='/store_user' render={() => (
-          <SaveUserAndRedirect saveUser={() => this.props.saveUser()} />
+        <Route key='login' exact path='/login/' component={({...rest}) => (
+          user? <Redirect to='/' />: <LoginForm {...rest} />
         )} />
+        <Route key='login_info' exact path='/login/:info' component={({...rest}) => (
+          user? <Redirect to='/' />: <LoginForm {...rest} />
+        )} />
+        <Route key='logged_in' exact path='/logged_in' render={() => {
+          let oldPath = sessionStorage.getItem('path') || '/';
+          sessionStorage.clear();
+          return <Redirect to={oldPath} />
+        }} />
         <Route key='logout' exact path='/logout' render={ () => (
           <ClearUserAndRedirect clearUser={ () => this.props.clearUser() } user={user} />
         )} />
         <Route key='profile' exact path='/profile' render={() => 
-          user? (
+          <UserRender currentUser={user} isCheckingSession={this.props.isCheckingSession} render={() => (
             <div className='main-body'>
               <Profile currentUser={user} trades={this.props.tradeList} games={this.props.gameList} />
             </div>
-          ) : (
-            <Redirect to='/' />
-          )
+          )} />
         } />
         <Route key='all' exact path='/all_games' render={() => (
           <div className='main-body'>
@@ -127,7 +136,7 @@ class MainBody extends Component {
           </div>
         )} />
         <Route key='my' exact path='/my_games' render={() => 
-          user? (
+          <UserRender currentUser={user} isCheckingSession={this.props.isCheckingSession} render={() => (
             <div className='main-body'>
               <span className='section-header' key='section-header'>My Games</span>
               <Link to='/my_games/sought' className='sub-section-header' key='my-sought-header'>My Games Sought</Link>
@@ -136,31 +145,25 @@ class MainBody extends Component {
               <GameList firstX={4} gameList={myOwnedGames} isOwned={true} key='my-owned-games'/>
               <AddButton user={user} mode='game' />
             </div>
-          ) : (
-            <Redirect to='/' />
-          )
+          )} />
         } />
         <Route key='my_sought' exact path='/my_games/sought' render={() => 
-          user? (
+          <UserRender currentUser={user} isCheckingSession={this.props.isCheckingSession} render={() => (
             <div className='main-body'>
               <h2 className='section-header' key='my-sought-header'>My Games Sought</h2>
               <GameList firstX={20} gameList={mySoughtGames} isOwned={false} key='my-sought-games' />
               <AddButton user={user} mode='sought_game' />
             </div>
-          ) : (
-            <Redirect to='/' />
-          )
+          )} />
         } />
         <Route key='my_owned' exact path='/my_games/owned' render={() => 
-          user? (
+          <UserRender currentUser={user} isCheckingSession={this.props.isCheckingSession} render={() => (
             <div className='main-body'>
               <h2 className='section-header' key='my-owned-header'>My Games Owned</h2>
               <GameList firstX={20} gameList={myOwnedGames} isOwned={true} key='my-owned-games' />
               <AddButton user={user} mode='sought_game' />
             </div>
-          ) : (
-            <Redirect to='/' />
-          )
+          )} />
         } />
         <Route key='community_sought' exact path='/all_games/sought' render={() => (
           <div className='main-body'>
@@ -175,16 +178,13 @@ class MainBody extends Component {
           </div>
         )} />
         <Route key='game' exact path='/game/:id' render={ ({ match }) => {
-          console.log('match');
-          console.log(match);
-          console.log(this.props.GameList);
           let matchingGame = this.props.gameList.find( (game) => String(game._id) === match.params.id);
           return matchingGame?
             <OneGame game={matchingGame} user={user} />:
             <p className='no-games'>No Game with ID</p>
         }} />
         <Route key='trades' exact path='/my_trades' render={ () => 
-          user? (
+          <UserRender currentUser={user} isCheckingSession={this.props.isCheckingSession} render={() => (
             <div className='main-body'>
               <TradeList 
                 currentUser={user}
@@ -193,9 +193,7 @@ class MainBody extends Component {
               />
               <AddButton user={user} mode='trade' />
             </div>
-          ) : (
-            <Redirect to='/' />
-          )
+          )} />
         } />
         <Route key='trade' exact path='/trade/:id' render={ ({ match }) => {
           if (!this.props.tradeList) return (
@@ -216,7 +214,7 @@ class MainBody extends Component {
             <div className='main-body'><p className='error'>No Trade with that ID</p></div>
         }} />
         <Route key='new_trade' exact path='/new/trade' render={ () => 
-          user? (
+          <UserRender currentUser={user} isCheckingSession={this.props.isCheckingSession} render={() => (
             <div className='main-body'>
               <TradeSteps 
                 soughtGames={soughtGames}
@@ -225,12 +223,10 @@ class MainBody extends Component {
                 myOwnedGames={myOwnedGames}
               />
             </div>
-          ) : (
-            <Redirect to='/' />
-          )
+          )} />
         } />
         <Route key='new_trade_sender' path='/new/trade/sender/:game' render={ ({match}) => (
-          user? (
+          <UserRender currentUser={user} isCheckingSession={this.props.isCheckingSession} render={() => (
             <div className='main-body'>
               <TradeSteps 
                 soughtGames={soughtGames}
@@ -240,12 +236,10 @@ class MainBody extends Component {
                 myOwnedGame={JSON.parse(decodeURIComponent(match.params.game))}
               />
             </div>
-          ) : (
-            <Redirect to='/' />
-          )
+          )} />
         )} />
         <Route key='new_trade_receiver' path='/new/trade/receiver/:game' render={ ({match}) => (
-          user? (
+          <UserRender currentUser={user} isCheckingSession={this.props.isCheckingSession} render={() => (
             <div className='main-body'>
               <TradeSteps 
                 soughtGames={soughtGames}
@@ -255,12 +249,10 @@ class MainBody extends Component {
                 ownedGame={JSON.parse(decodeURIComponent(match.params.game))}
               />
             </div>
-          ) : (
-            <Redirect to='/' />
-          )
+          )} />
         )} />
         <Route key='new_sought' exact path='/new/game/sought' render={ () =>
-          user ? (
+          <UserRender currentUser={user} isCheckingSession={this.props.isCheckingSession} render={() => (
             <div className='main-body'>
               <AddGame 
                 user={user}
@@ -268,12 +260,10 @@ class MainBody extends Component {
                 isGameOwned={false}
               />
             </div>
-          ) : (
-            <Redirect to='/' />
-          )
+          )} />
         } />
         <Route key='new_owned' exact path='/new/game/owned' render={ () => 
-          user? (
+          <UserRender currentUser={user} isCheckingSession={this.props.isCheckingSession} render={() => (
             <div className='main-body'>
               <AddGame 
                 user={user}
@@ -281,9 +271,7 @@ class MainBody extends Component {
                 isGameOwned={true}
               />
             </div>
-          ) : (
-            <Redirect to='/' />
-          )
+          )} />
         } />
         <Route key='error' render={ () => (
           <div className='error'>Invalid URL</div>
@@ -302,7 +290,6 @@ MainBody.propTypes = {
   filterMyOwned: React.PropTypes.func.isRequired,
   currentUser: React.PropTypes.string,
   isCheckingSession: React.PropTypes.bool.isRequired,
-  saveUser: React.PropTypes.func.isRequired,
   clearUser: React.PropTypes.func.isRequired
 }
 

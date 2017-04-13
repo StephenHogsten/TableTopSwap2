@@ -75,17 +75,6 @@ class App extends Component {
       });
     });
   }
-  saveUser(username) {
-    d3.json('/api/checksession', (err, data) => {
-      console.log('saveUser user:');
-      console.log(data);
-      if (data.username) {
-        this.setState({ currentUser: data._id});
-      } else {
-        this.setState({ currentUser: null });
-      }
-    });
-  }
   clearUser() {
     this.setState({
       currentUser: null
@@ -152,7 +141,6 @@ class App extends Component {
               isCheckingSession={this.state.isCheckingSession}
               gameList={this.state.gameList}
               tradeList={this.state.tradeList}
-              saveUser={ (username) => this.saveUser(username) }
               clearUser={ () => this.clearUser() }
               filterAllSought={(gameList) => this.filterParent(gameList, 'sought', false)}
               filterAllOwned={(gameList) => this.filterParent(gameList, 'owned', false)}
