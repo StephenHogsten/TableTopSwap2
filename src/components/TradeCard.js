@@ -8,6 +8,27 @@ import GameCard from './GameCard';
 import '../scss/TradeCard.scss';
 
 class TradeCard extends Component {
+  getStatusStyle(status, isCurrentUserSender) {
+    let color;
+    switch (status) {
+      case 'completed':
+        color = 'green'; break;
+      case 'modified':
+      case 'cancelled':
+      case 'rejected':
+        color = 'gray'; break;
+      case 'accepted':
+        color = 'green'; break;
+      case 'sent':
+        color = isCurrentUserSender? 'blue': 'yellow';
+        break;
+      default:
+        color = 'pink'  // this shouldn't ever happen
+    }
+    return {
+      borderLeft: 'solid 4px ' + color
+    };
+  }
   render() {
     let trade = this.props.trade;
     let status = trade.status;
@@ -20,9 +41,13 @@ class TradeCard extends Component {
     if (!senderGame || !recipientGame) return (
       <p className='error'>Incorrect Game IDs</p>
     );
+    console.log('senderGame', senderGame);
+    console.log('currentUser', this.props.currentUser);
     return (
       <Link to={'/trade/' + this.props.trade._id}>
-        <Paper className='trade-paper'>
+        <Paper className='trade-paper' style={
+          this.getStatusStyle(status, senderGame.user._id === this.props.currentUser)
+        }>
           <p className='trade-info-label'>Status: <span className='trade-status-text'>{status}</span></p>
           <div className='trade-paper-row'>
             <GameCard 
@@ -48,6 +73,7 @@ class TradeCard extends Component {
 }
 
 TradeCard.propTypes = {
+  currentUser: React.PropTypes.string.isRequired,
   trade: React.PropTypes.object.isRequired,
   gameList: React.PropTypes.array.isRequired,
   expanded: React.PropTypes.bool

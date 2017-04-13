@@ -110,6 +110,7 @@ class OneTrade extends Component {
     return (
       <div className='trade'>
         <TradeCard 
+          currentUser={this.props.currentUser}
           trade={this.props.trade} 
           gameList={this.props.gameList} 
           key='card' 

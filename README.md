@@ -100,6 +100,8 @@ I'll have mine based no board games instead (use the board game geek api: https:
   - [X] pass game instead of BGG_info and ID
   - [X] restyle the card
 - [ ] add a color status bar to trade card
+  - [X] blue when waiting on others, yellow when waiting on you, grey when cancelled, green when done
+  - [ ] add color to status thing as well
 - [ ] indicate in GameList if they have more than four
 - [ ] sort GameList by most recent first
 - [ ] for saving, does done need to be in componentwillmount?
