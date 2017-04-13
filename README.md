@@ -102,6 +102,7 @@ I'll have mine based no board games instead (use the board game geek api: https:
 - [ ] sort GameList by most recent first
 - [ ] for saving, does done need to be in componentwillmount?
 - [ ] fiddle with all the wording
+- [ ] remove unnecessary logging
 
 ## Bonuses
 - [ ] handle delayed BGG search results
