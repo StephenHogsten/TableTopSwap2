@@ -210,6 +210,7 @@ class MainBody extends Component {
                 ownedGames={ownedGames}
                 mySoughtGames={mySoughtGames}
                 myOwnedGames={myOwnedGames}
+
               />
             </div>
           )} />
@@ -247,6 +248,7 @@ class MainBody extends Component {
                 user={user}
                 mySoughtGames={mySoughtGames}
                 isGameOwned={false}
+                refreshGames={this.props.refreshGames}
               />
             </div>
           )} />
@@ -258,6 +260,7 @@ class MainBody extends Component {
                 user={user}
                 myOwnedGames={myOwnedGames}
                 isGameOwned={true}
+                refreshGames={this.props.refreshGames}
               />
             </div>
           )} />
@@ -277,6 +280,8 @@ MainBody.propTypes = {
   filterAllOwned: React.PropTypes.func.isRequired,
   filterMySought: React.PropTypes.func.isRequired,
   filterMyOwned: React.PropTypes.func.isRequired,
+  refreshGames: React.PropTypes.func.isRequired,
+  refreshTrades: React.PropTypes.func.isRequired,
   currentUser: React.PropTypes.string,
   isCheckingSession: React.PropTypes.bool.isRequired,
   clearUser: React.PropTypes.func.isRequired

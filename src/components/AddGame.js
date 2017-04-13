@@ -73,6 +73,7 @@ class AddGame extends Component {
   componentWillUpdate(nextProps, nextState) {
     console.log('component will update ' + nextState.saveState);
     if (nextState.saveState === saveStates.done) {
+      this.props.refreshGames();
       history.back();
     }
   }
@@ -118,7 +119,8 @@ AddGame.propTypes = {
   user: React.PropTypes.string.isRequired,
   myOwnedGames: React.PropTypes.array,
   mySoughtGames: React.PropTypes.array,
-  isGameOwned: React.PropTypes.bool
+  isGameOwned: React.PropTypes.bool,
+  refreshGames: React.PropTypes.func.isRequired
 };
 
 export default AddGame;

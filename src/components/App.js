@@ -142,6 +142,8 @@ class App extends Component {
               gameList={this.state.gameList}
               tradeList={this.state.tradeList}
               clearUser={ () => this.clearUser() }
+              refreshGames={ () => this.getAllGames() }
+              refreshTrades={ () => this.getAllTrades() }
               filterAllSought={(gameList) => this.filterParent(gameList, 'sought', false)}
               filterAllOwned={(gameList) => this.filterParent(gameList, 'owned', false)}
               filterMySought={(gameList) => this.filterParent(gameList, 'sought', true)}
