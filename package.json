@@ -21,7 +21,7 @@
     "cross-spawn": "4.0.2",
     "css-loader": "0.26.1",
     "d3-request": "^1.0.5",
-    "detect-port": "1.1.0", 
+    "detect-port": "1.1.0",
     "dotenv": "^4.0.0",
     "enzyme": "^2.7.1",
     "eslint": "3.16.1",
@@ -42,8 +42,8 @@
     "json-loader": "0.5.4",
     "material-ui": "^0.17.1",
     "mongoose": "^4.9.2",
+    "node-sass": "^4.5.2",
     "nodemon": "^1.11.0",
-    "node-sass": "3.4.0",
     "object-assign": "4.1.1",
     "passport": "^0.3.2",
     "passport-local": "^1.0.0",
@@ -67,11 +67,10 @@
   "scripts": {
     "start_client": "node scripts/start.js",
     "start_server": "nodemon ./server/server.js",
-    "start": "npm build & node server.js",
+    "start": "yarn build & node server.js",
     "build": "node scripts/build.js",
     "test": "node scripts/test.js --env=jsdom"
   },
-  "proxy": "http://localhost:3001",
   "jest": {
     "collectCoverageFrom": [
       "src/**/*.{js,jsx}"
