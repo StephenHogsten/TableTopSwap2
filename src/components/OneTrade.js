@@ -89,6 +89,7 @@ class OneTrade extends Component {
   }
   componentWillUpdate(nextProps, nextState) {
     if (nextState.saveState === saveStates.done) {
+      this.props.refreshTrades();
       history.back();
     }
   }
@@ -121,6 +122,7 @@ class OneTrade extends Component {
 }
 
 OneTrade.propTypes = {
+  refreshTrades: React.PropTypes.func.isRequired,
   trade: React.PropTypes.object.isRequired,
   currentUser: React.PropTypes.string.isRequired,
   gameList: React.PropTypes.array.isRequired

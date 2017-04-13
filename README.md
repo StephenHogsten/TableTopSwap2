@@ -89,8 +89,8 @@ I'll have mine based no board games instead (use the board game geek api: https:
   ---
 - [X] fix refreshing never having a user
 - [X] create sign up button
-- [ ] retrigger getting trades and games when appropriate
-  - [ ] make a sidebar for trades
+- [X] retrigger getting trades and games when appropriate
+  - [X] make a sidebar for trades
 - [ ] add loading when getting search results back
   - [ ] handle delayed BGG search results (multiple things)
 - [ ] fiddle with the linking within trades
@@ -104,6 +104,9 @@ I'll have mine based no board games instead (use the board game geek api: https:
 - [ ] remove unnecessary logging
 
 ## Bonuses
+- [ ] visual tweaks
+  - [ ] the buttons / fields on login should line up better
+  - [ ] sent should be recieved to recipients
 - [ ] mobile friendly
 - [ ] jest
   - [ ] test more advancing scenarios if possible

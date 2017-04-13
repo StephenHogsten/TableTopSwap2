@@ -185,11 +185,6 @@ class MainBody extends Component {
           )} />
         } />
         <Route key='trade' exact path='/trade/:id' render={ ({ match }) => {
-          if (!this.props.tradeList) return (
-            <div className='main-body'>
-              <p className='error'>You must be logged in to see your trades</p>
-            </div>
-          );
           let matchingTrade = this.props.tradeList.find( (trade) => String(trade._id) === match.params.id);
           return matchingTrade?
             <div className='main-body'>
@@ -198,6 +193,7 @@ class MainBody extends Component {
                 trade={matchingTrade}
                 gameList={this.props.gameList}
                 expanded={true}
+                refreshTrades={this.props.refreshTrades}
               />
             </div>:
             <div className='main-body'><p className='error'>No Trade with that ID</p></div>
