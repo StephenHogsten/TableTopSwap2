@@ -34,22 +34,15 @@ class AddGame extends Component {
     this.searchTimeout = setTimeout( () => this.searchForGame(gameTitle), delay);
   }
   searchForGame(gameTitle, manual) {
-    console.log('manual', manual);
     clearTimeout( this.searchTimeout );
     let waitingId = Math.round(100000 * Math.random());   //generate a random number
     this.setState({ 
       isWaiting: true,
       waitingId: waitingId
     });
-    console.log('searching...', gameTitle);
     d3Json('/api/bggSearch/' + gameTitle, (err, data) => {
-      console.log('error');
-      console.log(err);
-      console.log('data');
-      console.log(data);
       // use closures to the ignore the wrong results
       if (waitingId !== this.state.waitingId) { 
-        console.log('not the right id');
         return;
       }
       if (err) throw err;
@@ -69,10 +62,8 @@ class AddGame extends Component {
     });
   }
   saveGame(gameId) {
-    console.log('we\'re supposed to save the game to db');
     this.setState({ saveState: saveStates.saving });
     let searchFor = '/api/add_game?id=' + gameId + '&issought=' + !this.props.isGameOwned;
-    console.log('searchFor: ' + searchFor);
     d3Json(searchFor, (err, data) => {
       if (err) {
         this.setState({ saveState: saveStates.error, error: err });
@@ -80,15 +71,12 @@ class AddGame extends Component {
         if (data.hasOwnProperty('error')) {
           this.setState({ saveState: saveStates.error, error: data.error });
         } else {
-          console.log('save successful?');
-          console.log(data);
           this.setState({ saveState: saveStates.done });
         }
       }
     });
   }
   componentWillUpdate(nextProps, nextState) {
-    console.log('component will update ' + nextState.saveState);
     if (nextState.saveState === saveStates.done) {
       this.props.refreshGames();
       history.back();
@@ -101,7 +89,6 @@ class AddGame extends Component {
       case saveStates.none:   // eslint-disable-line
         break;
       case saveStates.saving:
-        console.log('state', this.state);
         return <Loading />;
       case saveStates.error:
         return <div className='error'>{JSON.stringify(this.state.error)}</div>;
@@ -117,13 +104,9 @@ class AddGame extends Component {
           "What game are you looking for?"
         }</h2>
         <div className='search-bar' onKeyDown={(event) => {
-          console.log('event.target', event.target);
-          console.log('event.key', event.key);
-          console.log('event.key', event.key === 'Enter');
           if (event.key === 'Enter') { 
             let val = event.target.value;
-            console.log('val', val);
-            if (val) { console.log('manual key'); this.searchForGame(val, 'enter'); }
+            if (val) { this.searchForGame(val, 'enter'); }
           }
         }}>
           <TextField 
@@ -133,8 +116,7 @@ class AddGame extends Component {
             onChange={(event) => this.searchForGameDelay(event) }
           />
           <SearchIcon style={{color:"#666"}} onClick={ (event) => {
-            console.log('manual click')
-            this.searchForGame( event.target.value, 'click' );
+            this.searchForGame( document.getElementById('game-title').value, 'click' );
           }}/>
         </div>
         {this.state.isWaiting? (
