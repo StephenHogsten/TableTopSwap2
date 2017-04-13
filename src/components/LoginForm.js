@@ -10,7 +10,6 @@ class LoginForm extends Component {
   constructor({match}) {
     super();
     let error;
-    console.log('match.params', match.params);
     if (match.params.info) {
       error = JSON.parse(decodeURIComponent(match.params.info));
       console.log('error', error);
@@ -23,7 +22,8 @@ class LoginForm extends Component {
     };
   }
   submitForm(isCreateMode) {
-    let usernameProblem = (document.getElementById('form-username').value === '');
+    let username = document.getElementById('form-username').value
+    let usernameProblem = (username === '');
     let passwordProblem = (document.getElementById('form-password').value === '');
     if (usernameProblem || passwordProblem) {
       this.setState({
@@ -39,12 +39,6 @@ class LoginForm extends Component {
     document.getElementById('login-form').submit();
   }
   render() {
-    const shouldCreate = [
-      'invalid username',
-      'username already taken',
-      'password must be at least 8 characters',
-      'unable to create user'
-    ].includes(this.state.errorInfo);
     const loginFailed =  !this.state.errorInfo? null: (
       <Paper style={{backgroundColor:'rgba(255,100,100,0.4)'}} className='login-failed-message'>
         <p className='login-failed-text'>Login Failed: <em>{this.state.errorInfo}</em></p>
@@ -58,7 +52,8 @@ class LoginForm extends Component {
             name='username' 
             id='form-username'
             errorText={this.state.userError} 
-            floatingLabelText='username' 
+            floatingLabelText='username'
+            defaultValue={sessionStorage.getItem('login_user')}
           />
           <br />
           <TextField 
@@ -69,15 +64,13 @@ class LoginForm extends Component {
             type='password'
           />
           <br />
-          {shouldCreate ? (
-            <RaisedButton 
-              id='login-create-button' 
-              secondary={true} 
-              label='Create new Account'
-              onTouchTap={() => this.submitForm(true)}
-              style={{margin:'8px'}}
-            />
-          ): null}
+          <RaisedButton 
+            id='login-create-button' 
+            secondary={true} 
+            label='Create new Account'
+            onTouchTap={() => this.submitForm(true)}
+            style={{margin:'8px'}}
+          />
           <RaisedButton 
             id='login-submit-button'
             primary={true} 

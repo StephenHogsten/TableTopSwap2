@@ -88,11 +88,11 @@ I'll have mine based no board games instead (use the board game geek api: https:
 - [X] deploy to heroku
   ---
 - [X] fix refreshing never having a user
+- [X] create sign up button
 - [ ] jest
   - [ ] test more advancing scenarios if possible
   - [ ] for react components
   - [ ] for server endpoints?
-- [ ] create sign up button
 - [ ] retrigger getting trades and games when appropriate
   - [ ] make a sidebar for trades
 - [ ] add loading when getting search results back

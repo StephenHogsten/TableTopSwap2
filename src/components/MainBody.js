@@ -15,7 +15,6 @@ import AddGame from './AddGame.js';
 import Profile from './Profile.js';
 import LoginForm from './LoginForm.js';
 import AddButton from './AddButton.js';
-import ProxyText from './ProxyTest.js';
 
 import '../scss/MainBody.scss';
 
