@@ -67,7 +67,7 @@
   "scripts": {
     "start_client": "node scripts/start.js",
     "start_server": "nodemon ./server/server.js",
-    "start": "npm rebuild node-sass & npm build & node server.js",
+    "start": "npm build & node server.js",
     "build": "node scripts/build.js",
     "test": "node scripts/test.js --env=jsdom"
   },
