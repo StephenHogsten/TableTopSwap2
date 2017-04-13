@@ -21,10 +21,6 @@ const app = express();
 
 app.use(express.static('./build'));
 
-app.get('/', function (req, res) {
-  res.sendFile(path.join(__dirname, './build', 'index.html'));
-});
-
 var sessionOptions = {
   secret: process.env.SECRET || 'simplesecret',
   resave: false,
@@ -49,6 +45,10 @@ app.use(passport.session());
 
 const router = require('./server/routes')(passport);
 app.use('/api', router);
+
+app.get('*', function (req, res){
+  res.sendFile(path.resolve(__dirname, 'build', 'index.html'))
+});
 
 const port = process.env.PORT || 3001;
 app.listen(port, () => {
