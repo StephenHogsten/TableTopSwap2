@@ -43,12 +43,13 @@ class TradeCard extends Component {
     );
     console.log('senderGame', senderGame);
     console.log('currentUser', this.props.currentUser);
+    let colorStyle = this.getStatusStyle(status, senderGame.user._id === this.props.currentUser);
     return (
       <Link to={'/trade/' + this.props.trade._id}>
-        <Paper className='trade-paper' style={
-          this.getStatusStyle(status, senderGame.user._id === this.props.currentUser)
-        }>
-          <p className='trade-info-label'>Status: <span className='trade-status-text'>{status}</span></p>
+        <Paper className='trade-paper' style={colorStyle}>
+          <p className='trade-info-label' style={colorStyle}>
+            Status: <span className='trade-status-text'>{status}</span>
+          </p>
           <div className='trade-paper-row'>
             <GameCard 
               game={senderGame}
