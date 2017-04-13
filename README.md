@@ -87,8 +87,7 @@ I'll have mine based no board games instead (use the board game geek api: https:
   - [X] replace things like text fields with the appropriate material components
 - [X] deploy to heroku
   ---
-- [ ] fix refreshing never having a user
-  - [ ] create something to check if they're logged in properly periodically?
+- [X] fix refreshing never having a user
 - [ ] jest
   - [ ] test more advancing scenarios if possible
   - [ ] for react components
