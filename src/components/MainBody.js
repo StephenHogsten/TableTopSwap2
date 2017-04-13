@@ -57,16 +57,6 @@ const UserRender = (props) => {
 }
 
 class MainBody extends Component {
-  componentWillMount() {
-    if (this.props.user) return;
-    d3Text('/api/checksession', (err, data) => {
-      if (err) return;
-      if (data) {
-        console.log('data: ' + data);
-        this.props.saveUser( data );
-      }
-    });
-  }
   // add the add button
   render() {
     let soughtGames = this.props.filterAllSought(this.props.gameList);
