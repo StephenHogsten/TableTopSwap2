@@ -116,7 +116,7 @@ I'll have mine based no board games instead (use the board game geek api: https:
   - [X] link to recipient sought on accept
   - [X] create recipient sought on accept
   - [X] mark complete on complete
-  - [ ] my games aren't being defaulted when coming from my gamecard (the other is)
+  - [X] my games aren't being defaulted when coming from my gamecard (the other is)
 - [ ] fiddle with all the wording
 - [ ] remove unnecessary logging
 - [ ] add City/State to profile
