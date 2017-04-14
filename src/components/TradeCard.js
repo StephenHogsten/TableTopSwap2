@@ -36,13 +36,9 @@ class TradeCard extends Component {
     senderGame = this.props.gameList.find( (oneGame) => oneGame._id == senderGame);   // eslint-disable-line
     let recipientGame = trade.recipient.owned_game_id;
     recipientGame = this.props.gameList.find( (oneGame) => oneGame._id == recipientGame);   // eslint-disable-line
-    console.log('sender', senderGame);
-    console.log('recip', recipientGame);
     if (!senderGame || !recipientGame) return (
       <p className='error'>Incorrect Game IDs</p>
     );
-    console.log('senderGame', senderGame);
-    console.log('currentUser', this.props.currentUser);
     let colorStyle = this.getStatusStyle(status, senderGame.user._id === this.props.currentUser);
     return (
       <Link to={'/trade/' + this.props.trade._id}>

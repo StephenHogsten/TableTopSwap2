@@ -263,10 +263,10 @@ module.exports = (passport) => {
   //    reciever
   //    sender_owned_game
   //    receiver_owned_game
-  //    receiver_owned_BGG_id
   //    notes
   //    status (defaults to sent but pending also accepted)
   //  optionally:
+  //    receiver_owned_BGG_id
   //    sender_sought_game
   //    receiver_sought_game
   router.get('/add_trade', (req, res) => {
@@ -311,13 +311,17 @@ module.exports = (passport) => {
       });
   });
   // expects query parameters of:
-  //  id - trade's id
-  //  status - the status we want to assign
+  //    id - trade's id
+  //    status - the status we want to assign
+  //  optionally: 
+  //    receiver_sought_game
+  //    sender_owned_BGG_id
   router.get('/set_trade', (req, res) => {
     console.log('setting trade:', req.query);
     if (!req.isAuthenticated()) { res.send({ error: 'not logged in' }); }
     Trade.findById( req.query.id, (err, trade) => {
-      if (err) { res.send({ error: 'no trade with that id' }); return; }
+      if (err) { res.send({error: err}); return; }
+      if (!trade) { res.send({ error: 'no trade with that id' }); return; }
       let user = String(req.user._id);
       console.log('user: ' + user + ' ' + user.length);
       console.log('user: ' + typeof(user));
@@ -331,11 +335,24 @@ module.exports = (passport) => {
             res.send({ error: 'user is not the recipient' }); return; }
           if (trade.status !== 'sent') {
             res.send({ error: 'can only accept sent trades' }); return; }
-          // create a sought game for recipient if it doesn't exist
-          // if (!trade.recipient.sought_game_id) {
-
-          // }
-          break;
+          // they must've created a sought game in between - link together
+          if (req.query.receiver_sought_game) {
+            trade.recipient.sought_game_id = req.query.receiver_sought_game;
+            break;
+          }
+          if (!req.query.sender_owned_BGG_id) {
+            res.send({ error: 'no sender game BGG id'}); return; 
+          }
+          // they've accepted, so we'll create a sought game for them
+          newGame(req.query.sender_owned_BGG_id, true, trade.recipient.user, (err, game) => {
+            if (err) { res.send({ error: err}); return; }
+            trade.recipient.sought_game_id = game._id;
+            trade.status = req.query.status;
+            trade.save( (err) => {
+              res.send(err? {error: err}: {success: true});
+            });
+          });
+          return;
         case 'rejected':
           if (user !== trade.sender.user && user !== trade.recipient.user) {
             res.send({ error: 'user is not part of the trade' }); return; }

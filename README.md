@@ -113,8 +113,8 @@ I'll have mine based no board games instead (use the board game geek api: https:
 - [ ] fiddle with the linking within trades
   - [X] make sure recipient sought is being added on creation
   - [X] create sender sought on creation
-  - [ ] link to recipient sought on accept
-  - [ ] create recipient sought on accept
+  - [X] link to recipient sought on accept
+  - [X] create recipient sought on accept
   - [ ] mark complete on complete
   - [ ] my games aren't being defaulted when coming from my gamecard (the other is)
 - [ ] fiddle with all the wording

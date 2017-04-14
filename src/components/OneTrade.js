@@ -46,6 +46,22 @@ class OneTrade extends Component {
     console.log('setting status: ', status);
     this.setState({ saveState: saveStates.loading });
     let searchFor = '/api/set_trade?id=' + this.props.trade._id + '&status=' + status;
+    if (!this.props.trade.recipient.sought_game_id) {
+      // we need to link or create a recipient sought game
+      let senderGameId = this.props.trade.sender.owned_game_id;
+      let senderGame = this.props.gameList.find( (game) => game._id === senderGameId);
+      if (!senderGame) { this.setState({ error: 'no sender owned game' }); return; }
+      let recipientUser = this.props.trade.recipient.user;
+      let recipientGame = this.props.gameList.find( (game) => (
+        game.BGG_id === senderGame.BGG_id && game.user._id === recipientUser && game.sought_or_owned === 'sought'
+      ));
+      if (recipientGame) {
+        searchFor += '&receiver_sought_game=' + recipientGame._id;
+      } else {
+        searchFor += '&sender_owned_BGG_id=' + senderGame.BGG_id;
+      }
+    }
+    console.log('searchFor', searchFor);
     d3Json(searchFor, (err, data) => {
       if (err) {
         this.setState({ error: err, saveState: saveStates.error });
