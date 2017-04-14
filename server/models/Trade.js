@@ -24,6 +24,7 @@ const gameSchema = mongoose.Schema({
       required: [true, 'requested game is required']
     }
   },
+  "created_date": Date,
   "notes": String,  // just keeping plain text for now
   "status": {
     type: String,
@@ -38,6 +39,13 @@ const gameSchema = mongoose.Schema({
     ],
     required: true
   }
+});
+
+gameSchema.pre('save', function (next) {
+  if (!this.created_date) {
+    this.created_date = new Date();
+  }
+  next();
 });
 
 module.exports = mongoose.model('trade_request', gameSchema);

@@ -106,7 +106,9 @@ I'll have mine based no board games instead (use the board game geek api: https:
   - [X] add color to status thing as well
 - [X] indicate in GameList if they have more than four
 - [X] sort GameList by most recent first
+  - [X] sort TradeList by most recent first
 - [ ] for saving, does done need to be in componentwillmount?
+    - answer: no
   - [ ] add spinner to everything that waits?
 - [ ] fiddle with the linking within trades
 - [ ] fiddle with all the wording

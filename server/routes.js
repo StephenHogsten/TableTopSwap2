@@ -286,14 +286,12 @@ module.exports = (passport) => {
     });
   })
   router.get('/all_trades', (req, res) => {
-    console.log('all_trades');
-    console.log(req.user);
-    Trade.find( {}, (err, trades) => {
-      console.log('inside');
-      console.log(trades);
-      if (err) { res.send({ error: err }); return; }
-      res.send(trades);
-    })
+    Trade.find({})
+      .sort({'created_date': -1})
+      .exec((err, trades) => {
+        if (err) { res.send({ error: err }); return; }
+        res.send(trades);
+      });
   });
   // expects query parameters of:
   //  id - trade's id
