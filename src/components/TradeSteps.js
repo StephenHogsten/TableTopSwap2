@@ -95,14 +95,17 @@ class TradeSteps extends Component {
     let senderOwned = this.state.senderOwned;
     let recipientOwned = this.state.recipientOwned;
     let mySought = this.props.mySoughtGames.find( (game) => game.BGG_id === recipientOwned.BGG_id );
+    console.log('soughtGames', this.props.soughtGames);
+    console.log('senderOwned.BGG_id', senderOwned.BGG_id);
     let sought = this.props.soughtGames.find( (game) => game.BGG_id === senderOwned.BGG_id)
+    console.log('sought', sought);
     let searchFor = '/api/add_trade?sender_owned_game=' + senderOwned._id 
       + '&receiver_owned_game=' + recipientOwned._id
       + '&receiver=' + this.state.recipient
       + '&notes=' + this.state.notes
       + '&status=' + 'sent';    // eslint-disable-line
     if (mySought) searchFor += '&sender_sought_game=' + mySought._id;
-    if (sought) searchFor += '&recever_sought_game=' + sought._id;
+    if (sought) searchFor += '&receiver_sought_game=' + sought._id;
     d3Json(searchFor, (err, data) => {
       if (err) {
         this.setState({ saveState: saveStates.error, error: err });

@@ -107,10 +107,16 @@ I'll have mine based no board games instead (use the board game geek api: https:
 - [X] indicate in GameList if they have more than four
 - [X] sort GameList by most recent first
   - [X] sort TradeList by most recent first
-- [ ] for saving, does done need to be in componentwillmount?
+- [X] for saving, does done need to be in componentwillmount?
     - answer: no
-  - [ ] add spinner to everything that waits?
+  - [X] add spinner to everything that waits?
 - [ ] fiddle with the linking within trades
+  - [X] make sure recipient sought is being added on creation
+  - [ ] create sender sought on creation
+  - [ ] link to recipient sought on accept
+  - [ ] create recipient sought on accept
+  - [ ] mark complete on complete
+  - [ ] my games aren't being defaulted when coming from my gamecard (the other is)
 - [ ] fiddle with all the wording
 - [ ] remove unnecessary logging
 - [ ] add City/State to profile
@@ -118,6 +124,7 @@ I'll have mine based no board games instead (use the board game geek api: https:
   - [ ] the buttons / fields on login should line up better
   - [ ] sent should be recieved to recipients
   - [ ] fix scrolling (make it scroll to top)
+  - [ ] more padding above OneGame
 - [ ] mobile friendly
 - [ ] default focus where it belongs
   - [ ] enter should submit for login
@@ -126,7 +133,9 @@ I'll have mine based no board games instead (use the board game geek api: https:
 - [ ] style the add buttons better 
   - [ ] make them show more plus buttons with text to the left instead of a menu
   - [ ] make text to the left show on hover for the just trade mode
+- [ ] Some sort of splash page before login (use material-ui as a guide)
 ## Bonuses
+- [ ] make the thing that is a flat div and turns into an app bar
 - [ ] jest
   - [ ] test more advancing scenarios if possible
   - [ ] for react components

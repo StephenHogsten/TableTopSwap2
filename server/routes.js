@@ -278,7 +278,7 @@ module.exports = (passport) => {
       status: req.query.status || 'sent'
     });
     if (req.query.sender_sought_game) trade.sender.sought_game_id = req.query.sender_sought_game;
-    if (req.query.receiver_sought_game) trade.receiver.sought_game_id = req.query.receiver_sought_game;
+    if (req.query.receiver_sought_game) trade.recipient.sought_game_id = req.query.receiver_sought_game;
     // could verify games here
     console.log('new trade: ', trade);
     trade.save( (err) => {
