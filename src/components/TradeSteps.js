@@ -31,6 +31,7 @@ class TradeSteps extends Component {
     };
   }
   stepDetails() {
+    // create the body for each step
     switch (this.state.step) {
       case 0:
         return (
@@ -72,7 +73,9 @@ class TradeSteps extends Component {
         );
     }
   }
+  
   isNextDisabled(step) {
+    // check whether we're able to move on to the next step
     switch (step) {
       case 0:
         if (this.state.recipientOwned === -1) return true;
@@ -84,21 +87,23 @@ class TradeSteps extends Component {
         return true;
     }
   }
+
   moveStep(increment) {
     let {step} = this.state;
     step += increment;
     this.setState({ step: step });
   }
+
   handleSubmit() {
     this.setState({ saveState: saveStates.saving });
+
     // see if there's already corresponding sought games
     let senderOwned = this.state.senderOwned;
     let recipientOwned = this.state.recipientOwned;
     let mySought = this.props.mySoughtGames.find( (game) => game.BGG_id === recipientOwned.BGG_id );
-    console.log('soughtGames', this.props.soughtGames);
-    console.log('senderOwned.BGG_id', senderOwned.BGG_id);
     let sought = this.props.soughtGames.find( (game) => game.BGG_id === senderOwned.BGG_id)
-    console.log('sought', sought);
+
+    // build api string
     let searchFor = '/api/add_trade?sender_owned_game=' + senderOwned._id 
       + '&receiver_owned_game=' + recipientOwned._id
       + '&receiver_owned_BGG_id=' + recipientOwned.BGG_id
@@ -107,6 +112,7 @@ class TradeSteps extends Component {
       + '&status=' + 'sent';    // eslint-disable-line
     if (mySought) searchFor += '&sender_sought_game=' + mySought._id;
     if (sought) searchFor += '&receiver_sought_game=' + sought._id;
+
     d3Json(searchFor, (err, data) => {
       if (err) {
         this.setState({ saveState: saveStates.error, error: err });
@@ -118,6 +124,45 @@ class TradeSteps extends Component {
         }
       }
     });
+  }
+  moveBackButton(step) {
+    if (step > 0) {
+      return (
+        <FlatButton 
+          style={{margin:'4px'}}
+          label='back'   
+          onTouchTap={ () => this.moveStep(-1) }
+        />
+      ); 
+    } else {
+      return (
+        <FlatButton
+          style={{margin:'4px'}}
+          label='cancel'
+          onTouchTap={ () => history.back() }
+        /> 
+      );
+    }
+  }
+  moveForwardButton(step) {
+    if (step < laststep) { 
+      return (
+        <RaisedButton
+          label='next'
+          primary={true}
+          disabled={this.isNextDisabled(step)}
+          onTouchTap={ () => this.moveStep(1) }
+        />
+      );
+    } else {
+      return (
+        <RaisedButton
+          label='submit'
+          primary={true}
+          onTouchTap={ () => this.handleSubmit() }
+        />
+      );
+    }  
   }
 
   render() {
@@ -138,6 +183,7 @@ class TradeSteps extends Component {
     const step = this.state.step;
     return (
       <div className='trade-steps'>
+        <h5 className='section-header'>Propose New Trade</h5>
         <Stepper activeStep={step}>
           <Step>
             <StepLabel>Select a game</StepLabel>
@@ -149,31 +195,9 @@ class TradeSteps extends Component {
             <StepLabel>Send your request</StepLabel>
           </Step>
         </Stepper>
+        {this.moveBackButton(step)}
+        {this.moveForwardButton(step)}
         <div className='step-details'>{this.stepDetails()}</div>
-        {step > 0? (
-          <FlatButton 
-            label='back'   
-            onTouchTap={ () => this.moveStep(-1) }
-          />
-          ): (
-          <FlatButton
-            label='cancel'
-            onTouchTap={ () => history.back() }
-          /> )}
-        {step < laststep? (
-          <RaisedButton
-            label='next'
-            primary={true}
-            disabled={this.isNextDisabled(step)}
-            onTouchTap={ () => this.moveStep(1) }
-          />
-        ): (
-          <RaisedButton
-            label='submit'
-            primary={true}
-            onTouchTap={ () => this.handleSubmit() }
-          />
-        )}  
       </div>
     );
   }

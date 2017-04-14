@@ -110,7 +110,7 @@ I'll have mine based no board games instead (use the board game geek api: https:
 - [X] for saving, does done need to be in componentwillmount?
     - answer: no
   - [X] add spinner to everything that waits?
-- [ ] fiddle with the linking within trades
+- [X] fiddle with the linking within trades
   - [X] make sure recipient sought is being added on creation
   - [X] create sender sought on creation
   - [X] link to recipient sought on accept
@@ -145,6 +145,7 @@ I'll have mine based no board games instead (use the board game geek api: https:
 - [ ] Some sort of splash page before login (use material-ui as a guide)
 ## Bonuses
 - [ ] make the thing that is a flat div and turns into an app bar for splash page
+- [ ] add a badge with trades to act on
 - [ ] jest
   - [ ] test more advancing scenarios if possible
   - [ ] for react components
