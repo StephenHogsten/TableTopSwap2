@@ -118,7 +118,7 @@ I'll have mine based no board games instead (use the board game geek api: https:
   - [X] mark complete on complete
   - [X] my games aren't being defaulted when coming from my gamecard (the other is)
 - [X] fiddle with all the wording
-- [ ] remove unnecessary logging
+- [X] remove unnecessary logging
 - [ ] add City/State to profile
   - [ ] add to User.js
   - [ ] add to the profile page as editable
