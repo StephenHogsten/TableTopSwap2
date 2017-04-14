@@ -2,12 +2,12 @@ import React, { Component } from 'react';
 import { json as d3Json} from 'd3-request';
 
 import GameList from './GameList.js';
+import Loading from './Loading.js';
 
 import {Step, Stepper, StepLabel} from 'material-ui/Stepper';
 import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
 import TextField from 'material-ui/TextField';
-import AutoRenewIcon from 'material-ui/svg-icons/action/autorenew';
 
 const laststep = 2;
 const saveStates = {
@@ -101,6 +101,7 @@ class TradeSteps extends Component {
     console.log('sought', sought);
     let searchFor = '/api/add_trade?sender_owned_game=' + senderOwned._id 
       + '&receiver_owned_game=' + recipientOwned._id
+      + '&receiver_owned_BGG_id=' + recipientOwned.BGG_id
       + '&receiver=' + this.state.recipient
       + '&notes=' + this.state.notes
       + '&status=' + 'sent';    // eslint-disable-line
@@ -125,9 +126,10 @@ class TradeSteps extends Component {
         break;
       case saveStates.done:
         this.props.refreshTrades();
+        this.props.refreshGames();
         history.back();
       case saveStates.saving:   // eslint-disable-line
-        return <AutoRenewIcon className='loading' />;
+        return <Loading />;
       case saveStates.error:
         return <div className='error'>{JSON.stringify(this.state.error)}</div>
       default: 

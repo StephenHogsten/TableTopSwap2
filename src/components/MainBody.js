@@ -205,6 +205,7 @@ class MainBody extends Component {
                 mySoughtGames={mySoughtGames}
                 myOwnedGames={myOwnedGames}
                 refreshTrades={this.props.refreshTrades}
+                refreshGames={this.props.refreshGames}
               />
             </div>
           )} />
@@ -219,6 +220,7 @@ class MainBody extends Component {
                 myOwnedGames={myOwnedGames}
                 myOwnedGame={JSON.parse(decodeURIComponent(match.params.game))}
                 refreshTrades={this.props.refreshTrades}
+                refreshGames={this.props.refreshGames}
               />
             </div>
           )} />
@@ -233,6 +235,7 @@ class MainBody extends Component {
                 myOwnedGames={myOwnedGames}
                 ownedGame={JSON.parse(decodeURIComponent(match.params.game))}
                 refreshTrades={this.props.refreshTrades}
+                refreshGames={this.props.refreshGames}
               />
             </div>
           )} />

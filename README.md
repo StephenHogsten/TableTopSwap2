@@ -112,7 +112,7 @@ I'll have mine based no board games instead (use the board game geek api: https:
   - [X] add spinner to everything that waits?
 - [ ] fiddle with the linking within trades
   - [X] make sure recipient sought is being added on creation
-  - [ ] create sender sought on creation
+  - [X] create sender sought on creation
   - [ ] link to recipient sought on accept
   - [ ] create recipient sought on accept
   - [ ] mark complete on complete
@@ -125,14 +125,15 @@ I'll have mine based no board games instead (use the board game geek api: https:
   - [ ] sent should be recieved to recipients
   - [ ] fix scrolling (make it scroll to top)
   - [ ] more padding above OneGame
+  - [ ] Trade Card layout just isn't very good
+  - [ ] style the add buttons better 
+    - [ ] make them show more plus buttons with text to the left instead of a menu
+    - [ ] make text to the left show on hover for the just trade mode
 - [ ] mobile friendly
 - [ ] default focus where it belongs
   - [ ] enter should submit for login
 - [ ] AddButton.js "iconButton.setKeyboardFocus is not a fn" on ESC
 - [ ] close icon menu when navigating to profile
-- [ ] style the add buttons better 
-  - [ ] make them show more plus buttons with text to the left instead of a menu
-  - [ ] make text to the left show on hover for the just trade mode
 - [ ] Some sort of splash page before login (use material-ui as a guide)
 ## Bonuses
 - [ ] make the thing that is a flat div and turns into an app bar

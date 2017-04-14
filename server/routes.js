@@ -80,6 +80,28 @@ const queryBggInfo = (ids, cb) => {
   });
 }
 
+function newGame(BGG_id, isSought, user, cb) {
+  queryBggInfo(BGG_id, (err, data) => {
+      if (err) { cb(err); return; }
+      data = data[0];
+      let BGGid = data.BGG_id;
+      delete data.BGG_id;
+      // we should prevent user from creating duplicates
+      let game = new Game({
+        BGG_id: BGGid,
+        user: user,
+        sought_or_owned: isSought? 'sought': 'owned',
+        isTradeAccepted: false,
+        BGG_info: data
+      });
+      console.log('game', game);
+      console.log('game._id', game._id);
+      game.save((err) => {
+        cb(err, game);
+      });
+    });
+}
+
 module.exports = (passport) => {
 
   const router = express.Router();
@@ -216,22 +238,8 @@ module.exports = (passport) => {
     console.log(req.query.sought);
     console.log(Boolean(req.query.sought)? 'sought': 'owned');
     let user = req.query.user? req.query.user: req.user._id
-    queryBggInfo(req.query.id, (err, data) => {
-      if (err) { res.send({ error: err }); return; }
-      data = data[0];
-      let BGGid = data.BGG_id;
-      delete data.BGG_id;
-      // we should prevent user from creating duplicates
-      let game = new Game({
-        BGG_id: BGGid,
-        user: user,
-        sought_or_owned: req.query.issought === 'true'? 'sought': 'owned',
-        isTradeAccepted: false,
-        BGG_info: data
-      });
-      game.save((err) => {
-        res.send( err? {error: err}: {success: game._id} );
-      });
+    newGame(req.query.id, req.query.issought === 'true', user, (err, game) => {
+      res.send( err? {error: err}: {success: game._id});
     });
   });
   router.get('/all_games', (req, res) => {
@@ -255,6 +263,7 @@ module.exports = (passport) => {
   //    reciever
   //    sender_owned_game
   //    receiver_owned_game
+  //    receiver_owned_BGG_id
   //    notes
   //    status (defaults to sent but pending also accepted)
   //  optionally:
@@ -277,14 +286,22 @@ module.exports = (passport) => {
       notes: decodeURIComponent(req.query.notes),
       status: req.query.status || 'sent'
     });
-    if (req.query.sender_sought_game) trade.sender.sought_game_id = req.query.sender_sought_game;
     if (req.query.receiver_sought_game) trade.recipient.sought_game_id = req.query.receiver_sought_game;
-    // could verify games here
-    console.log('new trade: ', trade);
-    trade.save( (err) => {
-      res.send( err? {error: err}: {success: true});
-    });
-  })
+    if (!req.query.sender_sought_game && req.query.receiver_owned_BGG_id) {
+      newGame(req.query.receiver_owned_BGG_id, true, req.user._id, (err, game) => {
+        if (err) {res.send({error: err}); return; }
+        trade.sender.sought_game_id = game._id;
+        trade.save( (err) => {
+          res.send( err? {error: err}: {success: true});
+        });
+      });
+    } else {
+      trade.sender.sought_game_id = req.query.sender_sought_game;
+      trade.save( (err) => {
+        res.send( err? {error: err}: {success: true});
+      });
+    }
+  });
   router.get('/all_trades', (req, res) => {
     Trade.find({})
       .sort({'created_date': -1})
