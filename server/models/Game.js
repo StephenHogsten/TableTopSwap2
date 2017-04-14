@@ -19,6 +19,7 @@ const gameSchema = Schema({
     default: 'sought'
   },
   "isTradeAccepted": Boolean,
+  "created_date": Date,
   "BGG_info": {
     "full_image_url": String,
     "thumb_image_url": String,
@@ -31,6 +32,13 @@ const gameSchema = Schema({
     "description": String,
     "rating": Number
   }
+});
+
+gameSchema.pre('save', function (next) {
+  if (!this.created_date) {
+    this.created_date = new Date();
+  }
+  next();
 });
 
 gameSchema.index({ user: 1, BGG_id: 1, sought_or_owned: 1 }, { unique: true });

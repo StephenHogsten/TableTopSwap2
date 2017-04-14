@@ -86,10 +86,12 @@ class AddGame extends Component {
     switch (this.state.saveState) {
       case saveStates.done:
         console.log('state: done');
-      case saveStates.none:   // eslint-disable-line
-        break;
-      case saveStates.saving:
+        this.props.refreshGames();
+        history.back();
+      case saveStates.saving:   // eslint-disable-line
         return <Loading />;
+      case saveStates.none:   
+        break;
       case saveStates.error:
         return <div className='error'>{JSON.stringify(this.state.error)}</div>;
       default:

@@ -238,6 +238,7 @@ module.exports = (passport) => {
     // is there a way to sort?
     Game
       .find({})
+      .sort({ created_date: -1 })
       .populate('user', {
         _id: true,
         username: true,

@@ -25,13 +25,13 @@ class Profile extends Component {
           username: json.username
         },
         trades: this.props.trades.filter( (trade) => (
-          trade.sender.user === id || trade.recipient.user === id
+          trade.sender.user._id === id || trade.recipient.user._id === id
         )).length,
         owned: this.props.games.filter( (game) => (
-          game.user === id && game.sought_or_owned === 'owned'
+          game.user._id === id && game.sought_or_owned === 'owned'
         )).length,
         sought: this.props.games.filter( (game) => (
-          game.user === id && game.sought_or_owned === 'sought'
+          game.user._id === id && game.sought_or_owned === 'sought'
         )).length
       });
     });

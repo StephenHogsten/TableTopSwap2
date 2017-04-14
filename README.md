@@ -105,7 +105,7 @@ I'll have mine based no board games instead (use the board game geek api: https:
   - [X] blue when waiting on others, yellow when waiting on you, grey when cancelled, green when done
   - [X] add color to status thing as well
 - [X] indicate in GameList if they have more than four
-- [ ] sort GameList by most recent first
+- [X] sort GameList by most recent first
 - [ ] for saving, does done need to be in componentwillmount?
   - [ ] add spinner to everything that waits?
 - [ ] fiddle with the linking within trades
@@ -140,3 +140,4 @@ I'll have mine based no board games instead (use the board game geek api: https:
 - [ ] automatically match people
 - [ ] more validators for mongoose models
   - [ ] user fields should check that the user actually exists (not sure how to do this)
+- [ ] scale to too many games to fit in client cache
