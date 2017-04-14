@@ -39,7 +39,7 @@ class TradeSteps extends Component {
             <GameList 
               gameList={this.props.ownedGames} 
               activeId={String(this.state.recipientOwned._id)} 
-              onClickFn={ (game) => { this.setState({ recipientOwned: game, recipient: game.user }); } } 
+              onClickFn={ (game) => { this.setState({ recipientOwned: game, recipient: game.user._id }); } } 
             />
           </div>
         );
@@ -115,18 +115,15 @@ class TradeSteps extends Component {
       }
     });
   }
-  componentWillUpdate(nextProps, nextState) {
-      if (nextState.saveState === saveStates.done) {
-        this.props.refreshTrades();
-        history.back();
-      }
-  }
+
   render() {
     switch (this.state.saveState) {
       case saveStates.none:
         break;
       case saveStates.done:
-      case saveStates.saving:
+        this.props.refreshTrades();
+        history.back();
+      case saveStates.saving:   // eslint-disable-line
         return <AutoRenewIcon className='loading' />;
       case saveStates.error:
         return <div className='error'>{JSON.stringify(this.state.error)}</div>

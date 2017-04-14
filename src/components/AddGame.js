@@ -76,12 +76,6 @@ class AddGame extends Component {
       }
     });
   }
-  componentWillUpdate(nextProps, nextState) {
-    if (nextState.saveState === saveStates.done) {
-      this.props.refreshGames();
-      history.back();
-    }
-  }
   render() {
     switch (this.state.saveState) {
       case saveStates.done:

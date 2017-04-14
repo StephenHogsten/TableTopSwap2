@@ -3,6 +3,7 @@ import { json as d3Json } from 'd3-request';
 // import '../scss/OneTrade.scss';
 
 import TradeCard from './TradeCard.js';
+import Loading from './Loading.js';
 
 import RaisedButton from 'material-ui/RaisedButton';
 // import AutoRenewIcon from 'material-ui/svg-icons/action/autorenew';
@@ -87,25 +88,14 @@ class OneTrade extends Component {
         );
     }
   }
-  componentWillUpdate(nextProps, nextState) {
-    if (nextState.saveState === saveStates.done) {
+  render() {
+    if (this.state.saveState === saveStates.done) {
       this.props.refreshTrades();
       history.back();
+      return (
+        <Loading />
+      )
     }
-  }
-  render() {
-    // switch (this.state.saveState) {
-    //   case saveStates.none:
-    //     break;
-    //   case saveStates.done:
-    //     console.log('we\'re done');
-    //   case saveStates.saving:
-    //     return <AutoRenewIcon className='loading' />;
-    //   case saveStates.error:
-    //     return <div className='error'>{JSON.stringify(this.state.error)}</div>
-    //   default: 
-    //     return <div className='error'>Invalid save state</div>
-    // }
     let buttons = this.makeButtons();
     return (
       <div className='trade'>

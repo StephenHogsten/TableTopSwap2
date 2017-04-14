@@ -68,9 +68,6 @@ class App extends Component {
     if (!user) return;
     d3.json('/api/all_trades', (err, data) => {
       if (err) throw err;
-      console.log(data);
-      console.log('user: ', user);
-      console.log(data.filter((d) => (d.sender.user === user || d.recipient.user === user)));
       this.setState({
         tradeList: data.filter((d) => (d.sender.user === user || d.recipient.user === user))
       });
