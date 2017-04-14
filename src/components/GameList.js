@@ -1,12 +1,17 @@
 import React, { Component } from 'react';
-import GameCard, { NoneCard } from './GameCard.js';
+import GameCard, { NoneCard, MoreCard } from './GameCard.js';
 import '../scss/GameList.scss';
 
 class GameList extends Component {
   render() {
-    let count = this.props.firstX
-    count = count? this.props.firstX: 40;
+    // set-up display counts
+    let count = this.props.firstX || 100; // cap at 100 until we page
+    let shouldAddMore;
+    if (count < this.props.gameList.length) { shouldAddMore = true; }
+    else { count = this.props.gameList.length; }
     count = Math.min(count, this.props.gameList.length);
+
+    // add GameCard s to list
     let games = [];
     for(let i=0; i<count; i++) {
       let thisGame = this.props.gameList[i];
@@ -22,13 +27,19 @@ class GameList extends Component {
         />
       );
     }
-    if (games.length === 0) games.push(
+
+    // handle none case & see more case
+    if (games.length === 0) { games.push(
       <NoneCard key='none' linkTo={
         this.props.hasOwnProperty('isOwned')?
         (this.props.isOwned? 'new/game/owned': 'new/game/sought'):
         ""
       } />
-    );
+    )} else if (shouldAddMore && this.props.seeMoreLink) { 
+      games.push(
+        <MoreCard key='more' linkTo={this.props.seeMoreLink} />
+      );
+    }
     return (
       <div className="game-list">
         {games}
@@ -42,7 +53,8 @@ GameList.propTypes = {
   firstX: React.PropTypes.number,
   gameList: React.PropTypes.array.isRequired,
   onClickFn: React.PropTypes.func,
-  activeId: React.PropTypes.string
+  activeId: React.PropTypes.string,
+  seeMoreLink: React.PropTypes.string
 };
 
 export default GameList;

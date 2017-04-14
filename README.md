@@ -86,7 +86,9 @@ I'll have mine based no board games instead (use the board game geek api: https:
   - [X] 'none'
   - [X] replace things like text fields with the appropriate material components
 - [X] deploy to heroku
-  ---
+  
+------
+
 - [X] fix refreshing never having a user
 - [X] create sign up button
 - [X] retrigger getting trades and games when appropriate
@@ -99,26 +101,22 @@ I'll have mine based no board games instead (use the board game geek api: https:
   - [X] create server api to take a list of userIDs and return details
   - [X] pass game instead of BGG_info and ID
   - [X] restyle the card
-- [ ] add a color status bar to trade card
+- [X] add a color status bar to trade card
   - [X] blue when waiting on others, yellow when waiting on you, grey when cancelled, green when done
-  - [ ] add color to status thing as well
-- [ ] indicate in GameList if they have more than four
+  - [X] add color to status thing as well
+- [X] indicate in GameList if they have more than four
 - [ ] sort GameList by most recent first
 - [ ] for saving, does done need to be in componentwillmount?
   - [ ] add spinner to everything that waits?
 - [ ] fiddle with the linking within trades
 - [ ] fiddle with all the wording
 - [ ] remove unnecessary logging
-
-## Bonuses
+- [ ] add City/State to profile
 - [ ] visual tweaks
   - [ ] the buttons / fields on login should line up better
   - [ ] sent should be recieved to recipients
+  - [ ] fix scrolling (make it scroll to top)
 - [ ] mobile friendly
-- [ ] jest
-  - [ ] test more advancing scenarios if possible
-  - [ ] for react components
-  - [ ] for server endpoints?
 - [ ] default focus where it belongs
   - [ ] enter should submit for login
 - [ ] AddButton.js "iconButton.setKeyboardFocus is not a fn" on ESC
@@ -126,6 +124,12 @@ I'll have mine based no board games instead (use the board game geek api: https:
 - [ ] style the add buttons better 
   - [ ] make them show more plus buttons with text to the left instead of a menu
   - [ ] make text to the left show on hover for the just trade mode
+## Bonuses
+- [ ] jest
+  - [ ] test more advancing scenarios if possible
+  - [ ] for react components
+  - [ ] for server endpoints?
+- [ ] filter button for trades
 - [ ] indicate games sought by the person you're sending too
 - [ ] link to twitter for profile pics
 - [ ] require an email on login

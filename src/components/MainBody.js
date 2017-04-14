@@ -73,9 +73,9 @@ class MainBody extends Component {
           let userSpecifics = (!user)? null: [
             (<Link to='/my_games' className='section-header' key='header'>My Games</Link>),
             (<Link to='/my_games/sought' className='sub-section-header' key='my-sought-header'>My Games Sought</Link>),
-            (<GameList firstX={4} gameList={mySoughtGames} isOwned={false} key='my-sought-games'/>),
+            (<GameList firstX={3} gameList={mySoughtGames} isOwned={false} seeMoreLink='/my_games/sought' key='my-sought-games'/>),
             (<Link to='/my_games/owned' className='sub-section-header' key='my-own)ed-header'>My Games Offered</Link>),
-            (<GameList firstX={4} gameList={myOwnedGames} isOwned={true} key='my-owned-games'/>),
+            (<GameList firstX={3} gameList={myOwnedGames} isOwned={true} seeMoreLink='/my_games/owned' key='my-owned-games'/>),
             (<Divider className='section-divider' key='divider'/>),
             (<br key='br'/>)
           ];
@@ -84,9 +84,9 @@ class MainBody extends Component {
               {userSpecifics}
               <Link to='/all_games' className='section-header' key='section-header'>Community Games</Link>
               <Link to='/all_games/sought' className='sub-section-header' key='sought-header'>Games Sought</Link>
-              <GameList firstX={4} gameList={soughtGames} key='sought-games'/>
+              <GameList firstX={3} gameList={soughtGames} seeMoreLink='/all_games/sought' key='sought-games'/>
               <Link to='/all_games/owned' className='sub-section-header' key='owned-header'>Games Offered</Link>
-              <GameList firstX={4} gameList={ownedGames} key='owned-games'/>
+              <GameList firstX={3} gameList={ownedGames} seeMoreLink='/all_games/owned' key='owned-games'/>
               <AddButton user={user}/>
             </div>
           );
@@ -116,9 +116,9 @@ class MainBody extends Component {
           <div className='main-body'>
             <span className='section-header' key='section-header'>Community Games</span>
             <Link to='/all_games/sought' className='sub-section-header' key='sought-header'>Games Sought</Link>
-            <GameList firstX={4} gameList={soughtGames} key='sought-games' isOwned={false}/>
+            <GameList firstX={3} gameList={soughtGames} seeMoreLink='/all_games/sought' key='sought-games' isOwned={false}/>
             <Link to='/all_games/owned' className='sub-section-header' key='owned-header'>Games Offered</Link>
-            <GameList firstX={4} gameList={ownedGames} key='owned-games' isOwned={true}/>
+            <GameList firstX={3} gameList={ownedGames} seeMoreLink='/all_games/owned' key='owned-games' isOwned={true}/>
             <AddButton user={user} mode='game' />
           </div>
         )} />
@@ -127,9 +127,9 @@ class MainBody extends Component {
             <div className='main-body'>
               <span className='section-header' key='section-header'>My Games</span>
               <Link to='/my_games/sought' className='sub-section-header' key='my-sought-header'>My Games Sought</Link>
-              <GameList firstX={4} gameList={mySoughtGames} isOwned={false} key='my-sought-games'/>
+              <GameList firstX={3} gameList={mySoughtGames} isOwned={false} seeMoreLink='/my_games/sought' key='my-sought-games'/>
               <Link to='/my_games/owned' className='sub-section-header' key='my-owned-header'>My Games Offered</Link>
-              <GameList firstX={4} gameList={myOwnedGames} isOwned={true} key='my-owned-games'/>
+              <GameList firstX={3} gameList={myOwnedGames} isOwned={true} seeMoreLink='/my_games/owned' key='my-owned-games'/>
               <AddButton user={user} mode='game' />
             </div>
           )} />
@@ -138,7 +138,7 @@ class MainBody extends Component {
           <UserRender currentUser={user} isCheckingSession={this.props.isCheckingSession} render={() => (
             <div className='main-body'>
               <h2 className='section-header' key='my-sought-header'>My Games Sought</h2>
-              <GameList firstX={20} gameList={mySoughtGames} isOwned={false} key='my-sought-games' />
+              <GameList gameList={mySoughtGames} isOwned={false} key='my-sought-games' />
               <AddButton user={user} mode='sought_game' />
             </div>
           )} />
@@ -147,7 +147,7 @@ class MainBody extends Component {
           <UserRender currentUser={user} isCheckingSession={this.props.isCheckingSession} render={() => (
             <div className='main-body'>
               <h2 className='section-header' key='my-owned-header'>My Games Owned</h2>
-              <GameList firstX={20} gameList={myOwnedGames} isOwned={true} key='my-owned-games' />
+              <GameList gameList={myOwnedGames} isOwned={true} key='my-owned-games' />
               <AddButton user={user} mode='sought_game' />
             </div>
           )} />
@@ -155,13 +155,13 @@ class MainBody extends Component {
         <Route key='community_sought' exact path='/all_games/sought' render={() => (
           <div className='main-body'>
             <h2 className='section-header' key='sought-header'>All Games Sought</h2>
-            <GameList firstX={20} gameList={soughtGames} key='sought-games' />
+            <GameList gameList={soughtGames} key='sought-games' />
           </div>
         )} />
         <Route key='community_owned' exact path='/all_games/owned' render={() => (
           <div className='main-body'>
             <h2 className='section-header' key='owned-header'>All Games Owned</h2>
-            <GameList firstX={20} gameList={ownedGames} gameType='owned' key='owned-games' />
+            <GameList gameList={ownedGames} gameType='owned' key='owned-games' />
           </div>
         )} />
         <Route key='game' exact path='/game/:id' render={ ({ match }) => {

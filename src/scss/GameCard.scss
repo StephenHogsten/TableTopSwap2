@@ -37,7 +37,9 @@ $picture-height: 240px;
   display: flex;
   justify-content: center;
   align-items: center;
-  color: #555;
+}
+.more-card {
+  @extend .none-card;
 }
 
 .game-image {

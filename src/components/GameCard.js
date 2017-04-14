@@ -84,3 +84,11 @@ export const NoneCard = (props) => (
     </Card>
   </Link>
 );
+
+export const MoreCard = (props) => (
+  <Link to={props.linkTo}>
+    <Card className='more-card' style={{backgroundColor:'rgba(220,120,120,0.5)'}}>
+      <CardTitle title='See More' titleColor='white' />
+    </Card>
+  </Link>
+)
