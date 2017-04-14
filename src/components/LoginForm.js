@@ -12,7 +12,6 @@ class LoginForm extends Component {
     let error;
     if (match.params.info) {
       error = JSON.parse(decodeURIComponent(match.params.info));
-      console.log('error', error);
       error = error.hasOwnProperty('message')? error = error.message: JSON.stringify(error);
     }
     this.state = {

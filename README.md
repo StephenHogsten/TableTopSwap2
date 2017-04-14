@@ -117,15 +117,17 @@ I'll have mine based no board games instead (use the board game geek api: https:
   - [X] create recipient sought on accept
   - [X] mark complete on complete
   - [X] my games aren't being defaulted when coming from my gamecard (the other is)
-- [ ] fiddle with all the wording
+- [X] fiddle with all the wording
 - [ ] remove unnecessary logging
 - [ ] add City/State to profile
   - [ ] add to User.js
   - [ ] add to the profile page as editable
   - [ ] add to the game card
+- [ ] split up routes
 - [ ] get a handle on when completed games are filtered
 - [ ] add error / loading for trade workflow
 - [ ] visual tweaks
+  - [ ] Game card should be sought by: for not owned
   - [ ] the buttons / fields on login should line up better
   - [ ] sent should be recieved to recipients
   - [ ] fix scrolling (make it scroll to top)

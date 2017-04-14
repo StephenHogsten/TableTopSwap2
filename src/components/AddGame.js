@@ -79,7 +79,6 @@ class AddGame extends Component {
   render() {
     switch (this.state.saveState) {
       case saveStates.done:
-        console.log('state: done');
         this.props.refreshGames();
         history.back();
       case saveStates.saving:   // eslint-disable-line
@@ -89,7 +88,6 @@ class AddGame extends Component {
       case saveStates.error:
         return <div className='error'>{JSON.stringify(this.state.error)}</div>;
       default:
-        console.log('invalid state: ' + this.state.saveState);
         return <div className='error'>Error: invalid save state</div>;
     }
     return (

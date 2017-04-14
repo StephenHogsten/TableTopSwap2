@@ -11,7 +11,6 @@ const Trade = require('./models/Trade.js')
 // http helper
 const makeRequest = (queryUrl, cb) => {
   queryUrl = url.parse(queryUrl);
-  console.log(queryUrl);
   let options = {
     protocol: 'https:',
     hostname: queryUrl.hostname,
@@ -39,9 +38,7 @@ const firstIdx = (game, prop) => {
 }
 
 const BGG2Game = (game) => {
-  console.log(4);
   let titleObj = game.name.find( (val) => val.$.primary ) || game.name[0];
-  console.log(5);
   return {
     BGG_id: game.$.objectid,
     full_image_url: firstIdx(game, 'image'),
@@ -61,20 +58,15 @@ const queryBggInfo = (ids, cb) => {
   let searchFor = 'https://www.boardgamegeek.com/xmlapi/boardgame/' + ids + '?stats=1';
   makeRequest(searchFor, (err, data) => {
     if (err) { cb(err); return; }
-    console.log(1);
     xml2js(data, (err, gameData) => {
-      console.log(2);
       if (err) { cb(err); return; }
       // at this point we have a JSON for the BGG data
       gameData = gameData.boardgames.boardgame;
-      console.log(3);
       // now we have an array of games
       let result = [];
       for (let gameIdx=0; gameIdx < gameData.length; gameIdx++) {
         result.push(BGG2Game(gameData[gameIdx]));
-        console.log('5.1');
       }
-      console.log(6);
       cb(null, result);
     });
   });
@@ -94,8 +86,6 @@ function newGame(BGG_id, isSought, user, cb) {
         isTradeAccepted: false,
         BGG_info: data
       });
-      console.log('game', game);
-      console.log('game._id', game._id);
       game.save((err) => {
         cb(err, game);
       });
@@ -118,7 +108,6 @@ module.exports = (passport) => {
     })(req, res, next);
   }, (error, req, res, next) => {
     // send errors (if successful we already redirected)
-    console.log('error: ', error);
     return res.redirect('/login/' + encodeURIComponent(JSON.stringify(error)));
   });
   //  logout
@@ -127,7 +116,6 @@ module.exports = (passport) => {
     res.send('logging out');
   });
   router.get('/checksession', (req, res) => {
-    console.log('checking session');
     if (req.user) {
       res.send({ 
         activeSession: true,
@@ -148,7 +136,7 @@ module.exports = (passport) => {
     }
     User.findById(req.params.id, (err, user) => {
       if (err) res.send({ error: err });
-      else { res.send({ username: user.username }); console.log('username', user); }
+      else { res.send({ username: user.username }); }
     });
   });
   router.post('/add_user', (req, res, next) => {
@@ -160,9 +148,6 @@ module.exports = (passport) => {
       newUser.save( (err) => {
         if (err) { 
           // err - send the user back to login 
-          console.log('-----');
-          console.log('error', err);
-          console.log('-----');
           let message;
           if (err.code === 11000) { message = 'username already taken' }
           else if (err.errors.hasOwnProperty('password') && err.errors.password.message === 'Password must be at least 8 characters') {
@@ -198,7 +183,6 @@ module.exports = (passport) => {
       if (err) res.send({'error': err});
       xml2js(data, (err, gameData) => {
         gameData = gameData.boardgames.boardgame;
-        console.log(gameData);
         if (!gameData) {res.send([]);}
         else {
           let results = gameData.map( (val) => {
@@ -230,13 +214,6 @@ module.exports = (passport) => {
       res.send('no valid user session');
       return;
     }
-    console.log('req.query');
-    console.log(req.query);
-    console.log('req user _id');
-    console.log(req.user._id);
-    console.log('sought or owned');
-    console.log(req.query.sought);
-    console.log(Boolean(req.query.sought)? 'sought': 'owned');
     let user = req.query.user? req.query.user: req.user._id
     newGame(req.query.id, req.query.issought === 'true', user, (err, game) => {
       res.send( err? {error: err}: {success: game._id});
@@ -271,9 +248,6 @@ module.exports = (passport) => {
   //    receiver_sought_game
   router.get('/add_trade', (req, res) => {
     if (!req.isAuthenticated()) { res.send({ error: 'not logged in' }); return; }
-    console.log('adding trade');
-    console.log(req.query);
-    console.log(req.user);
     let trade = new Trade({
       sender: {
         user: req.user._id,
@@ -317,7 +291,6 @@ module.exports = (passport) => {
   //    receiver_sought_game
   //    sender_owned_BGG_id
   router.get('/set_trade', (req, res) => {
-    console.log('setting trade:', req.query);
     if (!req.isAuthenticated()) { res.send({ error: 'not logged in' }); }
     Trade.findById( req.query.id, (err, trade) => {
       if (err) { res.send({error: err}); return; }
@@ -336,7 +309,6 @@ module.exports = (passport) => {
             // we need to link to or add a reciepient sought game 
             if (req.query.receiver_sought_game) {
               // they must've created a sought game in between - link together
-              console.log('receiver sought game', req.query.receiver_sought_game);
               trade.recipient.sought_game_id = req.query.receiver_sought_game;
               break;
             }
@@ -388,7 +360,7 @@ module.exports = (passport) => {
               Game.update(
                 { _id: gameId },
                 { $set: { isTradeAccepted: 'true' } },
-                (err) => console.log(err? err: ('updated game: ' + gameId))
+                (err) => console.log(err? err: ('updated game: ' + gameId))   // eslint-disable-line
               );
             }
           });

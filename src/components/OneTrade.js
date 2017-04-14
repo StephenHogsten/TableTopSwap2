@@ -43,7 +43,6 @@ class OneTrade extends Component {
     };
   }
   setTrade(status) {
-    console.log('setting status: ', status);
     this.setState({ saveState: saveStates.saving });
     let searchFor = '/api/set_trade?id=' + this.props.trade._id + '&status=' + status;
     if (!this.props.trade.recipient.sought_game_id) {
@@ -61,7 +60,6 @@ class OneTrade extends Component {
         searchFor += '&sender_owned_BGG_id=' + senderGame.BGG_id;
       }
     }
-    console.log('searchFor', searchFor);
     d3Json(searchFor, (err, data) => {
       if (err) {
         this.setState({ error: err, saveState: saveStates.error });
@@ -69,7 +67,6 @@ class OneTrade extends Component {
         if (data.hasOwnProperty('error')) {
           this.setState({ error: data.error, saveState: saveStates.error });
         } else {
-          console.log('data', data);
           this.setState({ saveState: saveStates.done });
         }
       }

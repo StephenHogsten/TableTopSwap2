@@ -100,12 +100,11 @@ class App extends Component {
         open={this.state.isDrawerOpen} 
         onRequestChange={ () => this.closeDrawer() }
       >
-        <MenuLink to="" label="All Games" clickFn={()=>this.closeDrawer()} />
+        <MenuLink to="my_trades" label="My Trades" clickFn={()=>this.closeDrawer()} />
         <Divider />
         <MenuLink to="my_games" label="My Games" clickFn={()=>this.closeDrawer()} />
         <MenuLink to="my_games/sought" label="  Games I Want" clickFn={()=>this.closeDrawer()} />
         <MenuLink to="my_games/owned" label="  Games I'm Offering" clickFn={()=>this.closeDrawer()} />
-        <MenuLink to="my_trades" label="My Trades" clickFn={()=>this.closeDrawer()} />
         <Divider />
         <MenuLink to="all_games" label="Community Games" clickFn={()=>this.closeDrawer()} />
         <MenuLink to="all_games/sought" label="  Games Others Want" clickFn={()=>this.closeDrawer()} />

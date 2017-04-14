@@ -6,7 +6,6 @@ import '../scss/OneGame.scss';
 
 class OneGame extends Component {
   render() {
-    console.log(this);
     let addButton=null;
     if (this.props.user && this.props.game.sought_or_owned === 'owned') {
       let mode = this.props.user === this.props.game.user._id? 'trade_sender': 'trade_receiver';

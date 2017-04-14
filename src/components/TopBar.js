@@ -38,7 +38,6 @@ class TopBar extends Component {
             <MenuLink to='logout' label="Sign out" />
           </IconMenu>:
           <FlatButton label='Login' onClick={ () => {
-            console.log(this.props.history.push);
             this.props.history.push('/login')
           }}/>
         }
