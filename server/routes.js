@@ -323,36 +323,37 @@ module.exports = (passport) => {
       if (err) { res.send({error: err}); return; }
       if (!trade) { res.send({ error: 'no trade with that id' }); return; }
       let user = String(req.user._id);
-      console.log('user: ' + user + ' ' + user.length);
-      console.log('user: ' + typeof(user));
-      console.log('trade sender: ' + trade.sender.user + ' ' + trade.sender.user.length);
-      console.log('trade recipient: ' + trade.recipient.user);
-      console.log('equal? ' + user === trade.sender.user);
-      console.log('equal? ' + user.length === trade.sender.user.length);
       switch (req.query.status) {
         case 'accepted':
           if (user !== trade.recipient.user) {
             res.send({ error: 'user is not the recipient' }); return; }
           if (trade.status !== 'sent') {
             res.send({ error: 'can only accept sent trades' }); return; }
-          // they must've created a sought game in between - link together
-          if (req.query.receiver_sought_game) {
-            trade.recipient.sought_game_id = req.query.receiver_sought_game;
+          if (trade.recipient.sought_game_id) {
+            // we already have a recipient sought game, save normally
             break;
-          }
-          if (!req.query.sender_owned_BGG_id) {
-            res.send({ error: 'no sender game BGG id'}); return; 
-          }
-          // they've accepted, so we'll create a sought game for them
-          newGame(req.query.sender_owned_BGG_id, true, trade.recipient.user, (err, game) => {
-            if (err) { res.send({ error: err}); return; }
-            trade.recipient.sought_game_id = game._id;
-            trade.status = req.query.status;
-            trade.save( (err) => {
-              res.send(err? {error: err}: {success: true});
+          } else {
+            // we need to link to or add a reciepient sought game 
+            if (req.query.receiver_sought_game) {
+              // they must've created a sought game in between - link together
+              console.log('receiver sought game', req.query.receiver_sought_game);
+              trade.recipient.sought_game_id = req.query.receiver_sought_game;
+              break;
+            }
+            if (!req.query.sender_owned_BGG_id) {
+              res.send({ error: 'no sender game BGG id'}); return; 
+            }
+            // they've accepted, so we'll create a sought game for them
+            newGame(req.query.sender_owned_BGG_id, true, trade.recipient.user, (err, game) => {
+              if (err) { res.send({ error: err}); return; }
+              trade.recipient.sought_game_id = game._id;
+              trade.status = req.query.status;
+              trade.save( (err) => {
+                res.send(err? {error: err}: {success: true});
+              });
             });
-          });
-          return;
+            return;
+          }
         case 'rejected':
           if (user !== trade.sender.user && user !== trade.recipient.user) {
             res.send({ error: 'user is not part of the trade' }); return; }
@@ -368,10 +369,30 @@ module.exports = (passport) => {
         case 'sent':
         case 'pending':
         case "cancelled":
+          break;
         case "completed":
           if (user !== trade.sender.user && user !== trade.recipient.user) {
             res.send({ error: 'user is not part of the trade' }); return; }
-          break;
+          trade.status = req.query.status;
+          trade.save( (err) => {
+            if (err) { res.send({ error: err }); return; }
+            res.send({message: 'success'});
+            // trade saved successfully - mark the games as traded
+            let games = [
+              trade.sender.sought_game_id,
+              trade.sender.owned_game_id,
+              trade.recipient.sought_game_id,
+              trade.recipient.owned_game_id
+            ];
+            for (let gameId of games) {
+              Game.update(
+                { _id: gameId },
+                { $set: { isTradeAccepted: 'true' } },
+                (err) => console.log(err? err: ('updated game: ' + gameId))
+              );
+            }
+          });
+          return;
         default:
           res.send({ error: 'new status is not a valid option' }); return;
       }

@@ -192,6 +192,7 @@ class MainBody extends Component {
                 gameList={this.props.gameList}
                 expanded={true}
                 refreshTrades={this.props.refreshTrades}
+                refreshGames={this.props.refreshGames}
               />
             </div>:
             <div className='main-body'><p className='error'>No Trade with that ID</p></div>

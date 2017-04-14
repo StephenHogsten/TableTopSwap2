@@ -181,6 +181,7 @@ class TradeSteps extends Component {
 
 TradeSteps.propTypes = {
   refreshTrades: React.PropTypes.func.isRequired,
+  refreshGames: React.PropTypes.func.isRequired,
   soughtGames: React.PropTypes.array.isRequired,
   ownedGames: React.PropTypes.array.isRequired,
   mySoughtGames: React.PropTypes.array.isRequired,

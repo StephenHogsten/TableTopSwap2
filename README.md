@@ -115,28 +115,36 @@ I'll have mine based no board games instead (use the board game geek api: https:
   - [X] create sender sought on creation
   - [X] link to recipient sought on accept
   - [X] create recipient sought on accept
-  - [ ] mark complete on complete
+  - [X] mark complete on complete
   - [ ] my games aren't being defaulted when coming from my gamecard (the other is)
 - [ ] fiddle with all the wording
 - [ ] remove unnecessary logging
 - [ ] add City/State to profile
+  - [ ] add to User.js
+  - [ ] add to the profile page as editable
+  - [ ] add to the game card
+- [ ] get a handle on when completed games are filtered
+- [ ] add error / loading for trade workflow
 - [ ] visual tweaks
   - [ ] the buttons / fields on login should line up better
   - [ ] sent should be recieved to recipients
   - [ ] fix scrolling (make it scroll to top)
   - [ ] more padding above OneGame
   - [ ] Trade Card layout just isn't very good
+    - [ ] open gamecard from tradecard
+  - [ ] indicate traded games
   - [ ] style the add buttons better 
     - [ ] make them show more plus buttons with text to the left instead of a menu
     - [ ] make text to the left show on hover for the just trade mode
-- [ ] mobile friendly
+  - [ ] close icon menu when navigating to profile
 - [ ] default focus where it belongs
   - [ ] enter should submit for login
+- [ ] take user to the trade you just created or home (not to the game)
+- [ ] mobile friendly
 - [ ] AddButton.js "iconButton.setKeyboardFocus is not a fn" on ESC
-- [ ] close icon menu when navigating to profile
 - [ ] Some sort of splash page before login (use material-ui as a guide)
 ## Bonuses
-- [ ] make the thing that is a flat div and turns into an app bar
+- [ ] make the thing that is a flat div and turns into an app bar for splash page
 - [ ] jest
   - [ ] test more advancing scenarios if possible
   - [ ] for react components

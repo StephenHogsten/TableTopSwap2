@@ -9,7 +9,7 @@ class OneGame extends Component {
     console.log(this);
     let addButton=null;
     if (this.props.user && this.props.game.sought_or_owned === 'owned') {
-      let mode = this.props.user === this.props.game.user? 'trade_sender': 'trade_receiver';
+      let mode = this.props.user === this.props.game.user._id? 'trade_sender': 'trade_receiver';
       addButton=<AddButton user={this.props.user} mode={mode} game={this.props.game} />
     }
     return (

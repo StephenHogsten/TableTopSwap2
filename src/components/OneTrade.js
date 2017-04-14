@@ -44,7 +44,7 @@ class OneTrade extends Component {
   }
   setTrade(status) {
     console.log('setting status: ', status);
-    this.setState({ saveState: saveStates.loading });
+    this.setState({ saveState: saveStates.saving });
     let searchFor = '/api/set_trade?id=' + this.props.trade._id + '&status=' + status;
     if (!this.props.trade.recipient.sought_game_id) {
       // we need to link or create a recipient sought game
@@ -105,7 +105,11 @@ class OneTrade extends Component {
     }
   }
   render() {
+    if (this.state.saveState === saveStates.saving) {
+      return <Loading />;
+    }
     if (this.state.saveState === saveStates.done) {
+      this.props.refreshGames();
       this.props.refreshTrades();
       history.back();
       return (
@@ -130,6 +134,7 @@ class OneTrade extends Component {
 
 OneTrade.propTypes = {
   refreshTrades: React.PropTypes.func.isRequired,
+  refreshGames: React.PropTypes.func.isRequired,
   trade: React.PropTypes.object.isRequired,
   currentUser: React.PropTypes.string.isRequired,
   gameList: React.PropTypes.array.isRequired
