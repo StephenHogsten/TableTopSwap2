@@ -106,7 +106,12 @@ class MainBody extends Component {
         <Route key='profile' exact path='/profile' render={() => 
           <UserRender currentUser={user} isCheckingSession={this.props.isCheckingSession} render={() => (
             <div className='main-body'>
-              <Profile currentUser={user} trades={this.props.tradeList} games={this.props.gameList} />
+              <Profile 
+                currentUser={user} 
+                trades={this.props.tradeList} 
+                games={this.props.gameList} 
+                refreshGames={this.props.refreshGames}
+              />
             </div>
           )} />
         } />

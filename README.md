@@ -123,6 +123,7 @@ I'll have mine based no board games instead (use the board game geek api: https:
   - [X] add to User.js
   - [X] add to the profile page as editable
   - [X] add to the game card
+- [X] reload games after updating profile (for the current user)
 - [ ] split up routes
 - [ ] get a handle on when completed games are filtered
 - [ ] add error / loading for trade workflow
@@ -131,6 +132,7 @@ I'll have mine based no board games instead (use the board game geek api: https:
   - [ ] the buttons / fields on login should line up better
   - [ ] sent should be recieved to recipients
   - [ ] City and state are aligned weirdly
+    - [ ] Can state open by typing
   - [ ] fix scrolling (make it scroll to top)
   - [ ] more padding above OneGame
   - [ ] Trade Card layout just isn't very good

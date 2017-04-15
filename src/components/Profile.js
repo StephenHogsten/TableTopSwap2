@@ -50,6 +50,7 @@ class Profile extends Component {
       this.setState({
         savingChanges: false
       });
+      this.props.refreshGames();
     });
   }
   componentDidMount() {
@@ -137,7 +138,8 @@ class Profile extends Component {
 Profile.propTypes = {
   currentUser: React.PropTypes.string.isRequired,
   trades: React.PropTypes.array.isRequired,
-  games: React.PropTypes.array.isRequired
+  games: React.PropTypes.array.isRequired,
+  refreshGames: React.PropTypes.func.isRequired
 };
 
 export default Profile;
