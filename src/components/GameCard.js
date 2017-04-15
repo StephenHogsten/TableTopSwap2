@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import {Card, CardTitle, CardText} from 'material-ui/Card';
+import {Card, CardHeader, CardTitle, CardText} from 'material-ui/Card';
 import AccessTimeIcon from 'material-ui/svg-icons/device/access-time';
 import PersonOutlineIcon from 'material-ui/svg-icons/social/person-outline';
 import SchoolIcon from 'material-ui/svg-icons/social/school';
@@ -9,7 +9,7 @@ import '../scss/GameCard.scss';
 
 class GameCard extends Component {
   info2Num(property, digits) {
-    let num = Number(this.props.info[property]);
+    let num = Number(this.props.game.BGG_info[property]);
     return digits? parseFloat(num).toFixed(digits) || 'n/a': num || 'n/a';
   }
   lowHigh(property) {
@@ -18,6 +18,20 @@ class GameCard extends Component {
     if (high > low) return low + '-' + high;
     return low + '+';
   }
+  makeHeader() {
+    let user = this.props.game.user;
+    if (user.city) {
+      if (user.state) {
+        return user.city + ', ' + user.state;
+      } else {
+        return user.city;
+      }
+    } else if (user.state) {
+      return user.state;
+    } else {
+      return 'location unknown';
+    }
+  }
   render() {
     let innards = (
       <Card 
@@ -25,13 +39,17 @@ class GameCard extends Component {
         style={{whiteSpace:'nowrap', textOverflow:'ellipsis'}} 
       >
         <div className={this.props.selected? 'active-game': 'inactive-game'} />
+        <CardHeader 
+          title={(this.props.game.sought_or_owned === 'sought'? 'Seeker: ': 'Owner: ') + this.props.game.user.username} 
+          subtitle={this.makeHeader()}
+        />
         <div 
-          style={{backgroundImage: 'url(' + (this.props.info.full_image_url || dice) + ')'}}
+          style={{backgroundImage: 'url(' + (this.props.game.BGG_info.full_image_url || dice) + ')'}}
           className={this.props.expanded? 'game-image-expanded': 'game-image'}
         >
         </div>
         <CardTitle 
-          title={this.props.info.title} 
+          title={this.props.game.BGG_info.title} 
           subtitle={'Rating: ' + this.info2Num('rating', 2) } 
           titleStyle={{overflow:'hidden', textOverflow: 'ellipsis', maxHeight:'33px'}}
         />
@@ -59,7 +77,7 @@ class GameCard extends Component {
     );
     return (
       <Link 
-        to={'/game/' + this.props.game_id}
+        to={'/game/' + this.props.game._id}
       >
         {innards}
       </Link>
@@ -68,8 +86,7 @@ class GameCard extends Component {
   }
 
 GameCard.propTypes = {
-  info: React.PropTypes.object.isRequired,
-  game_id: React.PropTypes.string.isRequired,
+  game: React.PropTypes.object.isRequired,
   selected: React.PropTypes.bool,
   onClickFn: React.PropTypes.func,
   expanded: React.PropTypes.bool
@@ -84,3 +101,11 @@ export const NoneCard = (props) => (
     </Card>
   </Link>
 );
+
+export const MoreCard = (props) => (
+  <Link to={props.linkTo}>
+    <Card className='more-card' style={{backgroundColor:'rgba(220,120,120,0.5)'}}>
+      <CardTitle title='See More' titleColor='white' />
+    </Card>
+  </Link>
+)

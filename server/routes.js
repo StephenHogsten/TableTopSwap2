@@ -11,7 +11,6 @@ const Trade = require('./models/Trade.js')
 // http helper
 const makeRequest = (queryUrl, cb) => {
   queryUrl = url.parse(queryUrl);
-  console.log(queryUrl);
   let options = {
     protocol: 'https:',
     hostname: queryUrl.hostname,
@@ -39,9 +38,7 @@ const firstIdx = (game, prop) => {
 }
 
 const BGG2Game = (game) => {
-  console.log(4);
   let titleObj = game.name.find( (val) => val.$.primary ) || game.name[0];
-  console.log(5);
   return {
     BGG_id: game.$.objectid,
     full_image_url: firstIdx(game, 'image'),
@@ -61,23 +58,38 @@ const queryBggInfo = (ids, cb) => {
   let searchFor = 'https://www.boardgamegeek.com/xmlapi/boardgame/' + ids + '?stats=1';
   makeRequest(searchFor, (err, data) => {
     if (err) { cb(err); return; }
-    console.log(1);
     xml2js(data, (err, gameData) => {
-      console.log(2);
       if (err) { cb(err); return; }
       // at this point we have a JSON for the BGG data
       gameData = gameData.boardgames.boardgame;
-      console.log(3);
       // now we have an array of games
-      result = [];
+      let result = [];
       for (let gameIdx=0; gameIdx < gameData.length; gameIdx++) {
         result.push(BGG2Game(gameData[gameIdx]));
-        console.log('5.1');
       }
-      console.log(6);
       cb(null, result);
     });
   });
+}
+
+function newGame(BGG_id, isSought, user, cb) {
+  queryBggInfo(BGG_id, (err, data) => {
+      if (err) { cb(err); return; }
+      data = data[0];
+      let BGGid = data.BGG_id;
+      delete data.BGG_id;
+      // we should prevent user from creating duplicates
+      let game = new Game({
+        BGG_id: BGGid,
+        user: user,
+        sought_or_owned: isSought? 'sought': 'owned',
+        isTradeAccepted: false,
+        BGG_info: data
+      });
+      game.save((err) => {
+        cb(err, game);
+      });
+    });
 }
 
 module.exports = (passport) => {
@@ -91,12 +103,11 @@ module.exports = (passport) => {
       if (!user) { return next(info); }
       req.logIn(user, function(err) {
         if (err) { return next(err); }
-        return res.redirect('/store_user/' + req.user.username);
+        return res.redirect('/logged_in')
       });
     })(req, res, next);
   }, (error, req, res, next) => {
     // send errors (if successful we already redirected)
-    console.log('error: ', error);
     return res.redirect('/login/' + encodeURIComponent(JSON.stringify(error)));
   });
   //  logout
@@ -105,17 +116,15 @@ module.exports = (passport) => {
     res.send('logging out');
   });
   router.get('/checksession', (req, res) => {
-    console.log('checking session');
+    console.log('req.user', req.user);
     if (req.user) {
       res.send({ 
+        activeSession: true,
         _id: req.user._id,
-        username: req.user.username,
-        email: req.user.email,
-        join_date: 'n/a',
-        picture: null
+        username: req.user.username
       });
     } else {
-      res.send({ message: 'no active session' });
+      res.send({ activeSession: false, message: 'no active session' });
     }
   });
   router.get('/user/:id', (req, res) => {
@@ -125,8 +134,34 @@ module.exports = (passport) => {
     }
     User.findById(req.params.id, (err, user) => {
       if (err) res.send({ error: err });
-      else { res.send({ username: user.username }); console.log('username', user); }
+      else { res.send({ 
+        username: user.username,
+        email: user.email,
+        join_date: user.join_date,
+        picture: user.picture,
+        city: user.city,
+        state: user.state
+      }); }
     });
+  });
+  // expects query parameters of either state or city or both
+  router.get('/update_user/:id', (req, res) => {
+    let updateObj = {};
+    let noUpdates = true;
+    if (req.query.state) {
+      updateObj.state = req.query.state;
+      noUpdates = false;
+    }
+    if (req.query.city) {
+      updateObj.city = req.query.city;
+      noUpdates = false;
+    }
+    if (noUpdates) { return res.send({error: 'no data changed'}); }
+    User.update(
+      { _id: req.params.id },
+      { $set: updateObj },
+      (err) => res.send( err? {error: err}: {result: 'success'})
+    );
   });
   router.post('/add_user', (req, res, next) => {
       let newUser = new User({
@@ -137,9 +172,6 @@ module.exports = (passport) => {
       newUser.save( (err) => {
         if (err) { 
           // err - send the user back to login 
-          console.log('-----');
-          console.log('error', err);
-          console.log('-----');
           let message;
           if (err.code === 11000) { message = 'username already taken' }
           else if (err.errors.hasOwnProperty('password') && err.errors.password.message === 'Password must be at least 8 characters') {
@@ -175,7 +207,6 @@ module.exports = (passport) => {
       if (err) res.send({'error': err});
       xml2js(data, (err, gameData) => {
         gameData = gameData.boardgames.boardgame;
-        console.log(gameData);
         if (!gameData) {res.send([]);}
         else {
           let results = gameData.map( (val) => {
@@ -207,38 +238,27 @@ module.exports = (passport) => {
       res.send('no valid user session');
       return;
     }
-    console.log('req.query');
-    console.log(req.query);
-    console.log('req user _id');
-    console.log(req.user._id);
-    console.log('sought or owned');
-    console.log(req.query.sought);
-    console.log(Boolean(req.query.sought)? 'sought': 'owned');
     let user = req.query.user? req.query.user: req.user._id
-    queryBggInfo(req.query.id, (err, data) => {
-      if (err) { res.send({ error: err }); return; }
-      data = data[0];
-      let BGGid = data.BGG_id;
-      delete data.BGG_id;
-      // we should prevent user from creating duplicates
-      let game = new Game({
-        BGG_id: BGGid,
-        user: user,
-        sought_or_owned: req.query.issought === 'true'? 'sought': 'owned',
-        isTradeAccepted: false,
-        BGG_info: data
-      });
-      game.save((err) => {
-        res.send( err? {error: err}: {success: game._id} );
-      });
+    newGame(req.query.id, req.query.issought === 'true', user, (err, game) => {
+      res.send( err? {error: err}: {success: game._id});
     });
   });
   router.get('/all_games', (req, res) => {
     // is there a way to sort?
-    Game.find( {}, (err, games) => {
-      if (err) { res.send({ error: err }); return; }
-      res.send(games);
-    });
+    Game
+      .find({})
+      .sort({ created_date: -1 })
+      .populate('user', {
+        _id: true,
+        username: true,
+        picture: true,
+        city: true,
+        state: true
+      })
+      .exec( (err, games) => {
+        if (err) { res.send({ error: err }); return; }
+        res.send(games);
+      });
   });
 
   // TRADE DATABASE
@@ -249,13 +269,11 @@ module.exports = (passport) => {
   //    notes
   //    status (defaults to sent but pending also accepted)
   //  optionally:
+  //    receiver_owned_BGG_id
   //    sender_sought_game
   //    receiver_sought_game
   router.get('/add_trade', (req, res) => {
     if (!req.isAuthenticated()) { res.send({ error: 'not logged in' }); return; }
-    console.log('adding trade');
-    console.log(req.query);
-    console.log(req.user);
     let trade = new Trade({
       sender: {
         user: req.user._id,
@@ -268,50 +286,72 @@ module.exports = (passport) => {
       notes: decodeURIComponent(req.query.notes),
       status: req.query.status || 'sent'
     });
-    if (req.query.sender_sought_game) trade.sender.sought_game_id = req.query.sender_sought_game;
-    if (req.query.receiver_sought_game) trade.receiver.sought_game_id = req.query.receiver_sought_game;
-    // could verify games here
-    console.log('new trade: ', trade);
-    trade.save( (err) => {
-      res.send( err? {error: err}: {success: true});
-    });
-  })
+    if (req.query.receiver_sought_game) trade.recipient.sought_game_id = req.query.receiver_sought_game;
+    if (!req.query.sender_sought_game && req.query.receiver_owned_BGG_id) {
+      newGame(req.query.receiver_owned_BGG_id, true, req.user._id, (err, game) => {
+        if (err) {res.send({error: err}); return; }
+        trade.sender.sought_game_id = game._id;
+        trade.save( (err) => {
+          res.send( err? {error: err}: {success: true});
+        });
+      });
+    } else {
+      trade.sender.sought_game_id = req.query.sender_sought_game;
+      trade.save( (err) => {
+        res.send( err? {error: err}: {success: true});
+      });
+    }
+  });
   router.get('/all_trades', (req, res) => {
-    console.log('all_trades');
-    console.log(req.user);
-    Trade.find( {}, (err, trades) => {
-      console.log('inside');
-      console.log(trades);
-      if (err) { res.send({ error: err }); return; }
-      res.send(trades);
-    })
+    Trade.find({})
+      .sort({'created_date': -1})
+      .exec((err, trades) => {
+        if (err) { res.send({ error: err }); return; }
+        res.send(trades);
+      });
   });
   // expects query parameters of:
-  //  id - trade's id
-  //  status - the status we want to assign
+  //    id - trade's id
+  //    status - the status we want to assign
+  //  optionally: 
+  //    receiver_sought_game
+  //    sender_owned_BGG_id
   router.get('/set_trade', (req, res) => {
-    console.log('setting trade:', req.query);
     if (!req.isAuthenticated()) { res.send({ error: 'not logged in' }); }
     Trade.findById( req.query.id, (err, trade) => {
-      if (err) { res.send({ error: 'no trade with that id' }); return; }
+      if (err) { res.send({error: err}); return; }
+      if (!trade) { res.send({ error: 'no trade with that id' }); return; }
       let user = String(req.user._id);
-      console.log('user: ' + user + ' ' + user.length);
-      console.log('user: ' + typeof(user));
-      console.log('trade sender: ' + trade.sender.user + ' ' + trade.sender.user.length);
-      console.log('trade recipient: ' + trade.recipient.user);
-      console.log('equal? ' + user === trade.sender.user);
-      console.log('equal? ' + user.length === trade.sender.user.length);
       switch (req.query.status) {
         case 'accepted':
           if (user !== trade.recipient.user) {
             res.send({ error: 'user is not the recipient' }); return; }
           if (trade.status !== 'sent') {
             res.send({ error: 'can only accept sent trades' }); return; }
-          // create a sought game for recipient if it doesn't exist
-          // if (!trade.recipient.sought_game_id) {
-
-          // }
-          break;
+          if (trade.recipient.sought_game_id) {
+            // we already have a recipient sought game, save normally
+            break;
+          } else {
+            // we need to link to or add a reciepient sought game 
+            if (req.query.receiver_sought_game) {
+              // they must've created a sought game in between - link together
+              trade.recipient.sought_game_id = req.query.receiver_sought_game;
+              break;
+            }
+            if (!req.query.sender_owned_BGG_id) {
+              res.send({ error: 'no sender game BGG id'}); return; 
+            }
+            // they've accepted, so we'll create a sought game for them
+            newGame(req.query.sender_owned_BGG_id, true, trade.recipient.user, (err, game) => {
+              if (err) { res.send({ error: err}); return; }
+              trade.recipient.sought_game_id = game._id;
+              trade.status = req.query.status;
+              trade.save( (err) => {
+                res.send(err? {error: err}: {success: true});
+              });
+            });
+            return;
+          }
         case 'rejected':
           if (user !== trade.sender.user && user !== trade.recipient.user) {
             res.send({ error: 'user is not part of the trade' }); return; }
@@ -327,10 +367,30 @@ module.exports = (passport) => {
         case 'sent':
         case 'pending':
         case "cancelled":
+          break;
         case "completed":
           if (user !== trade.sender.user && user !== trade.recipient.user) {
             res.send({ error: 'user is not part of the trade' }); return; }
-          break;
+          trade.status = req.query.status;
+          trade.save( (err) => {
+            if (err) { res.send({ error: err }); return; }
+            res.send({message: 'success'});
+            // trade saved successfully - mark the games as traded
+            let games = [
+              trade.sender.sought_game_id,
+              trade.sender.owned_game_id,
+              trade.recipient.sought_game_id,
+              trade.recipient.owned_game_id
+            ];
+            for (let gameId of games) {
+              Game.update(
+                { _id: gameId },
+                { $set: { isTradeAccepted: 'true' } },
+                (err) => console.log(err? err: ('updated game: ' + gameId))   // eslint-disable-line
+              );
+            }
+          });
+          return;
         default:
           res.send({ error: 'new status is not a valid option' }); return;
       }

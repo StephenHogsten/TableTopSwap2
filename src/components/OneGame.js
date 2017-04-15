@@ -6,17 +6,15 @@ import '../scss/OneGame.scss';
 
 class OneGame extends Component {
   render() {
-    console.log(this);
     let addButton=null;
     if (this.props.user && this.props.game.sought_or_owned === 'owned') {
-      let mode = this.props.user === this.props.game.user? 'trade_sender': 'trade_receiver';
+      let mode = this.props.user === this.props.game.user._id? 'trade_sender': 'trade_receiver';
       addButton=<AddButton user={this.props.user} mode={mode} game={this.props.game} />
     }
     return (
       <div className='one-game'>
         <GameCard 
-          info={this.props.game.BGG_info} 
-          game_id={this.props.game._id}
+          game={this.props.game}
           expanded={true}
           onClickFn={ () => window.open('https://boardgamegeek.com/boardgame/' + this.props.game.BGG_id)}
         />

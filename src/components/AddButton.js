@@ -24,7 +24,6 @@ class AddButton extends Component {
   render() {
     if (!this.props.user) return <span />;
     let menuItems = [];
-    console.log('mode: ' + this.props.mode);
     switch (this.props.mode) {
       case undefined:
       case 'all':
@@ -54,7 +53,6 @@ class AddButton extends Component {
           <SingleActionButton onTouchTap={ () => this.props.history.push('/new/trade/receiver/' + encodeURIComponent(JSON.stringify(this.props.game))) } />
         );
       default:
-        console.log('error');
         menuItems.push(<MenuItem primaryText="error" />);
     }
     return (

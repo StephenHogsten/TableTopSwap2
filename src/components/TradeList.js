@@ -8,7 +8,12 @@ class TradeList extends Component {
     let trades = [];
     this.props.tradeList.forEach( (oneTrade) => {
       trades.push(
-        <TradeCard trade={oneTrade} key={oneTrade._id} gameList={this.props.gameList}/>
+        <TradeCard 
+          currentUser={this.props.currentUser}
+          trade={oneTrade}
+          key={oneTrade._id}
+          gameList={this.props.gameList}
+        />
       );
     });
     if (trades.length === 0) trades = <NoneCard linkTo='new/trade' />;
@@ -23,7 +28,6 @@ class TradeList extends Component {
 }
 
 TradeList.propTypes = {
-  // undecided
   currentUser: React.PropTypes.string,
   tradeList: React.PropTypes.array,
   gameList: React.PropTypes.array.isRequired

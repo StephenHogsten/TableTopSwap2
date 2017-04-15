@@ -30,9 +30,22 @@ class App extends Component {
       gameList: [],
       tradeList: [],
       currentUser: null,
+      isCheckingSession: true,
       isDrawerOpen: false,
       lastUpdated: new Date()
     };
+  }
+  componentWillMount() {
+    d3.json('/api/checksession', (err, data) => {
+      if (err) {
+        this.setState({ isCheckingSession: false });
+      }
+      this.setState({
+        currentUser: data._id,
+        currentUsername: data.username,
+        isCheckingSession: false
+      });
+    });
   }
   componentDidMount() {
     this.getAllGames();
@@ -55,23 +68,9 @@ class App extends Component {
     if (!user) return;
     d3.json('/api/all_trades', (err, data) => {
       if (err) throw err;
-      console.log(data);
-      console.log('user: ', user);
-      console.log(data.filter((d) => (d.sender.user === user || d.recipient.user === user)));
       this.setState({
         tradeList: data.filter((d) => (d.sender.user === user || d.recipient.user === user))
       });
-    });
-  }
-  saveUser(username) {
-    d3.json('/api/checksession', (err, data) => {
-      console.log('saveUser user:');
-      console.log(data);
-      if (data.username) {
-        this.setState({ currentUser: data._id});
-      } else {
-        this.setState({ currentUser: null });
-      }
     });
   }
   clearUser() {
@@ -89,7 +88,7 @@ class App extends Component {
   filterParent(gameList, soughtOrOwned, isUser, filterAccepted=true) {
     return gameList.filter( (game) => {
       if (game.sought_or_owned !== soughtOrOwned) return false;
-      if ( (game.user === this.state.currentUser) !== isUser ) return false;
+      if ( (game.user._id === this.state.currentUser) !== isUser ) return false;
       if (filterAccepted && (game.isTradeAccepted)) return false;
       return true;
     })
@@ -101,12 +100,11 @@ class App extends Component {
         open={this.state.isDrawerOpen} 
         onRequestChange={ () => this.closeDrawer() }
       >
-        <MenuLink to="" label="All Games" clickFn={()=>this.closeDrawer()} />
+        <MenuLink to="my_trades" label="My Trades" clickFn={()=>this.closeDrawer()} />
         <Divider />
         <MenuLink to="my_games" label="My Games" clickFn={()=>this.closeDrawer()} />
         <MenuLink to="my_games/sought" label="  Games I Want" clickFn={()=>this.closeDrawer()} />
         <MenuLink to="my_games/owned" label="  Games I'm Offering" clickFn={()=>this.closeDrawer()} />
-        <MenuLink to="my_trades" label="My Trades" clickFn={()=>this.closeDrawer()} />
         <Divider />
         <MenuLink to="all_games" label="Community Games" clickFn={()=>this.closeDrawer()} />
         <MenuLink to="all_games/sought" label="  Games Others Want" clickFn={()=>this.closeDrawer()} />
@@ -137,10 +135,12 @@ class App extends Component {
 
             <MainBody 
               currentUser={this.state.currentUser}
+              isCheckingSession={this.state.isCheckingSession}
               gameList={this.state.gameList}
               tradeList={this.state.tradeList}
-              saveUser={ (username) => this.saveUser(username) }
               clearUser={ () => this.clearUser() }
+              refreshGames={ () => this.getAllGames() }
+              refreshTrades={ () => this.getAllTrades() }
               filterAllSought={(gameList) => this.filterParent(gameList, 'sought', false)}
               filterAllOwned={(gameList) => this.filterParent(gameList, 'owned', false)}
               filterMySought={(gameList) => this.filterParent(gameList, 'sought', true)}

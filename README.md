@@ -64,14 +64,13 @@ I'll have mine based no board games instead (use the board game geek api: https:
   - [X] retrieve all trades
   - [X] switch around to not pass the user id through a parameter
   - [X] interact with trades 
-- [ ] link client code to real API endpoints 
+- [X] link client code to real API endpoints 
   - [X] add all games to state
   - [X] add all trades to state
   - [X] adding new game
   - [X] fix clicking on gamecard
   - [X] add new trade
   - [X] advance trade
-- [ ] create something to check if they're logged in properly periodically
 - [X] Add Buttons
   - [X] add a button to the main page to add either games or trades (trades only if logged in)
   - [X] add a button to the trade page to create a new trade
@@ -80,43 +79,89 @@ I'll have mine based no board games instead (use the board game geek api: https:
   - [X] add a button when viewing your games to start a trade (make it select your game already)
   - [X] remove the testing menu options
 - [X] check that it's always _id when it should be (and vice versa?)
-- [ ] style everything in the shell
+- [X] style everything in the shell
   - [X] add game screen
   - [X] profile
   - [X] login screen
   - [X] 'none'
   - [X] replace things like text fields with the appropriate material components
 - [X] deploy to heroku
-  ---
-- [ ] fiddle with the linking within trades
-- [ ] test more advancing scenarios
-- [ ] add owner to game card
-- [ ] retrigger getting trades and games when appropriate
-- [ ] add loading when getting search results back
+  
+------
+
+- [X] fix refreshing never having a user
+- [X] create sign up button
+- [X] retrigger getting trades and games when appropriate
+  - [X] make a sidebar for trades
+- search cleanup
+  - [X] add loading when getting search results back
+  - [X] handle delayed BGG search results (multiple things) - pretty sure did it w/ closures
+  - [X] add instant search with enter or click button
+- [X] add owner to game card
+  - [X] create server api to take a list of userIDs and return details
+  - [X] pass game instead of BGG_info and ID
+  - [X] restyle the card
+- [X] add a color status bar to trade card
+  - [X] blue when waiting on others, yellow when waiting on you, grey when cancelled, green when done
+  - [X] add color to status thing as well
+- [X] indicate in GameList if they have more than four
+- [X] sort GameList by most recent first
+  - [X] sort TradeList by most recent first
+- [X] for saving, does done need to be in componentwillmount?
+    - answer: no
+  - [X] add spinner to everything that waits?
+- [X] fiddle with the linking within trades
+  - [X] make sure recipient sought is being added on creation
+  - [X] create sender sought on creation
+  - [X] link to recipient sought on accept
+  - [X] create recipient sought on accept
+  - [X] mark complete on complete
+  - [X] my games aren't being defaulted when coming from my gamecard (the other is)
+- [X] fiddle with all the wording
+- [X] remove unnecessary logging
+- [X] add City/State to profile
+  - [X] add to User.js
+  - [X] add to the profile page as editable
+  - [X] add to the game card
+- [ ] split up routes
+- [ ] get a handle on when completed games are filtered
+- [ ] add error / loading for trade workflow
+- [ ] visual tweaks
+  - [ ] Game card should be sought by: for not owned
+  - [ ] the buttons / fields on login should line up better
+  - [ ] sent should be recieved to recipients
+  - [ ] City and state are aligned weirdly
+  - [ ] fix scrolling (make it scroll to top)
+  - [ ] more padding above OneGame
+  - [ ] Trade Card layout just isn't very good
+    - [ ] open gamecard from tradecard
+  - [ ] indicate traded games
+  - [ ] style the add buttons better 
+    - [ ] make them show more plus buttons with text to the left instead of a menu
+    - [ ] make text to the left show on hover for the just trade mode
+  - [ ] close icon menu when navigating to profile
+- [ ] default focus where it belongs
+  - [ ] enter should submit for login
+- [ ] take user to the trade you just created or home (not to the game)
+- [ ] mobile friendly
 - [ ] AddButton.js "iconButton.setKeyboardFocus is not a fn" on ESC
+- [ ] Some sort of splash page before login (use material-ui as a guide)
+## Bonuses
+- [ ] make the thing that is a flat div and turns into an app bar for splash page
+- [ ] add a badge with trades to act on
 - [ ] jest
+  - [ ] test more advancing scenarios if possible
   - [ ] for react components
   - [ ] for server endpoints?
-- [ ] indicate in GameList if they have more than four
-- [ ] sort GameList by most recent first
-- [ ] close icon menu when navigating to profile
-- [ ] fiddle with all the wording
-- [ ] for saving, does done need to be in componentwillmount?
-
-## Bonuses
-- [ ] default focus where it belongs
-- [ ] paginate
-- [ ] handle delayed BGG search results
-- [ ] handle trades with no owned games better
-- [ ] fix refreshing never having a user
-- [ ] messaging
-- [ ] require an email on login
-- [ ] email notification
-- [ ] put user in local storage or something to navigate properly
+- [ ] filter button for trades
 - [ ] indicate games sought by the person you're sending too
+- [ ] link to twitter for profile pics
+- [ ] require an email on login
+- [ ] messaging
+- [ ] email notification
+- [ ] handle trades with no owned games better
+- [ ] paginate
 - [ ] automatically match people
-- [ ] style the add buttons better 
-  - [ ] make them show more plus buttons with text to the left instead of a menu
-  - [ ] make text to the left show on hover for the just trade mode
 - [ ] more validators for mongoose models
   - [ ] user fields should check that the user actually exists (not sure how to do this)
+- [ ] scale to too many games to fit in client cache

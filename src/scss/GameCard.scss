@@ -1,8 +1,8 @@
 $game-width: 250px;
-$game-height: 300px;
+$game-height: 400px;
 $game-width-expanded: 350px;
-$game-height-expanded: 430px;
-$picture-height: 210px;
+$game-height-expanded: 530px;
+$picture-height: 240px;
 
 // active game fader
 .active-game {
@@ -21,7 +21,7 @@ $picture-height: 210px;
   width: $game-width;
   height: $game-height;
   color: white;
-  margin: 8px;
+  margin: 4px;
   position: relative;
 }
 .game-card-expanded {
@@ -37,7 +37,9 @@ $picture-height: 210px;
   display: flex;
   justify-content: center;
   align-items: center;
-  color: #555;
+}
+.more-card {
+  @extend .none-card;
 }
 
 .game-image {

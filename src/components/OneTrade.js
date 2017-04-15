@@ -3,6 +3,7 @@ import { json as d3Json } from 'd3-request';
 // import '../scss/OneTrade.scss';
 
 import TradeCard from './TradeCard.js';
+import Loading from './Loading.js';
 
 import RaisedButton from 'material-ui/RaisedButton';
 // import AutoRenewIcon from 'material-ui/svg-icons/action/autorenew';
@@ -42,9 +43,23 @@ class OneTrade extends Component {
     };
   }
   setTrade(status) {
-    console.log('setting status: ', status);
-    this.setState({ saveState: saveStates.loading });
+    this.setState({ saveState: saveStates.saving });
     let searchFor = '/api/set_trade?id=' + this.props.trade._id + '&status=' + status;
+    if (!this.props.trade.recipient.sought_game_id) {
+      // we need to link or create a recipient sought game
+      let senderGameId = this.props.trade.sender.owned_game_id;
+      let senderGame = this.props.gameList.find( (game) => game._id === senderGameId);
+      if (!senderGame) { this.setState({ error: 'no sender owned game' }); return; }
+      let recipientUser = this.props.trade.recipient.user;
+      let recipientGame = this.props.gameList.find( (game) => (
+        game.BGG_id === senderGame.BGG_id && game.user._id === recipientUser && game.sought_or_owned === 'sought'
+      ));
+      if (recipientGame) {
+        searchFor += '&receiver_sought_game=' + recipientGame._id;
+      } else {
+        searchFor += '&sender_owned_BGG_id=' + senderGame.BGG_id;
+      }
+    }
     d3Json(searchFor, (err, data) => {
       if (err) {
         this.setState({ error: err, saveState: saveStates.error });
@@ -52,7 +67,6 @@ class OneTrade extends Component {
         if (data.hasOwnProperty('error')) {
           this.setState({ error: data.error, saveState: saveStates.error });
         } else {
-          console.log('data', data);
           this.setState({ saveState: saveStates.done });
         }
       }
@@ -87,28 +101,23 @@ class OneTrade extends Component {
         );
     }
   }
-  componentWillUpdate(nextProps, nextState) {
-    if (nextState.saveState === saveStates.done) {
-      history.back();
-    }
-  }
   render() {
-    // switch (this.state.saveState) {
-    //   case saveStates.none:
-    //     break;
-    //   case saveStates.done:
-    //     console.log('we\'re done');
-    //   case saveStates.saving:
-    //     return <AutoRenewIcon className='loading' />;
-    //   case saveStates.error:
-    //     return <div className='error'>{JSON.stringify(this.state.error)}</div>
-    //   default: 
-    //     return <div className='error'>Invalid save state</div>
-    // }
+    if (this.state.saveState === saveStates.saving) {
+      return <Loading />;
+    }
+    if (this.state.saveState === saveStates.done) {
+      this.props.refreshGames();
+      this.props.refreshTrades();
+      history.back();
+      return (
+        <Loading />
+      )
+    }
     let buttons = this.makeButtons();
     return (
       <div className='trade'>
         <TradeCard 
+          currentUser={this.props.currentUser}
           trade={this.props.trade} 
           gameList={this.props.gameList} 
           key='card' 
@@ -121,6 +130,8 @@ class OneTrade extends Component {
 }
 
 OneTrade.propTypes = {
+  refreshTrades: React.PropTypes.func.isRequired,
+  refreshGames: React.PropTypes.func.isRequired,
   trade: React.PropTypes.object.isRequired,
   currentUser: React.PropTypes.string.isRequired,
   gameList: React.PropTypes.array.isRequired
