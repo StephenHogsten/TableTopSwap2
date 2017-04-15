@@ -1,7 +1,7 @@
 $game-width: 250px;
-$game-height: 380px;
+$game-height: 400px;
 $game-width-expanded: 350px;
-$game-height-expanded: 510px;
+$game-height-expanded: 530px;
 $picture-height: 240px;
 
 // active game fader
@@ -21,7 +21,7 @@ $picture-height: 240px;
   width: $game-width;
   height: $game-height;
   color: white;
-  margin: 8px;
+  margin: 4px;
   position: relative;
 }
 .game-card-expanded {
