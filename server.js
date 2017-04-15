@@ -17,11 +17,8 @@ mongoose.connect(process.env.MONGO_URI, (err) => {
 // initialize app
 const app = express();
 
-<<<<<<< HEAD
 app.use(express.static('./build'));
 
-=======
->>>>>>> 3b35a90ab5b721086e1533241544307f4bf19d7c
 var sessionOptions = {
   secret: process.env.SECRET || 'simplesecret',
   resave: false,
