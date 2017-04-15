@@ -19,6 +19,9 @@ class GameCard extends Component {
     return low + '+';
   }
   makeHeader() {
+    if (this.props.game.isTradeAccepted) { 
+      return 'Trade Completed';
+    }
     let user = this.props.game.user;
     if (user.city) {
       if (user.state) {
@@ -32,19 +35,31 @@ class GameCard extends Component {
       return 'location unknown';
     }
   }
+  makeImageStyle() {
+    let style = {
+      backgroundImage: 'url(' + (this.props.game.BGG_info.full_image_url || dice) + ')'
+    };
+    if (this.props.game.isTradeAccepted) {
+      style.filter = 'grayscale(1)';
+    }
+    return style;
+  }
   render() {
     let innards = (
       <Card 
         className={this.props.expanded? 'game-card-expanded': 'game-card'}
         style={{whiteSpace:'nowrap', textOverflow:'ellipsis'}} 
       >
-        <div className={this.props.selected? 'active-game': 'inactive-game'} />
+        <div className={
+          this.props.game.isTradeAccepted? 'traded-game':
+          (this.props.selected? 'active-game': 'inactive-game')
+        } />
         <CardHeader 
           title={(this.props.game.sought_or_owned === 'sought'? 'Seeker: ': 'Owner: ') + this.props.game.user.username} 
           subtitle={this.makeHeader()}
         />
         <div 
-          style={{backgroundImage: 'url(' + (this.props.game.BGG_info.full_image_url || dice) + ')'}}
+          style={this.makeImageStyle()}
           className={this.props.expanded? 'game-image-expanded': 'game-image'}
         >
         </div>
