@@ -124,8 +124,9 @@ I'll have mine based no board games instead (use the board game geek api: https:
   - [X] add to the profile page as editable
   - [X] add to the game card
 - [X] reload games after updating profile (for the current user)
-- [ ] split up routes
 - [ ] get a handle on when completed games are filtered
+  - [X] filter from everywhere by my/owned & my/sought
+  - [ ] make it grayscale and put trade completed on it
 - [ ] add error / loading for trade workflow
 - [ ] visual tweaks
   - [ ] Game card should be sought by: for not owned

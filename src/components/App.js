@@ -91,7 +91,7 @@ class App extends Component {
       if ( (game.user._id === this.state.currentUser) !== isUser ) return false;
       if (filterAccepted && (game.isTradeAccepted)) return false;
       return true;
-    })
+    });
   }
   render() {
     const drawer = this.state.currentUser? (
@@ -144,7 +144,9 @@ class App extends Component {
               filterAllSought={(gameList) => this.filterParent(gameList, 'sought', false)}
               filterAllOwned={(gameList) => this.filterParent(gameList, 'owned', false)}
               filterMySought={(gameList) => this.filterParent(gameList, 'sought', true)}
+              filterMySoughtAll={(gameList) => this.filterParent(gameList, 'sought', true, false)}
               filterMyOwned={(gameList) => this.filterParent(gameList, 'owned', true)}
+              filterMyOwnedAll={(gameList) => this.filterParent(gameList, 'owned', true, false)}
             />
           </div>
         </BrowserRouter>    
