@@ -1,10 +1,25 @@
 .profile-info-label {
   font-family: 'Roboto', sans-serif;
   font-weight: 300;
+  margin-right: 10px;
+  margin-left: 16px;
 }
 
 .profile-info {
   font-family: 'Roboto', sans-serif;
   font-weight: bold;
-  padding-left: 10px;
+}
+
+#state-selection {
+  display: flex;
+  align-items: center;
+}
+
+#city-selection {
+  display: flex;
+  align-items: center;
+}
+
+#city-field {
+  margin-left: 5px;
 }

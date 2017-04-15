@@ -18,6 +18,20 @@ class GameCard extends Component {
     if (high > low) return low + '-' + high;
     return low + '+';
   }
+  makeHeader() {
+    let user = this.props.game.user;
+    if (user.city) {
+      if (user.state) {
+        return user.city + ', ' + user.state;
+      } else {
+        return user.city;
+      }
+    } else if (user.state) {
+      return user.state;
+    } else {
+      return 'location unknown';
+    }
+  }
   render() {
     let innards = (
       <Card 
@@ -25,7 +39,10 @@ class GameCard extends Component {
         style={{whiteSpace:'nowrap', textOverflow:'ellipsis'}} 
       >
         <div className={this.props.selected? 'active-game': 'inactive-game'} />
-        <CardHeader subtitle={'Owner: ' + this.props.game.user.username}/>
+        <CardHeader 
+          title={(this.props.game.sought_or_owned === 'sought'? 'Seeker: ': 'Owner: ') + this.props.game.user.username} 
+          subtitle={this.makeHeader()}
+        />
         <div 
           style={{backgroundImage: 'url(' + (this.props.game.BGG_info.full_image_url || dice) + ')'}}
           className={this.props.expanded? 'game-image-expanded': 'game-image'}

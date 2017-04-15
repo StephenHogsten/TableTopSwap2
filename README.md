@@ -119,10 +119,10 @@ I'll have mine based no board games instead (use the board game geek api: https:
   - [X] my games aren't being defaulted when coming from my gamecard (the other is)
 - [X] fiddle with all the wording
 - [X] remove unnecessary logging
-- [ ] add City/State to profile
-  - [ ] add to User.js
-  - [ ] add to the profile page as editable
-  - [ ] add to the game card
+- [X] add City/State to profile
+  - [X] add to User.js
+  - [X] add to the profile page as editable
+  - [X] add to the game card
 - [ ] split up routes
 - [ ] get a handle on when completed games are filtered
 - [ ] add error / loading for trade workflow
@@ -130,6 +130,7 @@ I'll have mine based no board games instead (use the board game geek api: https:
   - [ ] Game card should be sought by: for not owned
   - [ ] the buttons / fields on login should line up better
   - [ ] sent should be recieved to recipients
+  - [ ] City and state are aligned weirdly
   - [ ] fix scrolling (make it scroll to top)
   - [ ] more padding above OneGame
   - [ ] Trade Card layout just isn't very good

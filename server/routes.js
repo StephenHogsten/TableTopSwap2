@@ -116,14 +116,12 @@ module.exports = (passport) => {
     res.send('logging out');
   });
   router.get('/checksession', (req, res) => {
+    console.log('req.user', req.user);
     if (req.user) {
       res.send({ 
         activeSession: true,
         _id: req.user._id,
-        username: req.user.username,
-        email: req.user.email,
-        join_date: 'n/a',
-        picture: null
+        username: req.user.username
       });
     } else {
       res.send({ activeSession: false, message: 'no active session' });
@@ -136,8 +134,34 @@ module.exports = (passport) => {
     }
     User.findById(req.params.id, (err, user) => {
       if (err) res.send({ error: err });
-      else { res.send({ username: user.username }); }
+      else { res.send({ 
+        username: user.username,
+        email: user.email,
+        join_date: user.join_date,
+        picture: user.picture,
+        city: user.city,
+        state: user.state
+      }); }
     });
+  });
+  // expects query parameters of either state or city or both
+  router.get('/update_user/:id', (req, res) => {
+    let updateObj = {};
+    let noUpdates = true;
+    if (req.query.state) {
+      updateObj.state = req.query.state;
+      noUpdates = false;
+    }
+    if (req.query.city) {
+      updateObj.city = req.query.city;
+      noUpdates = false;
+    }
+    if (noUpdates) { return res.send({error: 'no data changed'}); }
+    User.update(
+      { _id: req.params.id },
+      { $set: updateObj },
+      (err) => res.send( err? {error: err}: {result: 'success'})
+    );
   });
   router.post('/add_user', (req, res, next) => {
       let newUser = new User({
@@ -227,7 +251,9 @@ module.exports = (passport) => {
       .populate('user', {
         _id: true,
         username: true,
-        picture: true
+        picture: true,
+        city: true,
+        state: true
       })
       .exec( (err, games) => {
         if (err) { res.send({ error: err }); return; }
