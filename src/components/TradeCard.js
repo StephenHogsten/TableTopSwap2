@@ -64,7 +64,7 @@ class TradeCard extends Component {
         style={colorStyle}
       >
         <p className='trade-info-label' key='date'>
-          Created: <span className='trade-info-text'>{(new Date(trade.created_date)).toLocaleDateString()}</span>
+          Created: <span className='trade-info-text'>{(new Date(trade.created_date)).toLocaleString()}</span>
         </p> 
         {!this.props.isExpanded? null : [
           <p className='trade-info-label' style={this.addPadding(colorStyle, 4)} key='status'>

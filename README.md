@@ -143,7 +143,7 @@ I'll have mine based no board games instead (use the board game geek api: https:
     - [X] too similar to onetrade 
     - [X] show date
   - [X] indicate traded games
-  - [ ] sort the trades by date
+  - [X] sort the trades by date
   - [ ] style the add buttons better 
     - [ ] make them show more plus buttons with text to the left instead of a menu
     - [ ] make text to the left show on hover for the just trade mode
