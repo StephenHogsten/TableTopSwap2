@@ -83,6 +83,12 @@ class OneTrade extends Component {
     });
   }
   makeButtons() {
+    // if one of the games is cancelled, only cancel or modify should be available
+    if (this.state.senderOwnedGame.isTradeAccepted || this.state.recipientOwnedGame.isTradeAccepted) {
+      return <CancelButton key='cancel' onTouchTap={a => this.setTrade(a)} />;
+    }
+
+    // otherwise the buttons depend just on the status/whether this issue initiated
     let userInitiated = this.props.trade.sender.user === this.props.currentUser;
     switch ( this.props.trade.status ) {
       case 'pending':
@@ -112,6 +118,7 @@ class OneTrade extends Component {
     }
   }
   render() {
+    // handle different save cases
     switch (this.state.saveState) {
       case saveStates.none:
         break;
@@ -136,18 +143,8 @@ class OneTrade extends Component {
       default:
         return <div className='error'>Invalid save state</div>
     }
-    if (this.state.saveState === saveStates.saving) {
-      return <Loading />;
-    }
-    if (this.state.saveState === saveStates.done) {
-      this.props.refreshGames();
-      this.props.refreshTrades();
-      history.back();
-      return (
-        <Loading />
-      )
-    }
-    let buttons = this.makeButtons();
+
+    // not in the middle of saving - just render the tradecard and buttons
     return (
       <div className='trade'>
         <TradeCard 
@@ -157,7 +154,7 @@ class OneTrade extends Component {
           key='card' 
           expanded={true}
         />
-        {buttons}
+        {this.makeButtons()}
       </div>
     );
   }

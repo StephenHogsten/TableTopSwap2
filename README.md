@@ -127,9 +127,9 @@ I'll have mine based no board games instead (use the board game geek api: https:
 - [X] get a handle on when completed games are filtered
   - [X] filter from everywhere by my/owned & my/sought
   - [X] make it grayscale and put trade completed on it
-- [ ] add error / loading for trade workflow
+- [X] add error / loading for trade workflow
   - [X] make modified trade workflow
-  - [ ] don't allow trades with completed games to progress
+  - [X] don't allow trades with completed games to progress
 - [ ] minor visual tweaks
   - [X] Game card should be sought by: for not owned
   - [ ] the buttons / fields on login should line up better
@@ -142,7 +142,9 @@ I'll have mine based no board games instead (use the board game geek api: https:
     - [ ] open gamecard from tradecard
     - [ ] too tall
     - [ ] too similar to onetrade 
-  - [ ] indicate traded games
+    - [ ] show date
+  - [X] indicate traded games
+  - [ ] sort the trades by date
   - [ ] style the add buttons better 
     - [ ] make them show more plus buttons with text to the left instead of a menu
     - [ ] make text to the left show on hover for the just trade mode
