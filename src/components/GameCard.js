@@ -47,7 +47,7 @@ class GameCard extends Component {
   render() {
     let innards = (
       <Card 
-        className={this.props.expanded? 'game-card-expanded': 'game-card'}
+        className={this.props.isExpanded? 'game-card-expanded': 'game-card'}
         style={{whiteSpace:'nowrap', textOverflow:'ellipsis'}} 
       >
         <div className={
@@ -60,7 +60,7 @@ class GameCard extends Component {
         />
         <div 
           style={this.makeImageStyle()}
-          className={this.props.expanded? 'game-image-expanded': 'game-image'}
+          className={this.props.isExpanded? 'game-image-expanded': 'game-image'}
         >
         </div>
         <CardTitle 
@@ -68,7 +68,7 @@ class GameCard extends Component {
           subtitle={'Rating: ' + this.info2Num('rating', 2) } 
           titleStyle={{overflow:'hidden', textOverflow: 'ellipsis', maxHeight:'33px'}}
         />
-        {this.props.expanded? (
+        {this.props.isExpanded? (
           <CardText style={{padding:'5px'}} color='rgba(0, 0, 0, 0.541176)'>
             <span className='game-text-row'><AccessTimeIcon className='game-text-icon'/><span>{
                 this.lowHigh('minutes')
@@ -104,7 +104,7 @@ GameCard.propTypes = {
   game: React.PropTypes.object.isRequired,
   selected: React.PropTypes.bool,
   onClickFn: React.PropTypes.func,
-  expanded: React.PropTypes.bool
+  isExpanded: React.PropTypes.bool
 }
 
 export default GameCard;

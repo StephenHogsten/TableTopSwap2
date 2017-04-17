@@ -134,15 +134,14 @@ I'll have mine based no board games instead (use the board game geek api: https:
   - [X] Game card should be sought by: for not owned
   - [X] the buttons / fields on login should line up better
   - [X] sent should be recieved to recipients
-  - [ ] City and state are aligned weirdly
-    - [ ] Can state open by typing
-  - [ ] fix scrolling (make it scroll to top)
-  - [ ] more padding above OneGame
+  - [X] City and state are aligned weirdly
+    - [X] Can state open by typing - no
+  - [X] fix scrolling (make it scroll to top)
+  - [X] more padding above OneGame
   - [ ] Trade Card layout just isn't very good
-    - [ ] open gamecard from tradecard
-    - [ ] too tall
-    - [ ] too similar to onetrade 
-    - [ ] show date
+    - [X] too tall
+    - [X] too similar to onetrade 
+    - [X] show date
   - [X] indicate traded games
   - [ ] sort the trades by date
   - [ ] style the add buttons better 
@@ -156,6 +155,7 @@ I'll have mine based no board games instead (use the board game geek api: https:
 - [ ] AddButton.js "iconButton.setKeyboardFocus is not a fn" on ESC
 - [ ] Some sort of splash page before login (use material-ui as a guide)
 ## Bonuses
+- [ ] can't go straight to trade IDs?
 - [ ] make the thing that is a flat div and turns into an app bar for splash page
 - [ ] add a badge with trades to act on
 - [ ] jest

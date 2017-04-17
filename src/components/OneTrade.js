@@ -152,7 +152,7 @@ class OneTrade extends Component {
           trade={this.props.trade} 
           gameList={this.props.gameList} 
           key='card' 
-          expanded={true}
+          isExpanded={true}
         />
         {this.makeButtons()}
       </div>
@@ -165,7 +165,7 @@ OneTrade.propTypes = {
   refreshGames: React.PropTypes.func.isRequired,
   trade: React.PropTypes.object.isRequired,
   currentUser: React.PropTypes.string.isRequired,
-  gameList: React.PropTypes.array.isRequired
+  gameList: React.PropTypes.array.isRequired,
 }
 
 export default OneTrade;

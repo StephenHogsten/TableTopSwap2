@@ -201,7 +201,7 @@ class MainBody extends Component {
                 currentUser={user}
                 trade={matchingTrade}
                 gameList={this.props.gameList}
-                expanded={true}
+                isExpanded={true}
                 refreshTrades={this.props.refreshTrades}
                 refreshGames={this.props.refreshGames}
               />

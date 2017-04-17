@@ -15,7 +15,7 @@ class OneGame extends Component {
       <div className='one-game'>
         <GameCard 
           game={this.props.game}
-          expanded={true}
+          isExpanded={true}
           onClickFn={ () => window.open('https://boardgamegeek.com/boardgame/' + this.props.game.BGG_id)}
         />
         {addButton}

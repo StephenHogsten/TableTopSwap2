@@ -1,12 +1,17 @@
 $trade-width: 250px;
+$trade-height-expanded: 300px;  
 
 .trade-paper {
   min-width: $trade-width;
-  min-height: 300px;
   padding: 12px;
   margin: 12px;
 }
 
+.trade-paper-expanded {
+  min-height: $trade-height-expanded;
+}
+
+// contains the two cards
 .trade-paper-row {
   min-width: $trade-width;
   display: flex;
@@ -14,16 +19,18 @@ $trade-width: 250px;
   justify-content: space-around;
   flex-flow: wrap;
   margin-bottom: 16px;
+  margin-top: 8px;
 }
 
 .trade-info-label {
   font-family: 'Roboto', sans-serif;
   font-weight: 300;
-  margin: 8px 4px 16px 24px;
-  padding-left: 4px;
+  margin: 0px;
+  padding: 8px;
+  border-left: 4px;  
 }
 
-.trade-status-text {
+.trade-info-text {
   font-family: 'Roboto', sans-serif;
   font-weight: bold;
 }
@@ -35,9 +42,8 @@ $trade-width: 250px;
   min-width: 100px;
   min-height: 50px;
   overflow: auto;
-  margin: 16px;
-  margin-top: 8px;
-  padding: 3px;
+  margin: 8px 32px 16px 32px;
+  padding: 8px;
 }
 
 .trade-button {
