@@ -128,8 +128,10 @@ I'll have mine based no board games instead (use the board game geek api: https:
   - [X] filter from everywhere by my/owned & my/sought
   - [X] make it grayscale and put trade completed on it
 - [ ] add error / loading for trade workflow
-- [ ] visual tweaks
-  - [ ] Game card should be sought by: for not owned
+  - [X] make modified trade workflow
+  - [ ] don't allow trades with completed games to progress
+- [ ] minor visual tweaks
+  - [X] Game card should be sought by: for not owned
   - [ ] the buttons / fields on login should line up better
   - [ ] sent should be recieved to recipients
   - [ ] City and state are aligned weirdly
@@ -138,6 +140,8 @@ I'll have mine based no board games instead (use the board game geek api: https:
   - [ ] more padding above OneGame
   - [ ] Trade Card layout just isn't very good
     - [ ] open gamecard from tradecard
+    - [ ] too tall
+    - [ ] too similar to onetrade 
   - [ ] indicate traded games
   - [ ] style the add buttons better 
     - [ ] make them show more plus buttons with text to the left instead of a menu
@@ -145,7 +149,7 @@ I'll have mine based no board games instead (use the board game geek api: https:
   - [ ] close icon menu when navigating to profile
 - [ ] default focus where it belongs
   - [ ] enter should submit for login
-- [ ] take user to the trade you just created or home (not to the game)
+- [ ] take user to the trade you just created or home (not back to the game)
 - [ ] mobile friendly
 - [ ] AddButton.js "iconButton.setKeyboardFocus is not a fn" on ESC
 - [ ] Some sort of splash page before login (use material-ui as a guide)

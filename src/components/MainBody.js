@@ -252,6 +252,22 @@ class MainBody extends Component {
             </div>
           )} />
         )} />
+        <Route key='new_trade_modified' path='/new/trade/modified/:receiving_game/:sending_game' render={ ({match}) => (
+          <UserRender currentUser={user} isCheckingSession={this.props.isCheckingSession} render={() => (
+            <div className='main-body'>
+              <TradeSteps 
+                soughtGames={soughtGames}
+                ownedGames={ownedGames}
+                mySoughtGames={mySoughtGames}
+                myOwnedGames={myOwnedGames}
+                ownedGame={JSON.parse(decodeURIComponent(match.params.sending_game))}
+                myOwnedGame={JSON.parse(decodeURIComponent(match.params.receiving_game))}
+                refreshTrades={this.props.refreshTrades}
+                refreshGames={this.props.refreshGames}
+              />
+            </div>
+          )} />
+        )} />
         <Route key='new_sought' exact path='/new/game/sought' render={ () =>
           <UserRender currentUser={user} isCheckingSession={this.props.isCheckingSession} render={() => (
             <div className='main-body'>

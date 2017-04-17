@@ -330,6 +330,7 @@ module.exports = (passport) => {
       if (err) { res.send({error: err}); return; }
       if (!trade) { res.send({ error: 'no trade with that id' }); return; }
       let user = String(req.user._id);
+      // different checks for differet attempted statuses
       switch (req.query.status) {
         case 'accepted':
           if (user !== trade.recipient.user) {
@@ -367,7 +368,7 @@ module.exports = (passport) => {
             res.send({ error: 'can only modify sent trades' }); return; }
           break;
         case 'modified':
-          if (user !== trade.recipient) { 
+          if (user !== trade.recipient.user) { 
             res.send({ error: 'user is not the recipient' }); return }
           if (trade.status !== 'sent') {
             res.send({ error: 'can only modify sent trades' }); return; }

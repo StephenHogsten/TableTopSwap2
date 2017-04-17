@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { json as d3Json } from 'd3-request';
+import { Redirect } from 'react-router-dom';
 // import '../scss/OneTrade.scss';
 
 import TradeCard from './TradeCard.js';
@@ -31,15 +32,23 @@ const saveStates = {
   'none': 'none',
   'saving': 'saving',
   'error': 'error',
-  'done': 'done'
+  'done': 'done',
+  'modify': 'modify'
 };
 
 class OneTrade extends Component {
-  constructor() {
+  constructor(props) {
     super();
+    // put the games and IDs in state
+    let senderOwnedGameId = props.trade.sender.owned_game_id;
+    let senderOwnedGame = props.gameList.find( game => game._id === senderOwnedGameId );
+    let recipientOnwedGameId = props.trade.recipient.owned_game_id;
+    let recipientOwnedGame = props.gameList.find( game => game._id === recipientOnwedGameId );
     this.state = {
-      error: null,
-      saveState: saveStates.none
+      error: (!recipientOwnedGame || !senderOwnedGame)? 'Games not found': '',
+      saveState: (!recipientOwnedGame || !senderOwnedGame)? saveStates.error: saveStates.none,
+      senderOwnedGame: senderOwnedGame,
+      recipientOwnedGame: recipientOwnedGame
     };
   }
   setTrade(status) {
@@ -47,17 +56,14 @@ class OneTrade extends Component {
     let searchFor = '/api/set_trade?id=' + this.props.trade._id + '&status=' + status;
     if (!this.props.trade.recipient.sought_game_id) {
       // we need to link or create a recipient sought game
-      let senderGameId = this.props.trade.sender.owned_game_id;
-      let senderGame = this.props.gameList.find( (game) => game._id === senderGameId);
-      if (!senderGame) { this.setState({ error: 'no sender owned game' }); return; }
       let recipientUser = this.props.trade.recipient.user;
       let recipientGame = this.props.gameList.find( (game) => (
-        game.BGG_id === senderGame.BGG_id && game.user._id === recipientUser && game.sought_or_owned === 'sought'
+        game.BGG_id === this.state.senderGame.BGG_id && game.user._id === recipientUser && game.sought_or_owned === 'sought'
       ));
       if (recipientGame) {
         searchFor += '&receiver_sought_game=' + recipientGame._id;
       } else {
-        searchFor += '&sender_owned_BGG_id=' + senderGame.BGG_id;
+        searchFor += '&sender_owned_BGG_id=' + this.state.senderGame.BGG_id;
       }
     }
     d3Json(searchFor, (err, data) => {
@@ -67,7 +73,11 @@ class OneTrade extends Component {
         if (data.hasOwnProperty('error')) {
           this.setState({ error: data.error, saveState: saveStates.error });
         } else {
-          this.setState({ saveState: saveStates.done });
+          if (status === 'modified') {
+            this.setState({ saveState: saveStates.modify });
+          } else {
+            this.setState({ saveState: saveStates.done });
+          }
         }
       }
     });
@@ -102,6 +112,30 @@ class OneTrade extends Component {
     }
   }
   render() {
+    switch (this.state.saveState) {
+      case saveStates.none:
+        break;
+      case saveStates.modify:
+        this.props.refreshTrades();
+        return (
+          <Redirect to={
+            '/new/trade/modified/' + 
+            encodeURIComponent(JSON.stringify(this.state.recipientOwnedGame))
+            + '/' + 
+            encodeURIComponent(JSON.stringify(this.state.senderOwnedGame))
+          } /> 
+        );
+      case saveStates.done:
+        this.props.refreshGames();
+        this.props.refreshTrades();
+        history.back();
+      case saveStates.saving:   // eslint-disable-line
+        return <Loading />;
+      case saveStates.error:
+        return <div className='error'>{JSON.stringify(this.state.error)}</div>
+      default:
+        return <div className='error'>Invalid save state</div>
+    }
     if (this.state.saveState === saveStates.saving) {
       return <Loading />;
     }
