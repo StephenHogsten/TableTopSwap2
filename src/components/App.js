@@ -131,6 +131,7 @@ class App extends Component {
               <TopBar 
                 currentUser={this.state.currentUser} 
                 openDrawer={ () => this.openDrawer() }
+                closeDrawer={ () => this.closeDrawer() }
               />
 
               {drawer}

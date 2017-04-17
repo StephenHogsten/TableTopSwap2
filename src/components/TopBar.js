@@ -34,8 +34,14 @@ class TopBar extends Component {
             targetOrigin={{horizontal: 'right', vertical: 'top'}}
             anchorOrigin={{horizontal: 'right', vertical: 'top'}}
           >
-            <MenuLink to="profile" label="View Profile" />
-            <MenuLink to='logout' label="Sign out" />
+            <MenuItem 
+              primaryText='View Profile' 
+              onTouchTap={ () => this.props.history.push('/profile') }
+            />
+            <MenuItem
+              primaryText='Logout'
+              onTouchTap={ () => this.props.history.push('/logout') }
+            />
           </IconMenu>:
           <FlatButton label='Login' onClick={ () => {
             this.props.history.push('/login')
@@ -48,7 +54,8 @@ class TopBar extends Component {
 
 TopBar.PropTypes = {
   currentUser: React.PropTypes.string,
-  openDrawer: React.PropTypes.func.isRequired
+  openDrawer: React.PropTypes.func.isRequired,
+  closeDrawer: React.PropTypes.func.isRequired
 };
 
 export default withRouter(TopBar);

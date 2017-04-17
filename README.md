@@ -138,18 +138,16 @@ I'll have mine based no board games instead (use the board game geek api: https:
     - [X] Can state open by typing - no
   - [X] fix scrolling (make it scroll to top)
   - [X] more padding above OneGame
-  - [ ] Trade Card layout just isn't very good
+  - [X] Trade Card layout just isn't very good
     - [X] too tall
     - [X] too similar to onetrade 
     - [X] show date
   - [X] indicate traded games
   - [X] sort the trades by date
-  - [ ] style the add buttons better 
-    - [ ] make them show more plus buttons with text to the left instead of a menu
-    - [ ] make text to the left show on hover for the just trade mode
-  - [ ] close icon menu when navigating to profile
+  - [X] close icon menu when navigating to profile
 - [ ] default focus where it belongs
   - [ ] enter should submit for login
+  - [ ] search bar for add game
 - [ ] take user to the trade you just created or home (not back to the game)
 - [ ] mobile friendly
 - [ ] AddButton.js "iconButton.setKeyboardFocus is not a fn" on ESC
@@ -163,6 +161,9 @@ I'll have mine based no board games instead (use the board game geek api: https:
   - [ ] for react components
   - [ ] for server endpoints?
 - [ ] filter button for trades
+- [ ] style the add buttons better 
+  - [ ] make them show more plus buttons with text to the left instead of a menu
+  - [ ] make text to the left show on hover for the just trade mode
 - [ ] indicate games sought by the person you're sending too
 - [ ] link to twitter for profile pics
 - [ ] require an email on login
