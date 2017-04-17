@@ -132,8 +132,8 @@ I'll have mine based no board games instead (use the board game geek api: https:
   - [X] don't allow trades with completed games to progress
 - [ ] minor visual tweaks
   - [X] Game card should be sought by: for not owned
-  - [ ] the buttons / fields on login should line up better
-  - [ ] sent should be recieved to recipients
+  - [X] the buttons / fields on login should line up better
+  - [X] sent should be recieved to recipients
   - [ ] City and state are aligned weirdly
     - [ ] Can state open by typing
   - [ ] fix scrolling (make it scroll to top)

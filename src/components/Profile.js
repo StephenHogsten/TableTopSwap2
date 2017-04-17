@@ -8,7 +8,6 @@ import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
-import Divider from 'material-ui/Divider';
 
 import '../scss/Profile.scss';
 
@@ -84,45 +83,48 @@ class Profile extends Component {
       return (
         <div className='profile-body'>
           <h2>{'Hello, ' + this.state.userInfo.username + '!'}</h2>
-          <p className='profile-info-label'>Trades Completed: 
-            <span className='profile-info'>
-              {this.state.trades}
-            </span>
-          </p>
-          <p className='profile-info-label'>Games Owned: 
-            <span className='profile-info'>
-              {this.state.owned}
-            </span>
-          </p>
-          <p className='profile-info-label'>Games Sought: 
-            <span className='profile-info'>
-              {this.state.sought}
-            </span>
-          </p>
-          <Divider />
-          <div id='city-selection'>
-            <p className='profile-info-label' key='label'>City: </p>
-            <TextField 
-              key='value'
-              id='city-field' 
-              onChange={(event, val) => {console.log('event,idx,val', event, val); this.setUserState('city', val);}}
-              defaultValue={this.state.userInfo.city}
-            />
-          </div>
-          <div id='state-selection'>
-            <p className='profile-info-label' key='label'>State: </p>
-            <SelectField 
-              key='value' 
-              onChange={ (event, idx, val) => this.setUserState('state', val) }
-              value={this.state.userInfo.state}
-            >
-              {items}
-            </SelectField>
-          </div>
+          <table><tbody>
+            <tr className='profile-line'>
+              <td className='profile-info-label'>Trades Completed:</td>
+              <td className='profile-info'>{this.state.trades}</td>
+            </tr>
+            <tr className='profile-line'>
+              <td className='profile-info-label'>Games Owned:</td>
+              <td className='profile-info'>{this.state.owned}</td>
+            </tr>
+            <tr className='profile-line'>
+              <td className='profile-info-label'>Games Sought:</td>
+              <td className='profile-info'>{this.state.sought}</td>
+            </tr>
+            <tr className='profile-line'>
+              <td className='profile-info-label'>City</td>
+              <td className='profile-info'>
+                <TextField 
+                  key='value'
+                  id='city-field' 
+                  onChange={(event, val) => {console.log('event,idx,val', event, val); this.setUserState('city', val);}}
+                  defaultValue={this.state.userInfo.city}
+                />
+              </td>
+            </tr>
+            <tr className='profile-line'>
+              <td className='profile-info-label'>State</td>
+              <td className='profile-info'>
+                <SelectField 
+                  key='value' 
+                  onChange={ (event, idx, val) => this.setUserState('state', val) }
+                  value={this.state.userInfo.state}
+                >
+                  {items}
+                </SelectField>
+              </td>
+            </tr>
+          </tbody></table>
           <RaisedButton 
             primary={true}
             label='Save Changes'
             onTouchTap={() => this.updateUserRecord()}
+            style={{marginTop:'16px'}}
           />
           { this.state.savingChanges? <Loading />: null }
         </div>

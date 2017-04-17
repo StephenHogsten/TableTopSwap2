@@ -32,6 +32,10 @@ class TradeCard extends Component {
   render() {
     let trade = this.props.trade;
     let status = trade.status;
+    if (status === 'sent' && trade.recipient.user === this.props.currentUser) {
+      console.log('should be received');
+      status = 'received';
+    }
     let senderGame = trade.sender.owned_game_id;
     senderGame = this.props.gameList.find( (oneGame) => oneGame._id == senderGame);   // eslint-disable-line
     let recipientGame = trade.recipient.owned_game_id;

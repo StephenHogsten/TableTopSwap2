@@ -52,6 +52,7 @@ class LoginForm extends Component {
             id='form-username'
             errorText={this.state.userError} 
             floatingLabelText='username'
+            fullWidth={true}
             defaultValue={sessionStorage.getItem('login_user')}
           />
           <br />
@@ -60,6 +61,7 @@ class LoginForm extends Component {
             id='form-password'
             errorText={this.state.passwordError} 
             floatingLabelText='password' 
+            fullWidth={true}
             type='password'
           />
           <br />
