@@ -149,7 +149,7 @@ I'll have mine based no board games instead (use the board game geek api: https:
   - [X] enter should submit for login
   - [X] search bar for add game
   - [X] notes for trade steps
-- [ ] take user to the trade you just created or home (not back to the game)
+- [X] take user to the trade you just created or home (not back to the game)
 - [ ] mobile friendly
 - [ ] AddButton.js "iconButton.setKeyboardFocus is not a fn" on ESC
 - [ ] Some sort of splash page before login (use material-ui as a guide)

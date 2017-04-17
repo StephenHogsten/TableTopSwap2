@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Redirect } from 'react-router-dom';
 import { json as d3Json} from 'd3-request';
 
 import GameList from './GameList.js';
@@ -173,7 +174,7 @@ class TradeSteps extends Component {
       case saveStates.done:
         this.props.refreshTrades();
         this.props.refreshGames();
-        history.back();
+        return <Redirect to='/my_trades' />;
       case saveStates.saving:   // eslint-disable-line
         return <Loading />;
       case saveStates.error:
