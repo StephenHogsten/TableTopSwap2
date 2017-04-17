@@ -14,6 +14,7 @@ import Divider from 'material-ui/Divider';
 //  my components
 import MainBody from './MainBody.js';
 import TopBar from './TopBar.js';
+import ScrollToTop from './ScrollToTop.js';
 
 
 const MenuLink = ({to, label, clickFn}) => (
@@ -125,30 +126,32 @@ class App extends Component {
     return (
       <MuiThemeProvider>
         <BrowserRouter>   
-          <div>
-            <TopBar 
-              currentUser={this.state.currentUser} 
-              openDrawer={ () => this.openDrawer() }
-            />
+          <ScrollToTop>
+            <div>
+              <TopBar 
+                currentUser={this.state.currentUser} 
+                openDrawer={ () => this.openDrawer() }
+              />
 
-            {drawer}
+              {drawer}
 
-            <MainBody 
-              currentUser={this.state.currentUser}
-              isCheckingSession={this.state.isCheckingSession}
-              gameList={this.state.gameList}
-              tradeList={this.state.tradeList}
-              clearUser={ () => this.clearUser() }
-              refreshGames={ () => this.getAllGames() }
-              refreshTrades={ () => this.getAllTrades() }
-              filterAllSought={(gameList) => this.filterParent(gameList, 'sought', false)}
-              filterAllOwned={(gameList) => this.filterParent(gameList, 'owned', false)}
-              filterMySought={(gameList) => this.filterParent(gameList, 'sought', true)}
-              filterMySoughtAll={(gameList) => this.filterParent(gameList, 'sought', true, false)}
-              filterMyOwned={(gameList) => this.filterParent(gameList, 'owned', true)}
-              filterMyOwnedAll={(gameList) => this.filterParent(gameList, 'owned', true, false)}
-            />
-          </div>
+              <MainBody 
+                currentUser={this.state.currentUser}
+                isCheckingSession={this.state.isCheckingSession}
+                gameList={this.state.gameList}
+                tradeList={this.state.tradeList}
+                clearUser={ () => this.clearUser() }
+                refreshGames={ () => this.getAllGames() }
+                refreshTrades={ () => this.getAllTrades() }
+                filterAllSought={(gameList) => this.filterParent(gameList, 'sought', false)}
+                filterAllOwned={(gameList) => this.filterParent(gameList, 'owned', false)}
+                filterMySought={(gameList) => this.filterParent(gameList, 'sought', true)}
+                filterMySoughtAll={(gameList) => this.filterParent(gameList, 'sought', true, false)}
+                filterMyOwned={(gameList) => this.filterParent(gameList, 'owned', true)}
+                filterMyOwnedAll={(gameList) => this.filterParent(gameList, 'owned', true, false)}
+              />
+            </div>
+          </ScrollToTop>
         </BrowserRouter>    
       </MuiThemeProvider>
     );
