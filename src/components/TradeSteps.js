@@ -64,6 +64,7 @@ class TradeSteps extends Component {
               id='trade-notes' 
               value={this.state.notes}
               onChange={ (event) => this.setState({ notes: event.target.value }) }
+              autoFocus
             />
           </div>
         );

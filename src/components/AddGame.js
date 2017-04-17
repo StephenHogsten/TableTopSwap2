@@ -108,6 +108,7 @@ class AddGame extends Component {
             id='game-title' 
             hintText='game title'
             onChange={(event) => this.searchForGameDelay(event) }
+            autoFocus
           />
           <SearchIcon style={{color:"#666"}} onClick={ (event) => {
             this.searchForGame( document.getElementById('game-title').value, 'click' );

@@ -145,9 +145,10 @@ I'll have mine based no board games instead (use the board game geek api: https:
   - [X] indicate traded games
   - [X] sort the trades by date
   - [X] close icon menu when navigating to profile
-- [ ] default focus where it belongs
-  - [ ] enter should submit for login
-  - [ ] search bar for add game
+- [X] default focus where it belongs
+  - [X] enter should submit for login
+  - [X] search bar for add game
+  - [X] notes for trade steps
 - [ ] take user to the trade you just created or home (not back to the game)
 - [ ] mobile friendly
 - [ ] AddButton.js "iconButton.setKeyboardFocus is not a fn" on ESC
