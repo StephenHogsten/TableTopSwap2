@@ -123,30 +123,40 @@ I'll have mine based no board games instead (use the board game geek api: https:
   - [X] add to User.js
   - [X] add to the profile page as editable
   - [X] add to the game card
-- [ ] split up routes
-- [ ] get a handle on when completed games are filtered
-- [ ] add error / loading for trade workflow
-- [ ] visual tweaks
-  - [ ] Game card should be sought by: for not owned
-  - [ ] the buttons / fields on login should line up better
-  - [ ] sent should be recieved to recipients
-  - [ ] City and state are aligned weirdly
-  - [ ] fix scrolling (make it scroll to top)
-  - [ ] more padding above OneGame
-  - [ ] Trade Card layout just isn't very good
-    - [ ] open gamecard from tradecard
-  - [ ] indicate traded games
-  - [ ] style the add buttons better 
-    - [ ] make them show more plus buttons with text to the left instead of a menu
-    - [ ] make text to the left show on hover for the just trade mode
-  - [ ] close icon menu when navigating to profile
-- [ ] default focus where it belongs
-  - [ ] enter should submit for login
-- [ ] take user to the trade you just created or home (not to the game)
+- [X] reload games after updating profile (for the current user)
+- [X] get a handle on when completed games are filtered
+  - [X] filter from everywhere by my/owned & my/sought
+  - [X] make it grayscale and put trade completed on it
+- [X] add error / loading for trade workflow
+  - [X] make modified trade workflow
+  - [X] don't allow trades with completed games to progress
+- [ ] minor visual tweaks
+  - [X] Game card should be sought by: for not owned
+  - [X] the buttons / fields on login should line up better
+  - [X] sent should be recieved to recipients
+  - [X] City and state are aligned weirdly
+    - [X] Can state open by typing - no
+  - [X] fix scrolling (make it scroll to top)
+  - [X] more padding above OneGame
+  - [X] Trade Card layout just isn't very good
+    - [X] too tall
+    - [X] too similar to onetrade 
+    - [X] show date
+  - [X] indicate traded games
+  - [X] sort the trades by date
+  - [X] close icon menu when navigating to profile
+- [X] default focus where it belongs
+  - [X] enter should submit for login
+  - [X] search bar for add game
+  - [X] notes for trade steps
+- [X] take user to the trade you just created or home (not back to the game)
 - [ ] mobile friendly
+  - [ ] add a grid layer to everything
 - [ ] AddButton.js "iconButton.setKeyboardFocus is not a fn" on ESC
+  - [ ] technically you can't have floating action button as the icon button
 - [ ] Some sort of splash page before login (use material-ui as a guide)
 ## Bonuses
+- [ ] can't go straight to trade IDs?
 - [ ] make the thing that is a flat div and turns into an app bar for splash page
 - [ ] add a badge with trades to act on
 - [ ] jest
@@ -154,6 +164,9 @@ I'll have mine based no board games instead (use the board game geek api: https:
   - [ ] for react components
   - [ ] for server endpoints?
 - [ ] filter button for trades
+- [ ] style the add buttons better 
+  - [ ] make them show more plus buttons with text to the left instead of a menu
+  - [ ] make text to the left show on hover for the just trade mode
 - [ ] indicate games sought by the person you're sending too
 - [ ] link to twitter for profile pics
 - [ ] require an email on login

@@ -2,7 +2,6 @@ const express = require('express');
 const https = require('https');
 const url = require('url');
 const xml2js = require('xml2js').parseString;
-const util = require('util');
 
 const User = require('./models/User.js');
 const Game = require('./models/Game.js');
@@ -96,8 +95,10 @@ module.exports = (passport) => {
 
   const router = express.Router();
 
-  //USER INFO / LOGIN
+  //USER ROUTES
+  //  login user
   router.post('/login', function(req, res, next) {
+    // use passport to authenticate
     passport.authenticate('local', function(err, user, info) {
       if (err) { return next(err); }
       if (!user) { return next(info); }
@@ -107,14 +108,15 @@ module.exports = (passport) => {
       });
     })(req, res, next);
   }, (error, req, res, next) => {
-    // send errors (if successful we already redirected)
+    // send error message to client
     return res.redirect('/login/' + encodeURIComponent(JSON.stringify(error)));
   });
-  //  logout
+  // logout
   router.get('/logout', (req, res) => {
     req.logout();
     res.send('logging out');
   });
+  // check for active session
   router.get('/checksession', (req, res) => {
     console.log('req.user', req.user);
     if (req.user) {
@@ -127,6 +129,7 @@ module.exports = (passport) => {
       res.send({ activeSession: false, message: 'no active session' });
     }
   });
+  // return user details
   router.get('/user/:id', (req, res) => {
     if (!req.params.id) {
       res.send({ error: 'no user id supplied' });
@@ -144,7 +147,8 @@ module.exports = (passport) => {
       }); }
     });
   });
-  // expects query parameters of either state or city or both
+  // update a user
+  //   expects query parameters of either state or city or both
   router.get('/update_user/:id', (req, res) => {
     let updateObj = {};
     let noUpdates = true;
@@ -163,6 +167,7 @@ module.exports = (passport) => {
       (err) => res.send( err? {error: err}: {result: 'success'})
     );
   });
+  // create new user
   router.post('/add_user', (req, res, next) => {
       let newUser = new User({
         username: req.body.username,
@@ -188,10 +193,10 @@ module.exports = (passport) => {
         failureRedirect: '/login_failed'
       }), (req, res) => {
         // we only get here if successful
-        res.redirect('/store_user/' + req.user.username);
+        res.redirect('/logged_in');
   });
 
-  //BOARD GAME GEEK
+  //BOARD GAME GEEK ROUTES
   // get detailed info
   // expects comma delimited ids to get BGG info for
   router.get('/bggGames/:ids', (req, res) => {
@@ -224,7 +229,7 @@ module.exports = (passport) => {
     });
   });
 
-  //GAME DATABASE
+  //GAME DATABASE ROUTES
   // add game expects query parameters:
   //  id (number - BGG game id)
   //  issought (bool)
@@ -243,8 +248,8 @@ module.exports = (passport) => {
       res.send( err? {error: err}: {success: game._id});
     });
   });
+  // return all game info
   router.get('/all_games', (req, res) => {
-    // is there a way to sort?
     Game
       .find({})
       .sort({ created_date: -1 })
@@ -261,17 +266,18 @@ module.exports = (passport) => {
       });
   });
 
-  // TRADE DATABASE
-  //  expected query parameters:
-  //    reciever
-  //    sender_owned_game
-  //    receiver_owned_game
-  //    notes
-  //    status (defaults to sent but pending also accepted)
-  //  optionally:
-  //    receiver_owned_BGG_id
-  //    sender_sought_game
-  //    receiver_sought_game
+  // TRADE DATABASE ROUTES
+  //  create new trade
+  //   expected query parameters:
+  //     reciever
+  //     sender_owned_game
+  //     receiver_owned_game
+  //     notes
+  //     status (defaults to sent but pending also accepted)
+  //   optionally:
+  //     receiver_owned_BGG_id
+  //     sender_sought_game
+  //     receiver_sought_game
   router.get('/add_trade', (req, res) => {
     if (!req.isAuthenticated()) { res.send({ error: 'not logged in' }); return; }
     let trade = new Trade({
@@ -302,6 +308,7 @@ module.exports = (passport) => {
       });
     }
   });
+  // retrieve all trades
   router.get('/all_trades', (req, res) => {
     Trade.find({})
       .sort({'created_date': -1})
@@ -310,18 +317,20 @@ module.exports = (passport) => {
         res.send(trades);
       });
   });
-  // expects query parameters of:
-  //    id - trade's id
-  //    status - the status we want to assign
-  //  optionally: 
-  //    receiver_sought_game
-  //    sender_owned_BGG_id
+  // update a trade's status
+  //  expects query parameters of:
+  //     id - trade's id
+  //     status - the status we want to assign
+  //   optionally: 
+  //     receiver_sought_game
+  //     sender_owned_BGG_id
   router.get('/set_trade', (req, res) => {
     if (!req.isAuthenticated()) { res.send({ error: 'not logged in' }); }
     Trade.findById( req.query.id, (err, trade) => {
       if (err) { res.send({error: err}); return; }
       if (!trade) { res.send({ error: 'no trade with that id' }); return; }
       let user = String(req.user._id);
+      // different checks for differet attempted statuses
       switch (req.query.status) {
         case 'accepted':
           if (user !== trade.recipient.user) {
@@ -359,7 +368,7 @@ module.exports = (passport) => {
             res.send({ error: 'can only modify sent trades' }); return; }
           break;
         case 'modified':
-          if (user !== trade.recipient) { 
+          if (user !== trade.recipient.user) { 
             res.send({ error: 'user is not the recipient' }); return }
           if (trade.status !== 'sent') {
             res.send({ error: 'can only modify sent trades' }); return; }

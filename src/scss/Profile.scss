@@ -3,6 +3,7 @@
   font-weight: 300;
   margin-right: 10px;
   margin-left: 16px;
+  min-width: 140px;
 }
 
 .profile-info {
@@ -10,14 +11,15 @@
   font-weight: bold;
 }
 
-#state-selection {
+tr {
   display: flex;
   align-items: center;
 }
 
-#city-selection {
+td {
   display: flex;
   align-items: center;
+  height: 55px;
 }
 
 #city-field {

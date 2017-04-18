@@ -52,7 +52,10 @@ class LoginForm extends Component {
             id='form-username'
             errorText={this.state.userError} 
             floatingLabelText='username'
+            fullWidth={true}
             defaultValue={sessionStorage.getItem('login_user')}
+            tabIndex={1}
+            autoFocus
           />
           <br />
           <TextField 
@@ -60,7 +63,9 @@ class LoginForm extends Component {
             id='form-password'
             errorText={this.state.passwordError} 
             floatingLabelText='password' 
+            fullWidth={true}
             type='password'
+            tabIndex={2}
           />
           <br />
           <RaisedButton 
@@ -69,6 +74,7 @@ class LoginForm extends Component {
             label='Create new Account'
             onTouchTap={() => this.submitForm(true)}
             style={{margin:'8px'}}
+            tabIndex={4}
           />
           <RaisedButton 
             id='login-submit-button'
@@ -76,6 +82,7 @@ class LoginForm extends Component {
             label='Submit' 
             onTouchTap={() => this.submitForm()}
             style={{margin:'8px'}}
+            tabIndex={3}
           />
         </form>
       </div>

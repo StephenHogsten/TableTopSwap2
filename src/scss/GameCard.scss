@@ -14,6 +14,12 @@ $picture-height: 240px;
   z-index: 0;
   background: rgba(0,205,255,.3);
 }
+.traded-game {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: rgba(50,50,50,0.3);
+}
 
 
 .game-card {

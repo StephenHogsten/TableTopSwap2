@@ -3,6 +3,8 @@ import React, { Component } from 'react';
 import { NoneCard } from './GameCard.js';
 import TradeCard from './TradeCard.js';
 
+import '../scss/TradeList.scss';
+
 class TradeList extends Component {
   render() {
     let trades = [];
@@ -21,7 +23,7 @@ class TradeList extends Component {
     // display each section that should exist for the user
     return (
       <div className='trade-list'>
-        <div className='trade-holder'>{trades}</div>
+        {trades}
       </div>
     );
   }

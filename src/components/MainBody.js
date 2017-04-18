@@ -106,7 +106,12 @@ class MainBody extends Component {
         <Route key='profile' exact path='/profile' render={() => 
           <UserRender currentUser={user} isCheckingSession={this.props.isCheckingSession} render={() => (
             <div className='main-body'>
-              <Profile currentUser={user} trades={this.props.tradeList} games={this.props.gameList} />
+              <Profile 
+                currentUser={user} 
+                trades={this.props.tradeList} 
+                games={this.props.gameList} 
+                refreshGames={this.props.refreshGames}
+              />
             </div>
           )} />
         } />
@@ -136,7 +141,11 @@ class MainBody extends Component {
           <UserRender currentUser={user} isCheckingSession={this.props.isCheckingSession} render={() => (
             <div className='main-body'>
               <h2 className='section-header' key='my-sought-header'>My Games Sought</h2>
-              <GameList gameList={mySoughtGames} isOwned={false} key='my-sought-games' />
+              <GameList 
+                gameList={this.props.filterMySoughtAll(this.props.gameList)}
+                isOwned={false}
+                key='my-sought-games' 
+              />
               <AddButton user={user} mode='sought_game' />
             </div>
           )} />
@@ -145,7 +154,11 @@ class MainBody extends Component {
           <UserRender currentUser={user} isCheckingSession={this.props.isCheckingSession} render={() => (
             <div className='main-body'>
               <h2 className='section-header' key='my-owned-header'>Games I'm Offering</h2>
-              <GameList gameList={myOwnedGames} isOwned={true} key='my-owned-games' />
+              <GameList 
+                gameList={this.props.filterMyOwnedAll(this.props.gameList)}
+                isOwned={true} 
+                key='my-owned-games' 
+              />
               <AddButton user={user} mode='sought_game' />
             </div>
           )} />
@@ -188,7 +201,7 @@ class MainBody extends Component {
                 currentUser={user}
                 trade={matchingTrade}
                 gameList={this.props.gameList}
-                expanded={true}
+                isExpanded={true}
                 refreshTrades={this.props.refreshTrades}
                 refreshGames={this.props.refreshGames}
               />
@@ -239,6 +252,22 @@ class MainBody extends Component {
             </div>
           )} />
         )} />
+        <Route key='new_trade_modified' path='/new/trade/modified/:receiving_game/:sending_game' render={ ({match}) => (
+          <UserRender currentUser={user} isCheckingSession={this.props.isCheckingSession} render={() => (
+            <div className='main-body'>
+              <TradeSteps 
+                soughtGames={soughtGames}
+                ownedGames={ownedGames}
+                mySoughtGames={mySoughtGames}
+                myOwnedGames={myOwnedGames}
+                ownedGame={JSON.parse(decodeURIComponent(match.params.sending_game))}
+                myOwnedGame={JSON.parse(decodeURIComponent(match.params.receiving_game))}
+                refreshTrades={this.props.refreshTrades}
+                refreshGames={this.props.refreshGames}
+              />
+            </div>
+          )} />
+        )} />
         <Route key='new_sought' exact path='/new/game/sought' render={ () =>
           <UserRender currentUser={user} isCheckingSession={this.props.isCheckingSession} render={() => (
             <div className='main-body'>
@@ -277,7 +306,9 @@ MainBody.propTypes = {
   filterAllSought: React.PropTypes.func.isRequired,
   filterAllOwned: React.PropTypes.func.isRequired,
   filterMySought: React.PropTypes.func.isRequired,
+  filterMySoughtAll: React.PropTypes.func.isRequired,
   filterMyOwned: React.PropTypes.func.isRequired,
+  filterMyOwnedAll: React.PropTypes.func.isRequired,
   refreshGames: React.PropTypes.func.isRequired,
   refreshTrades: React.PropTypes.func.isRequired,
   currentUser: React.PropTypes.string,
