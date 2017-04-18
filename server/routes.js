@@ -193,7 +193,7 @@ module.exports = (passport) => {
         failureRedirect: '/login_failed'
       }), (req, res) => {
         // we only get here if successful
-        res.redirect('/store_user/' + req.user.username);
+        res.redirect('/logged_in');
   });
 
   //BOARD GAME GEEK ROUTES

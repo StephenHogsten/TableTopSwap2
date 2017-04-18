@@ -151,7 +151,9 @@ I'll have mine based no board games instead (use the board game geek api: https:
   - [X] notes for trade steps
 - [X] take user to the trade you just created or home (not back to the game)
 - [ ] mobile friendly
+  - [ ] add a grid layer to everything
 - [ ] AddButton.js "iconButton.setKeyboardFocus is not a fn" on ESC
+  - [ ] technically you can't have floating action button as the icon button
 - [ ] Some sort of splash page before login (use material-ui as a guide)
 ## Bonuses
 - [ ] can't go straight to trade IDs?
