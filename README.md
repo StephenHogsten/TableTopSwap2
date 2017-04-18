@@ -150,12 +150,12 @@ I'll have mine based no board games instead (use the board game geek api: https:
   - [X] search bar for add game
   - [X] notes for trade steps
 - [X] take user to the trade you just created or home (not back to the game)
+## Bonuses
+- [ ] Some sort of splash page before login (use material-ui as a guide)
 - [ ] mobile friendly
   - [ ] add a grid layer to everything
 - [ ] AddButton.js "iconButton.setKeyboardFocus is not a fn" on ESC
   - [ ] technically you can't have floating action button as the icon button
-- [ ] Some sort of splash page before login (use material-ui as a guide)
-## Bonuses
 - [ ] can't go straight to trade IDs?
 - [ ] make the thing that is a flat div and turns into an app bar for splash page
 - [ ] add a badge with trades to act on
@@ -167,6 +167,7 @@ I'll have mine based no board games instead (use the board game geek api: https:
 - [ ] style the add buttons better 
   - [ ] make them show more plus buttons with text to the left instead of a menu
   - [ ] make text to the left show on hover for the just trade mode
+- [ ] add a different color theme
 - [ ] indicate games sought by the person you're sending too
 - [ ] link to twitter for profile pics
 - [ ] require an email on login
